@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臺灣小鼠診所 TAIWAN MOUSE CLINIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --tiffany: #0ABAB5; --tiffany-dark: #088a85; --tiffany-light: #e6f7f7; }
+        body { font-size: 18px; line-height: 1.6; }
+        @media (min-width: 768px) { body { font-size: 20px; } }
+        .bg-tiffany { background-color: var(--tiffany); }
+        .text-tiffany { color: var(--tiffany); }
+        .border-tiffany { border-color: var(--tiffany); }
+        .hero-bg {
+            background-image: linear-gradient(rgba(10, 186, 181, 0.8), rgba(10, 186, 181, 0.8)), url('https://img.chemie.de/Portal/News/673c3e9a734a1_zbNrZu6dj.png?tr=w-1314,h-657,cm-extract,x-106,y-94:n-news_teaser');
+            background-size: cover;
+            background-position: center;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(10, 186, 181, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 20px 10px rgba(10, 186, 181, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(10, 186, 181, 0); transform: scale(1); }
+        }
+        .btn-pulse { animation: pulse-glow 2s infinite; background-color: var(--tiffany); }
+        .line-fixed { position: absolute; bottom: 30px; right: 30px; z-index: 30; width: 100px; height: 100px; transition: transform 0.3s; }
+        .line-fixed img { width: 100%; height: auto; display: block; border-radius: 8px; }
+        .line-fixed:hover { transform: scale(1.1); }
+        .marquee-wrapper { background: #333; color: white; padding: 12px 0; overflow: hidden; position: relative; }
+        .marquee-content { display: inline-block; white-space: nowrap; animation: marquee 30s linear infinite; cursor: pointer; font-weight: bold; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; max-height: 500px; border: 1px solid #e2e8f0; border-radius: 12px; }
+        table { min-width: 650px; width: 100%; border-collapse: collapse; }
+        th { position: sticky; top: 0; background: var(--tiffany); color: white; z-index: 10; padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #edf2f7; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .category-row { background-color: #f1f5f9; font-weight: bold; color: #334155; }
+        @media (min-width: 1024px) { .dropdown:hover .dropdown-menu { display: block; } }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); }
+        .modal-content { background: white; margin: 2% auto; padding: 25px; border-radius: 20px; width: 95%; max-width: 1100px; max-height: 92vh; overflow-y: auto; }
+        @media (min-width: 768px) { .modal-content { padding: 45px; } }
+        .cert-info-card { border-left: 6px solid var(--tiffany); background: #f8fafc; padding: 20px; border-radius: 0 12px 12px 0; margin-bottom: 25px; }
+        .cert-grid { display: grid; grid-template-cols: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 20px; }
+        .cert-grid img { width: 100%; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .visitor-badge { display: inline-flex; align-items: center; background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); font-family: monospace; font-size: 16px; margin-top: 20px; }
+        html { scroll-behavior: smooth; }
+        
+        /* 搜尋列樣式 */
+        .search-container { position: relative; display: flex; align-items: center; background: #f1f5f9; border-radius: 99px; padding: 4px 12px; border: 2px solid transparent; transition: all 0.3s; }
+        .search-container:focus-within { border-color: var(--tiffany); background: white; box-shadow: 0 0 10px rgba(10, 186, 181, 0.2); }
+        .search-input { background: transparent; border: none; outline: none; padding: 4px 8px; width: 150px; font-size: 16px; font-weight: normal; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-tiffany">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="text-xl md:text-2xl font-black text-slate-800 tracking-tighter uppercase">
+                    <span id="nav-title-zh">臺灣小鼠診所</span> <span class="text-tiffany text-[10px] md:text-xs block tracking-widest leading-none">TAIWAN MOUSE CLINIC</span>
+                </div>
+            </div>
+            
+            <div class="hidden lg:flex items-center space-x-8 font-bold">
+                <div class="relative dropdown">
+                    <button class="hover:text-tiffany transition flex items-center"><span data-i18n="nav-about">關於我們</span> <i class="fas fa-chevron-down ml-2 text-xs"></i></button>
+                    <div class="dropdown-menu absolute hidden bg-white shadow-2xl rounded-xl py-4 w-48 border-t-4 border-tiffany mt-2">
+                        <a href="javascript:void(0)" onclick="openAbout('org')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany" data-i18n="nav-org">組織架構</a>
+                        <a href="javascript:void(0)" onclick="openAbout('comm')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany" data-i18n="nav-comm">委員會</a>
+                        <a href="javascript:void(0)" onclick="openAbout('people')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany" data-i18n="nav-members">診所成員</a>
+                        <a href="javascript:void(0)" onclick="openAbout('location')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany" data-i18n="nav-location">地理位置</a>
+                    </div>
+                </div>
+                <a href="#" class="hover:text-tiffany transition" data-i18n="nav-animal-room">動物房</a>
+                <a href="#" class="hover:text-tiffany transition" data-i18n="nav-info">其他資訊</a>
+
+                <div class="search-container">
+                    <i class="fas fa-search text-slate-400 text-sm"></i>
+                    <input type="text" id="serviceSearch" class="search-input" placeholder="搜尋服務..." onkeyup="if(event.key === 'Enter') handleSearch()">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <div class="hidden md:flex items-center border rounded-full px-3 py-1 bg-slate-50 text-sm font-bold">
+                    <button id="lang-zh" onclick="switchLang('zh')" class="text-tiffany mr-2">中</button>
+                    <span class="text-slate-300">|</span>
+                    <button id="lang-en" onclick="switchLang('en')" class="ml-2 hover:text-tiffany">EN</button>
+                </div>
+
+                <a href="https://lims.tmc.sinica.edu.tw/tac/home?x=dyovMz-Sp2LhvdEqq-yS3g" target="_blank" class="px-4 py-2 md:px-6 md:py-3 text-white rounded-full font-bold btn-pulse transition text-sm md:text-lg" data-i18n="btn-lims">登入 LIMS</a>
+                
+                <div class="hidden md:flex space-x-2">
+                    <button onclick="openAbout('cert-taf')" title="TAF 認證資訊">
+                        <img src="images/TAF_150.png" alt="TAF" class="h-10 md:h-12 border bg-white rounded p-1 hover:border-tiffany transition">
+                    </button>
+                    <button onclick="openAbout('cert-aaalac')" title="AAALAC 認證資訊">
+                        <img src="images/aaalac_150.png" alt="AAALAC" class="h-10 md:h-12 border bg-white rounded p-1 hover:border-tiffany transition">
+                    </button>
+                </div>
+
+                <button class="lg:hidden text-2xl text-slate-600 pl-2" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 p-4 space-y-4 font-bold text-center">
+            <div class="search-container mx-auto max-w-xs mb-4">
+                <i class="fas fa-search text-slate-400 text-sm"></i>
+                <input type="text" id="serviceSearchMobile" class="search-input w-full" placeholder="搜尋服務..." onkeyup="if(event.key === 'Enter') handleSearch(true)">
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+                <button onclick="openAbout('org')" class="p-2 bg-slate-50 rounded" data-i18n="nav-org">組織架構</button>
+                <button onclick="openAbout('location')" class="p-2 bg-slate-50 rounded" data-i18n="nav-location">地理位置</button>
+            </div>
+            <a href="#" class="block py-2 border-b" data-i18n="nav-animal-room">動物房資訊</a>
+            <div class="flex justify-center space-x-4 py-2">
+                <img src="images/TAF_150.png" class="h-10 border" onclick="openAbout('cert-taf')">
+                <img src="images/aaalac_150.png" class="h-10 border" onclick="openAbout('cert-aaalac')">
+            </div>
+        </div>
+    </nav>
+
+    <div class="marquee-wrapper">
+        <div class="marquee-content text-sm md:text-xl" id="marquee-text">
+            <i class="fas fa-bullhorn mr-3"></i> [最新公告] 2026 年度服務費用更新 ｜ 歡迎點擊「關於我們」查看成員分機 ｜ 中心 GLP 認證展延成功 ｜ 
+        </div>
+    </div>
+
+    <header class="hero-bg text-white py-16 md:py-24 text-center">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-6xl font-extrabold drop-shadow-md leading-tight" data-i18n="hero-title">國家綜合小鼠表現型<br class="md:hidden">暨藥物測試中心</h2>
+            <p class="mt-4 md:mt-8 text-lg md:text-2xl font-medium opacity-95" data-i18n="hero-subtitle">精準表型分析 · 專業藥物測試 · 國家級核心設施</p>
+        </div>
+    </header>
+
+    <section class="py-12 container mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+        <a href="https://lims.tmc.sinica.edu.tw/tac/home?x=dyovMz-Sp2LhvdEqq-yS3g" target="_blank" class="p-4 md:p-8 bg-white rounded-2xl shadow hover:shadow-xl border-t-8 border-tiffany transition text-center group">
+            <div class="text-tiffany font-black text-sm md:text-lg mb-2 flex items-center justify-center">
+                <span data-i18n="step-1">01 系統註冊</span>
+                <i class="fas fa-external-link-alt ml-2 text-[10px] opacity-40 group-hover:opacity-100 transition-opacity"></i>
+            </div>
+            <div class="text-[10px] md:text-sm opacity-70 italic" data-i18n="step-1-sub">帳號與計畫申請</div>
+        </a>
+
+        <div class="p-4 md:p-8 bg-white rounded-2xl shadow border-t-8 border-tiffany text-center">
+            <div class="text-tiffany font-black text-sm md:text-lg mb-2" data-i18n="step-2">02 購買點數</div>
+            <div class="text-[10px] md:text-sm opacity-70 italic" data-i18n="step-2-sub">預付與報價流程</div>
+        </div>
+
+        <a href="https://drive.google.com/file/d/1xGTd8uCdYMZXV83LOYKNF_qle5gUGjtl/view?usp=drive_link" target="_blank" class="p-4 md:p-8 bg-white rounded-2xl shadow hover:shadow-xl border-t-8 border-tiffany transition text-center group">
+            <div class="text-tiffany font-black text-sm md:text-lg mb-2 flex items-center justify-center">
+                <span data-i18n="step-3">03 動物入住/檢體遞交</span>
+                <i class="fas fa-file-pdf ml-2 text-[10px] opacity-40 group-hover:opacity-100 transition-opacity"></i>
+            </div>
+            <div class="text-[10px] md:text-sm opacity-70 italic" data-i18n="step-3-sub">物流與健康監測</div>
+        </a>
+
+        <a href="#services-area" class="p-4 md:p-8 bg-white rounded-2xl shadow hover:shadow-xl border-t-8 border-tiffany transition text-center group">
+            <div class="text-tiffany font-black text-sm md:text-lg mb-2 flex items-center justify-center">
+                <span data-i18n="step-4">04 進行實驗</span>
+                <i class="fas fa-chevron-down ml-2 text-[10px] opacity-40 group-hover:opacity-100 transition-opacity"></i>
+            </div>
+            <div class="text-[10px] md:text-sm opacity-70 italic" data-i18n="step-4-sub">核心服務明細</div>
+        </a>
+
+        <a href="https://drive.google.com/file/d/1cpMRfbdxoq45jtAKJ0saV3xNEkA4dlTV/view?usp=drive_link" target="_blank" class="p-4 md:p-8 bg-white rounded-2xl shadow hover:shadow-xl border-t-8 border-tiffany transition text-center col-span-2 md:col-span-1 group">
+            <div class="text-tiffany font-black text-sm md:text-lg mb-2 flex items-center justify-center">
+                <span data-i18n="step-5">05 動物退房/檢體領回</span>
+                <i class="fas fa-file-pdf ml-2 text-[10px] opacity-40 group-hover:opacity-100 transition-opacity"></i>
+            </div>
+            <div class="text-[10px] md:text-sm opacity-70 italic" data-i18n="step-5-sub">祝你實驗順利</div>
+        </a>
+    </div>
+</section>
+
+    <section id="services-area" class="py-16 md:py-20 container mx-auto px-4 bg-white rounded-[2rem] md:rounded-[3rem] shadow-inner">
+        <h3 class="text-2xl md:text-4xl font-black text-center text-slate-800 mb-12" id="service-title-area">核心服務領域 <span class="text-tiffany text-lg md:text-2xl font-bold block mt-2">(點擊查看費用)</span></h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12">
+            <div onclick="openModal('neuro')" class="p-6 md:p-12 bg-slate-50 rounded-3xl shadow hover:border-tiffany border-2 border-transparent cursor-pointer text-center transition">
+                <i class="fas fa-brain text-4xl md:text-6xl text-tiffany mb-4 md:mb-8"></i>
+                <h4 class="font-bold text-lg md:text-2xl" data-i18n="cat-neuro">神經行為</h4>
+            </div>
+            <div onclick="openModal('pathology')" class="p-6 md:p-12 bg-slate-50 rounded-3xl shadow hover:border-tiffany border-2 border-transparent cursor-pointer text-center transition">
+                <i class="fas fa-microscope text-4xl md:text-6xl text-tiffany mb-4 md:mb-8"></i>
+                <h4 class="font-bold text-lg md:text-2xl" data-i18n="cat-pathology">病理分析</h4>
+            </div>
+            <div onclick="openModal('metabolism')" class="p-6 md:p-12 bg-slate-50 rounded-3xl shadow hover:border-tiffany border-2 border-transparent cursor-pointer text-center transition">
+                <i class="fas fa-apple-alt text-4xl md:text-6xl text-tiffany mb-4 md:mb-8"></i>
+                <h4 class="font-bold text-lg md:text-2xl" data-i18n="cat-metabolism">生理代謝</h4>
+            </div>
+            <div onclick="openModal('cardio')" class="p-6 md:p-12 bg-slate-50 rounded-3xl shadow hover:border-tiffany border-2 border-transparent cursor-pointer text-center transition">
+                <i class="fas fa-heartbeat text-4xl md:text-6xl text-tiffany mb-4 md:mb-8"></i>
+                <h4 class="font-bold text-lg md:text-2xl" data-i18n="cat-cardio">心血管</h4>
+            </div>
+            <div onclick="openModal('imaging')" class="p-6 md:p-12 bg-slate-50 rounded-3xl shadow hover:border-tiffany border-2 border-transparent cursor-pointer text-center transition">
+                <i class="fas fa-video text-4xl md:text-6xl text-tiffany mb-4 md:mb-8"></i>
+                <h4 class="font-bold text-lg md:text-2xl" data-i18n="cat-imaging">動物影像</h4>
+            </div>
+            <div onclick="openModal('immunology')" class="p-6 md:p-12 bg-slate-50 rounded-3xl shadow hover:border-tiffany border-2 border-transparent cursor-pointer text-center transition">
+                <i class="fas fa-shield-virus text-4xl md:text-6xl text-tiffany mb-4 md:mb-8"></i>
+                <h4 class="font-bold text-lg md:text-2xl" data-i18n="cat-immunology">免疫疾病</h4>
+            </div>
+        </div>
+    </section>
+
+    <div id="serviceModal" class="modal"><div class="modal-content relative"><button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 text-4xl">×</button><div id="modalBody"></div></div></div>
+    <div id="aboutModal" class="modal"><div class="modal-content relative"><button onclick="closeAbout()" class="absolute top-4 right-4 text-slate-400 text-4xl">×</button><div id="aboutBody"></div></div></div>
+
+    <footer class="bg-slate-800 text-white py-12 text-center mt-12 relative">
+        <div class="container mx-auto px-4">
+            <p class="text-lg md:text-xl opacity-80 mb-4" data-i18n="footer-copy">© 2026 TAIWAN MOUSE CLINIC 國家綜合小鼠表現型暨藥物測試中心</p>
+            <div class="visitor-badge">
+                <i class="fas fa-eye mr-3 text-tiffany"></i>
+                <span data-i18n="visitor-text">累計訪客數：</span><span id="visitor-count" class="font-bold ml-1">312,084</span>
+            </div>
+        </div>
+        <div class="line-fixed">
+            <a href="https://lin.ee/U53d1n0" target="_blank">
+                <img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="LINE" class="shadow-xl">
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        let currLang = 'zh';
+        const translations = {
+            zh: {
+                "nav-about": "關於我們", "nav-org": "組織架構", "nav-comm": "委員會", "nav-members": "診所成員", "nav-location": "地理位置",
+                "nav-animal-room": "動物房", "nav-info": "其他資訊", "btn-lims": "登入 LIMS",
+                "search-placeholder": "搜尋服務...",
+                "marquee": "<i class='fas fa-bullhorn mr-3'></i> [最新公告] 2026 年度服務費用更新 ｜ 歡迎點擊「關於我們」查看成員分機 ｜ 中心 GLP 認證展延成功 ｜",
+                "hero-title": "國家綜合小鼠表現型<br class='md:hidden'>暨藥物測試中心",
+                "hero-subtitle": "精準表型分析 · 專業藥物測試 · 國家級核心設施",
+                "step-1": "01 系統註冊", 
+                "step-1-sub": "帳號與計畫申請",
+                "step-2": "02 購買點數", 
+                "step-2-sub": "預付與報價流程",
+                "step-3": "03 動物入住/檢體遞交", 
+                "step-3-sub": "物流與健康監測",
+                "step-4": "04 進行實驗", 
+                "step-4-sub": "核心服務明細",
+                "step-5": "05 動物退房/檢體領回", 
+                "step-5-sub": "祝你實驗順利",
+                "service-title": "核心服務領域 <span class='text-tiffany text-lg md:text-2xl font-bold block mt-2'>(點擊查看費用)</span>",
+                "cat-neuro": "神經行為", "cat-pathology": "病理分析", "cat-metabolism": "生理代謝", "cat-cardio": "心血管", "cat-imaging": "動物影像", "cat-immunology": "免疫疾病",
+                "footer-copy": "© 2026 TAIWAN MOUSE CLINIC 國家綜合小鼠表現型暨藥物測試中心",
+                "visitor-text": "累計訪客數：",
+                "th-code": "代號", "th-item": "項目", "th-acad": "學術界", "th-ind": "產業界",
+                "search-results": "搜尋結果", "no-results": "未找到符合的項目"
+            },
+            en: {
+                "nav-about": "About Us", "nav-org": "Organization", "nav-comm": "Committees", "nav-members": "Members", "nav-location": "Location",
+                "nav-animal-room": "Animal Facility", "nav-info": "Resources", "btn-lims": "Login LIMS",
+                "search-placeholder": "Search services...",
+                "marquee": "<i class='fas fa-bullhorn mr-3'></i> [News] 2026 Service Fees Updated | Click 'About Us' for extensions | GLP Certification Renewed |",
+                "hero-title": "Taiwan Mouse Clinic (TMC)<br class='md:hidden'> Phenotyping & Drug Testing",
+                "hero-subtitle": "Precision Phenotyping · Professional Drug Testing · National Core Facility",
+                "step-1": "01 Registration", 
+                "step-1-sub": "Account & Project Application",
+                "step-2": "02 Purchase Credits", 
+                "step-2-sub": "Prepayment & Quotation",
+                "step-3": "03 Animal Housing/Submission", 
+                "step-3-sub": "Logistics & Health Monitoring",
+                "step-4": "04 Experimentation", 
+                "step-4-sub": "Core Service Details",
+                "step-5": "05 Check-out/Collection", 
+                "step-5-sub": "Good luck with your research",
+                "service-title": "Core Service Areas <span class='text-tiffany text-lg md:text-2xl font-bold block mt-2'>(Click to view fees)</span>",
+                "cat-neuro": "Neurobehavior", "cat-pathology": "Pathology", "cat-metabolism": "Metabolism", "cat-cardio": "Cardiovascular", "cat-imaging": "Imaging", "cat-immunology": "Immunology",
+                "footer-copy": "© 2026 TAIWAN MOUSE CLINIC. All rights reserved.",
+                "visitor-text": "Total Visitors: ",
+                "th-code": "Code", "th-item": "Service Item", "th-acad": "Academic", "th-ind": "Industry",
+                "search-results": "Search Results", "no-results": "No items found matching your query"
+            }
+        };
+
+        const serviceData = {
+            neuro: { 
+                title: { zh: "神經行為評估", en: "Neurobehavioral Evaluation" }, 
+                costs: [
+                    ["A12-A-4.1.1", {zh:"飼養籠內行為分析 (1小時)", en:"Home Cage Activity (1hr)"}, "$480", "$1,600"],
+                    ["A12-A-4.1.2", {zh:"飼養籠內行為分析 (24小時)", en:"Home Cage Activity (24hr)"}, "$1,250", "$2,800"],
+                    ["A12-A-4.2", {zh:"開放空間移動軌跡分析", en:"Open Field Test"}, "$350", "$1,600"],
+                    ["A12-A-4.3", {zh:"小鼠跑步測試", en:"Treadmill Test"}, "$500", "$1,500"],
+                    ["A12-A-4.4", {zh:"小鼠冷熱痛覺測試", en:"Hot/Cold Plate Test"}, "$140", "$500"],
+                    ["A12-A-4.5", {zh:"疼痛閃尾測試", en:"Tail Flick Test"}, "$140", "$500"],
+                    ["A12-A-4.6", {zh:"電子式馮佛雷纖細絲測試", en:"Electronic Von Frey Test"}, "$150", "$500"],
+                    ["A12-A-4.7", {zh:"行為及外觀檢測 (58 項)", en:"SHIRPA (58 items)"}, "$340", "$1,200"],
+                    ["A12-A-4.8", {zh:"拉力測試", en:"Grip Strength Test"}, "$200", "$600"],
+                    ["A12-A-4.9", {zh:"Y 形迷宮", en:"Y-Maze Test"}, "$350", "$1,400"],
+                    ["A12-A-4.10", {zh:"抬高式十字迷津", en:"Elevated Plus Maze"}, "$350", "$1,400"],
+                    ["A12-A-4.11", {zh:"莫氏水迷津", en:"Morris Water Maze"}, "$3,500", "$7,000"],
+                    ["A12-A-4.12", {zh:"動態重量分布測試", en:"Dynamic Weight Bearing"}, "$400", "$1,500"],
+                    ["A12-A-4.13", {zh:"懸尾試驗", en:"Tail Suspension Test"}, "$350", "$1,400"],
+                    ["A12-A-4.14", {zh:"小鼠壓痛覺測定", en:"Pressure Pain Test"}, "$600", "$2,200"]
+                ],
+                note: { zh: "註：電子式馮佛雷纖細絲測試：上述收費標準為每試驗 (每隻小鼠測1腳掌)", en: "Note: Electronic Von Frey Test fee is per test (one hind paw per mouse)." }
+            },
+            pathology: { 
+                title: { zh: "病理分析", en: "Pathology Analysis" }, 
+                isPathology: true,
+                categories: [
+                    { name: {zh:"A. 血清生化", en:"A. Serum Biochemistry"}, rows: [
+                        ["A12-A-2.1.26", {zh:"血清生化分析(一) - AST, ALT, CPK, LDH, ALP, GLU, BUN, CRE, UA, TG, TBIL, Ca, TP, ALB, IP, AMYL", en:"Biochemistry Panel I"}, "$80", "$250"],
+                        ["A12-A-2.1.27", {zh:"血清生化分析(二) - TCHO, HDL-C, CKMB, Mg, NH3-W & Na, K, Cl", en:"Biochemistry Panel II"}, "$150", "$380"]
+                    ]},
+                    { name: {zh:"B. 組織病理學", en:"B. Histopathology"}, rows: [
+                        ["A12-B-6.1", {zh:"灌流 (Perfusion)", en:"Perfusion"}, "$370", "$800"],
+                        ["A12-B-6.2", {zh:"組織修剪 (Trimming)", en:"Trimming"}, "$65", "$160"],
+                        ["A12-B-6.3", {zh:"脫鈣 (Decalcification)", en:"Decalcification"}, "$120", "$260"],
+                        ["A12-B-6.4", {zh:"組織脫水及包埋 (1組織/蠟塊)", en:"Embedding"}, "$150", "$240"],
+                        ["A12-B-6.5", {zh:"石蠟切片 (Paraffin sectioning)", en:"Sectioning"}, "$80", "$130"],
+                        ["A12-B-6.6.1", {zh:"H&E 染色 (每片)", en:"H&E Staining"}, "$70", "$130"],
+                        ["A12-B-6.6.3", {zh:"膠原纖維染色 (Masson's Trichrome)", en:"Masson's Trichrome"}, "$240", "$500"]
+                    ]},
+                    { name: {zh:"C. 血液/尿液/腦脊髓液檢驗", en:"C. CBC & Fluid Analysis"}, rows: [
+                        ["A12-B-6.7", {zh:"全血球計數 (CBC)", en:"CBC"}, "$295", "$500"],
+                        ["A12-B-6.8", {zh:"血液收集 (Blood collection)", en:"Blood collection"}, "$70", "$260"],
+                        ["A12-B-6.10", {zh:"尿液收集 (Urine collection)", en:"Urine collection"}, "$120", "$400"],
+                        ["A12-B-6.11", {zh:"腦脊髓液抽取 (CSF collection)", en:"CSF collection"}, "$400", "$1,200"],
+                        ["A12-B-6.12", {zh:"血小板凝集檢測", en:"Platelet Aggregation"}, "$1,400", "$2,500"],
+                        ["A12-B-6.13", {zh:"血小板凝集及ATP 釋放檢測", en:"Aggregation & ATP Release"}, "$2,900", "$4,900"]
+                    ]},
+                    { name: {zh:"D. 玻片掃描", en:"D. Slide Scanning"}, rows: [
+                        ["A12-B-6.9.1", {zh:"玻片掃描 (200 X, 含DVD)", en:"Slide Scanning (200X)"}, "$100", "$270"],
+                        ["A12-B-6.9.2", {zh:"玻片掃描 (螢光, 含DVD)", en:"Fluorescent Scanning"}, "$320", "$900"],
+                        ["A12-B-6.9.3", {zh:"玻片掃描-組織陣列切片 (含DVD)", en:"TMA Slide Scanning"}, "$240", "$500"]
+                    ]}
+                ],
+                redNotes: {
+                    zh: ["1. H&E 染色包含每片提供兩個切片。", "2. 病理實驗動物請於中午前送達。", "3. 急件處理將以兩倍收費。"],
+                    en: ["1. H&E staining includes two sections per slide.", "2. Animals must arrive before noon for same-day pathology.", "3. Urgent requests incur double charges."]
+                }
+            },
+            metabolism: { 
+                title: { zh: "生理代謝", en: "Metabolic Analysis" }, 
+                costs: [
+                    ["A12-A-2.2.4", {zh:"TSE 代謝系統分析 (24小時)", en:"TSE Metabolic System (24h)"}, "$1,200", "$4,000"],
+                    ["A12-A-2.2.4.2", {zh:"TSE - 攝食及飲水監測", en:"TSE Food/Water Monitoring"}, "$100", "$700"],
+                    ["A12-A-2.2.4.3", {zh:"TSE - 活力測試", en:"TSE Activity Test"}, "$150", "$800"],
+                    ["A12-A-2.3.2", {zh:"代謝籠 (24小時)", en:"Metabolic Cage (24h)"}, "$120", "$760"],
+                    ["A12-A-2.3.3", {zh:"大鼠代謝籠 (24小時)", en:"Rat Metabolic Cage (24h)"}, "$240", "$1,000"],
+                    ["A12-A-2.4", {zh:"體組成分析", en:"Body Composition Analysis"}, "$160", "$480"]
+                ] 
+            },
+            cardio: { 
+                title: { zh: "心血管測試", en: "Cardiovascular Testing" }, 
+                costs: [
+                    ["A12-A-3.1.1", {zh:"心電圖 (麻醉)", en:"ECG (Anesthetized)"}, "$230", "$600"], 
+                    ["A12-A-3.1.3", {zh:"遙測心電圖分析", en:"Telemetry ECG Analysis"}, "$1,500", "$6,800"],
+                    ["A12-A-3.2.1", {zh:"非侵入式血壓 (3天)", en:"Non-invasive Blood Pressure (3d)"}, "$280", "$1,000"]
+                ],
+                note: { zh: "※ 遙測心電圖僅接受藥物開發相關實驗。", en: "※ Telemetry ECG is only available for drug development studies." }
+            },
+            imaging: { 
+                title: { zh: "動物影像", en: "Animal Imaging" }, 
+                costs: [
+                    ["A12-B-7.2.11", {zh:"斷層掃描 (活體)", en:"Micro-CT (In vivo)"}, "$800/30m", "$1,800/30m"],
+                    ["A12-B-7.2.12", {zh:"斷層掃描 (非活體)", en:"Micro-CT (Ex vivo)"}, "$650/30m", "$1,400/30m"],
+                    ["A12-B-7.2.13", {zh:"影像分析", en:"Image Analysis"}, "$500/30m", "$1,000/30m"],
+                    ["A12-B-7.4.1", {zh:"螢光造影 - 小鼠", en:"Fluorescence - Mouse"}, "$150", "$550"],
+                    ["A12-B-7.4.2", {zh:"螢光造影 - 大鼠", en:"Fluorescence (in vivo) – Rat"}, "$450/動物/30分鐘", "$1,100/動物/30分鐘"],
+                    ["A12-B-7.4.3", {zh:"細胞螢光造影", en:"Fluorescence (vitro)"}, "$240/96孔板", "$865/96孔板"],
+                    ["A12-B-7.4.4", {zh:"冷光造影 - 小鼠", en:"Bioluminescence (in vivo) - Mouse"}, "$250", "$650"],
+                    ["A12-B-7.4.5", {zh:"冷光造影 - 大鼠", en:"Luminescence (in vivo) – Rat"}, "$1,210/動物/30分鐘", "$1,945/動物/30分鐘"],
+                    ["A12-B-7.5.1", {zh:"高頻超音波掃描", en:"High-Freq Ultrasound"}, "$850/hr", "$2,600/hr"],
+                    ["A12-B-7.5.2", {zh:"光聲超音波影像", en:"Photoacoustic Imaging"}, "$1,000/hr", "$5,500/hr"]
+                ] 
+            },
+            immunology: { 
+                title: { zh: "免疫疾病", en: "Immunology & Respiratory" }, 
+                costs: [
+                    ["A12-A-5.8", {zh:"體外體溫偵測", en:"Infrared Body Temp"}, "$65", "$350"],
+                    ["A12-A-5.9",  {zh:"體內體溫偵測", en:"Core Body Temp"}, "$60/小鼠/次", "$350/小鼠/次"],
+                    ["A12-A-5.10", {zh:"氣喘致敏", en:"Asthma Induction"}, "$2,400", "$7,000"],
+                    ["A12-A-5.11", {zh:"肺功能檢測", en:"Pulmonary Function"}, "$600", "$1,700"],
+                    ["A12-A-5.12", {zh:"X射線照射", en:"X-Ray Irradiation"}, "$120/cage", "$600/cage"],
+                    ["A12-A-5.13", {zh:"阻力與順應性呼吸測試", en:"Resistance & Compliance"}, "$800", "$3,200"]
+                ] 
+            }
+        };
+
+        function switchLang(lang) {
+            currLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            // 更新搜尋欄 placeholder
+            document.getElementById('serviceSearch').placeholder = translations[lang]['search-placeholder'];
+            document.getElementById('serviceSearchMobile').placeholder = translations[lang]['search-placeholder'];
+            
+            document.getElementById('marquee-text').innerHTML = translations[lang]['marquee'];
+            document.getElementById('service-title-area').innerHTML = translations[lang]['service-title'];
+            document.getElementById('lang-zh').className = (lang === 'zh' ? 'text-tiffany mr-2' : 'mr-2 hover:text-tiffany');
+            document.getElementById('lang-en').className = (lang === 'en' ? 'text-tiffany ml-2' : 'ml-2 hover:text-tiffany');
+        }
+
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+        function closeModal() { document.getElementById('serviceModal').style.display = 'none'; }
+        function closeAbout() { document.getElementById('aboutModal').style.display = 'none'; }
+
+        // 搜尋邏輯
+        function handleSearch(isMobile = false) {
+            const query = (isMobile ? document.getElementById('serviceSearchMobile').value : document.getElementById('serviceSearch').value).toLowerCase().trim();
+            if (!query) return;
+
+            const t = translations[currLang];
+            let results = [];
+
+            // 遍歷所有服務數據
+            for (const key in serviceData) {
+                const service = serviceData[key];
+                if (service.isPathology) {
+                    service.categories.forEach(cat => {
+                        cat.rows.forEach(row => {
+                            if (row[0].toLowerCase().includes(query) || 
+                                row[1].zh.toLowerCase().includes(query) || 
+                                row[1].en.toLowerCase().includes(query)) {
+                                results.push(row);
+                            }
+                        });
+                    });
+                } else {
+                    service.costs.forEach(row => {
+                        if (row[0].toLowerCase().includes(query) || 
+                            row[1].zh.toLowerCase().includes(query) || 
+                            row[1].en.toLowerCase().includes(query)) {
+                            results.push(row);
+                        }
+                    });
+                }
+            }
+
+            // 渲染結果彈窗
+            let h = `<h2 class="text-2xl md:text-3xl font-black text-tiffany mb-6 border-b-4 border-tiffany pb-2">${t['search-results']}: "${query}"</h2>`;
+            if (results.length > 0) {
+                h += `<div class="table-scroll"><table><thead><tr><th>${t['th-code']}</th><th>${t['th-item']}</th><th>${t['th-acad']}</th><th>${t['th-ind']}</th></tr></thead><tbody>`;
+                results.forEach(r => {
+                    h += `<tr><td>${r[0]}</td><td>${r[1][currLang]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`;
+                });
+                h += `</tbody></table></div>`;
+            } else {
+                h += `<p class="py-8 text-center text-slate-500 font-bold">${t['no-results']}</p>`;
+            }
+            
+            document.getElementById('modalBody').innerHTML = h;
+            document.getElementById('serviceModal').style.display = 'block';
+            if(isMobile) toggleMobileMenu();
+        }
+
+        function openModal(id) {
+            const d = serviceData[id];
+            const t = translations[currLang];
+            let h = `<h2 class="text-2xl md:text-3xl font-black text-tiffany mb-6 border-b-4 border-tiffany pb-2">${d.title[currLang]}</h2>`;
+            h += `<div class="table-scroll"><table><thead><tr><th>${t['th-code']}</th><th>${t['th-item']}</th><th>${t['th-acad']}</th><th>${t['th-ind']}</th></tr></thead><tbody>`;
+            
+            if (d.isPathology) {
+                d.categories.forEach(cat => {
+                    h += `<tr class="category-row"><td colspan="4">${cat.name[currLang]}</td></tr>`;
+                    cat.rows.forEach(r => h += `<tr><td>${r[0]}</td><td>${r[1][currLang]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`);
+                });
+            } else {
+                d.costs.forEach(c => h += `<tr><td>${c[0]}</td><td>${c[1][currLang]}</td><td>${c[2]}</td><td>${c[3]}</td></tr>`);
+            }
+            h += `</tbody></table></div>`;
+            if (d.note) h += `<p class="mt-4 text-red-500 font-bold text-base">${d.note[currLang]}</p>`;
+            if (d.redNotes) {
+                h += `<div class="mt-4">`;
+                d.redNotes[currLang].forEach(n => h += `<p class="text-red-600 font-bold text-sm mb-1">${n}</p>`);
+                h += `</div>`;
+            }
+            document.getElementById('modalBody').innerHTML = h;
+            document.getElementById('serviceModal').style.display = 'block';
+        }
+
+        function openAbout(type) {
+            let b = "";
+            if(type === 'cert-taf') {
+                const title = currLang === 'zh' ? 'TAF / TFDA GLP 品質認證' : 'TAF / TFDA GLP Certification';
+                const p1 = currLang === 'zh' 
+                    ? '台灣小鼠診所於 <span class="text-tiffany font-bold">2025年 2 月</span> 通過 TAF OECD GLP 與 TFDA GLP 雙重認證。' 
+                    : 'TMC has passed TAF OECD GLP and TFDA GLP certification in <span class="text-tiffany font-bold">Feb 2025</span>.';
+                b = `<h2 class="text-2xl md:text-3xl font-black text-tiffany mb-6">${title}</h2>
+                     <div class="cert-info-card"><p>${p1}</p></div>
+                     <div class="cert-grid">
+                        <img src="images/GLP_c_1-1.png"><img src="images/GLP_c_2-1.png"><img src="images/TFDA GLP_1-1.png">
+                     </div>`;
+            } else if(type === 'cert-aaalac') {
+                const title = currLang === 'zh' ? 'AAALAC 國際認證' : 'AAALAC International Accreditation';
+                b = `<h2 class="text-2xl md:text-3xl font-black text-tiffany mb-6">${title}</h2>
+                     <div class="cert-info-card"><p>${currLang === 'zh' ? '於 111 年 6 月獲得認證，符合國際動物照護規範。' : 'Accredited since June 2022, meeting international standards for animal care.'}</p></div>
+                     <div class="cert-grid justify-center"><img src="images/aaalac_01.png" style="max-width: 600px; margin: auto;"></div>`;
+            } else if(type === 'org') {
+                const title = currLang === 'zh' ? '組織架構' : 'Organization';
+                b = `<h2 class="text-2xl md:text-3xl font-black text-tiffany mb-6">${title}</h2>
+                     <div class="flex flex-col items-center py-10 bg-slate-50 rounded-xl overflow-x-auto">
+                        <div class="org-node mb-4">國科會 / 國家生技研究園區</div>
+                        <div class="org-line mb-4"></div>
+                        <div class="org-node mb-4">中心主任 (Director)</div>
+                        <div class="org-line mb-4"></div>
+                        <div class="flex space-x-4">
+                            <div class="org-node">技術服務組</div><div class="org-node">品質保證組</div><div class="org-node">行政管理組</div>
+                        </div>
+                     </div>`;
+            } else if(type === 'location') {
+                const title = currLang === 'zh' ? '地理位置' : 'Our Location';
+                b = `<h2 class="text-2xl md:text-3xl font-black text-tiffany mb-6">${title}</h2>
+                     <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="font-bold mb-4 text-tiffany">${currLang === 'zh' ? '國家生技研究園區 (C棟)' : 'National Biotechnology Research Park (Building C)'}</p>
+                            <p class="mb-4 text-slate-600">${currLang === 'zh' ? '115 台北市南港區研究院路二段 12 巷' : 'Ln. 12, Sec. 2, Academia Rd., Nangang Dist., Taipei 115, Taiwan'}</p>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="text-sm"><strong>${currLang === 'zh' ? '接駁車資訊：' : 'Shuttle Bus:'}</strong><br>
+                                ${currLang === 'zh' ? '可從南港捷運站 2 號出口搭乘園區專屬接駁車。' : 'Take the park shuttle bus from Nangang MRT Station Exit 2.'}</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-200 h-64 rounded-xl flex items-center justify-center italic text-slate-500">Google Map Placeholder</div>
+                     </div>`;
+            }
+            document.getElementById('aboutBody').innerHTML = b;
+            document.getElementById('aboutModal').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2347 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臺灣小鼠診所 TAIWAN MOUSE CLINIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { 
+    --tiffany: #0ABAB5;         /* 活力主色：用於按鈕、重點數字 */
+    --tiffany-dark: #088a85; 
+    --tiffany-light: #e6f7f7; 
+    --navy-deep: #1e293b;       /* 專業深色：用於標題、頁首頁尾、產業界文字 */
+    --slate-bg: #f8fafc;        /* 背景淺灰：取代死白，更有質感 */
+}
+
+/* 更新背景色，讓白框區塊更跳脫 */
+body { background-color: var(--slate-bg); }
+        @media (min-width: 768px) { body { font-size: 20px; } }
+        .bg-tiffany { background-color: var(--tiffany); }
+        .text-tiffany { color: var(--tiffany); }
+        .border-tiffany { border-color: var(--tiffany); }
+        .hero-bg {
+            background-image: linear-gradient(rgba(10, 186, 181, 0.8), rgba(10, 186, 181, 0.8)), url('https://img.chemie.de/Portal/News/673c3e9a734a1_zbNrZu6dj.png?tr=w-1314,h-657,cm-extract,x-106,y-94:n-news_teaser');
+            background-size: cover; background-position: center;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(10, 186, 181, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 20px 10px rgba(10, 186, 181, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(10, 186, 181, 0); transform: scale(1); }
+        }
+        .btn-pulse { animation: pulse-glow 2s infinite; background-color: var(--tiffany); }
+        .line-fixed { position: absolute; bottom: 30px; right: 30px; z-index: 30; width: 100px; height: 100px; transition: transform 0.3s; }
+        .line-fixed img { width: 100%; height: auto; display: block; border-radius: 8px; }
+        .line-fixed:hover { transform: scale(1.1); }
+        .marquee-wrapper { background: #333; color: white; padding: 12px 0; overflow: hidden; position: relative; }
+        .marquee-content { display: inline-block; white-space: nowrap; animation: marquee 30s linear infinite; cursor: pointer; font-weight: bold; }
+        .marquee-content-container {
+    display: inline-block;
+    white-space: nowrap;
+    cursor: grab; /* 讓鼠標變成「抓取」的圖案 */
+    user-select: none; /* 防止拖曳時選取到文字 */
+    will-change: transform;
+}
+
+.marquee-content-container:active {
+    cursor: grabbing; /* 按住時變成「抓緊」的圖案 */
+}
+
+/* 暫停效果：滑鼠移上去跑馬燈會停住 */
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes arrowSide {
+    0%, 100% { transform: translateX(0); opacity: 0.3; }
+    50% { transform: translateX(5px); opacity: 0.8; }
+}
+.fa-chevron-right {
+    animation: arrowSide 2s infinite ease-in-out;
+}
+
+.animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+.animate-slideUp { animation: slideUp 0.4s ease-out; }
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; max-height: 500px; border: 1px solid #e2e8f0; border-radius: 12px; }
+        table { min-width: 650px; width: 100%; border-collapse: collapse; }
+        th { position: sticky; top: 0; background: var(--tiffany); color: white; z-index: 10; padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #edf2f7; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .category-row { background-color: #f1f5f9; font-weight: bold; color: #334155; }
+        @media (min-width: 1024px) { .dropdown:hover .dropdown-menu { display: block; } }
+        .dropdown-menu::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; background: transparent; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); }
+        .modal-content { background: white; margin: 2% auto; padding: 25px; border-radius: 20px; width: 95%; max-width: 1100px; max-height: 92vh; overflow-y: auto; }
+        @media (min-width: 768px) { .modal-content { padding: 45px; } }
+        .visitor-badge { display: inline-flex; align-items: center; background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); font-family: monospace; font-size: 16px; margin-top: 20px; }
+        html { scroll-behavior: smooth; }
+        
+        .search-wrapper { position: relative; display: flex; align-items: center; overflow: hidden; height: 40px; min-width: 40px; justify-content: flex-end; }
+        .search-input { background: #f8fafc; border: 1px solid #e2e8f0; outline: none; padding: 8px 0px; width: 0; opacity: 0; border-radius: 99px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); font-size: 16px; }
+        .search-wrapper:hover .search-input, .search-input:focus { width: 240px; padding: 8px 40px 8px 16px; opacity: 1; background: #f1f5f9; border-color: #cbd5e1; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05); }
+        .search-icon { position: absolute; right: 12px; cursor: pointer; color: #94a3b8; transition: color 0.3s; z-index: 10; }
+        .search-wrapper:hover .search-icon { color: var(--tiffany); }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-tiffany">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        
+        <div class="flex items-center -ml-4 md:-ml-8 transition-all">
+            
+<a href="#" class="flex items-center -ml-4 md:-ml-6 transition-all group">
+            <img src="images/TMC_logo.jpg" 
+                 onerror="this.src='https://via.placeholder.com/150?text=TMC'" 
+                 class="h-16 md:h-18 w-auto object-contain mr-4 transition-transform group-hover:scale-110" 
+                 alt="Taiwan Mouse Clinic Logo">
+            
+            <div class="text-xl md:text-2xl font-black text-slate-800 tracking-tighter uppercase leading-tight">
+                <span id="nav-title-zh" class="text-2xl md:text-4xl font-black text-slate-800">臺灣小鼠診所</span> 
+                <span class="text-tiffany text-[10px] md:text-xs block tracking-widest leading-none">TAIWAN MOUSE CLINIC</span>
+            </div>
+        </div>
+            
+            <div class="hidden lg:flex items-center space-x-8 font-bold text-lg">
+    <div class="relative dropdown">
+        <button class="hover:text-tiffany transition flex items-center">
+            <i class="fas fa-info-circle mr-2 text-tiffany/80"></i>
+            <span data-i18n="nav-about">關於我們</span> 
+            <i class="fas fa-chevron-down ml-2 text-xs"></i>
+        </button>
+        <div class="dropdown-menu absolute hidden bg-white shadow-2xl rounded-xl py-4 w-56 border-t-4 border-tiffany mt-1">
+            <a href="javascript:void(0)" onclick="openAbout('intro')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+                <i class="fas fa-hospital-user mr-2 opacity-70"></i><span data-i18n="nav-intro">TMC 簡介</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('org')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany">
+                <i class="fas fa-sitemap mr-2 opacity-70"></i><span data-i18n="nav-org">組織架構</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('comm')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany">
+                <i class="fas fa-users-cog mr-2 opacity-70"></i><span data-i18n="nav-comm">委員會成員</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('people')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany">
+                <i class="fas fa-user-md mr-2 opacity-70"></i><span data-i18n="nav-members">診所成員</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('location')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany">
+                <i class="fas fa-map-marker-alt mr-2 opacity-70"></i><span data-i18n="nav-location">地理位置</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="relative dropdown">
+        <button class="hover:text-tiffany transition flex items-center">
+            <i class="fas fa-paw mr-2 text-tiffany/80"></i>
+            <span data-i18n="nav-animal-room">動物房</span> 
+            <i class="fas fa-chevron-down ml-2 text-xs"></i>
+        </button>
+        <div class="dropdown-menu absolute hidden bg-white shadow-2xl rounded-xl py-4 w-72 border-t-4 border-tiffany mt-1">
+            <a href="javascript:void(0)" onclick="openAbout('animal-intro')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+                <i class="fas fa-clipboard-list mr-2 opacity-70"></i><span data-i18n="ar-intro">簡介</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('animal-env')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+                <i class="fas fa-leaf mr-2 opacity-70"></i><span data-i18n="ar-env">環境與飼養管理</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('animal-health')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+            <i class="fas fa-heartbeat mr-2 opacity-70"></i><span data-i18n="ar-health">健康監測</span>
+</a>
+            <a href="javascript:void(0)" onclick="openAbout('animal-env-mon')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+    <i class="fas fa-desktop mr-2 opacity-70"></i><span data-i18n="ar-env-mon">環境監測</span>
+</a>
+            <div class="border-t border-slate-100 my-2"></div>
+            <a href="javascript:void(0)" onclick="openAbout('animal-checkin')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+                <i class="fas fa-file-import mr-2 opacity-70"></i><span data-i18n="ar-checkin">動物入住申請</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('animal-checkout')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+                <i class="fas fa-file-export mr-2 opacity-70"></i><span data-i18n="ar-checkout">動物退房申請</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('animal-transport')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+                <i class="fas fa-route mr-2 opacity-70"></i><span data-i18n="ar-transport">運送路線&包裝規範</span>
+            </a>
+            <a href="javascript:void(0)" onclick="openAbout('animal-spf')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+                <i class="fas fa-microscope mr-2 opacity-70"></i><span data-i18n="ar-spf">SPF 小鼠淨化服務</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="relative dropdown">
+    <button class="hover:text-tiffany transition flex items-center">
+        <i class="fas fa-question-circle mr-2 text-tiffany/80"></i>
+        <span data-i18n="nav-info">其他資訊</span> 
+        <i class="fas fa-chevron-down ml-2 text-xs"></i>
+    </button>
+    <div class="dropdown-menu absolute hidden bg-white shadow-2xl rounded-xl py-4 w-64 border-t-4 border-tiffany mt-1">
+        <a href="javascript:void(0)" onclick="openOther('sample')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+            <i class="fas fa-vial mr-2 opacity-70"></i><span data-i18n="nav-sample">檢體製備</span>
+        </a>
+        <a href="javascript:void(0)" onclick="openOther('sop')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+            <i class="fas fa-file-alt mr-2 opacity-70"></i><span data-i18n="nav-sop">標準實驗程序</span>
+        </a>
+        <a href="javascript:void(0)" onclick="openOther('database')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+            <i class="fas fa-database mr-2 opacity-70"></i><span data-i18n="nav-database">小鼠資料庫</span>
+        </a>
+        <a href="javascript:void(0)" onclick="openOther('publications')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+            <i class="fas fa-book mr-2 opacity-70"></i><span data-i18n="nav-publications">文獻發表</span>
+        </a>
+        <a href="javascript:void(0)" onclick="openOther('events')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+            <i class="fas fa-calendar-check mr-2 opacity-70"></i><span data-i18n="nav-events">歷年活動</span>
+        </a>
+        <a href="javascript:void(0)" onclick="openOther('links')" class="block px-6 py-3 hover:bg-tiffany-light hover:text-tiffany font-bold">
+            <i class="fas fa-external-link-alt mr-2 opacity-70"></i><span data-i18n="nav-links">友站連結</span>
+        </a>
+    </div>
+</div>
+
+    <div class="search-wrapper">
+        <input type="text" id="serviceSearch" class="search-input" placeholder="搜尋服務..." onkeyup="if(event.key === 'Enter') handleSearch()">
+        <i class="fas fa-search search-icon" onclick="handleSearch()"></i>
+    </div>
+</div>
+
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <div class="hidden md:flex items-center border rounded-full px-3 py-1 bg-slate-50 text-sm font-bold">
+                    <button id="lang-zh" onclick="switchLang('zh')" class="text-tiffany mr-2">中</button>
+                    <span class="text-slate-300">|</span>
+                    <button id="lang-en" onclick="switchLang('en')" class="ml-2 hover:text-tiffany">EN</button>
+                </div>
+
+                <a href="https://lims.tmc.sinica.edu.tw/tac/home" target="_blank" class="px-4 py-2 md:px-6 md:py-3 text-white rounded-full font-bold btn-pulse transition text-sm md:text-lg shadow-md" data-i18n="btn-lims">
+                    <i class="fas fa-sign-in-alt mr-2 text-base md:text-lg"></i>登入 LIMS
+                </a>
+            
+            <button class="lg:hidden text-3xl text-slate-600 pl-2" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 p-4 space-y-4 font-bold text-center">
+            <input type="text" id="serviceSearchMobile" class="w-full p-3 bg-slate-100 rounded-xl" placeholder="搜尋服務..." onkeyup="if(event.key === 'Enter') handleSearch(true)">
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="openAbout('org')" class="p-2 bg-slate-50 rounded" data-i18n="nav-org">組織架構</button>
+                <button onclick="openAbout('location')" class="p-2 bg-slate-50 rounded" data-i18n="nav-location">地理位置</button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="marquee-container">
+    </div>
+    </div>
+
+    <header class="hero-bg text-white py-16 md:py-24 text-center">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-6xl font-extrabold drop-shadow-md leading-tight" data-i18n="hero-title">國家綜合小鼠表現型暨藥物測試中心</h2>
+            <p class="mt-4 md:mt-8 text-lg md:text-2xl font-medium opacity-95" data-i18n="hero-subtitle">精準表型分析 · 專業藥物測試 · 國家級核心設施</p>
+        </div>
+    </header>
+
+<section class="bg-white py-12 border-b border-slate-100 shadow-sm relative z-10">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+            
+            <div class="text-center group">
+                <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
+                    5,200<span class="text-xl ml-1">+</span>
+                </div>
+                <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-service">服務人次</div>
+            </div>
+
+            <div class="text-center border-l border-slate-100 group">
+                <div class="text-4xl md:text-5xl font-black text-slate-800 mb-2 transition-transform group-hover:scale-110">
+                    150<span class="text-xl ml-1">+</span>
+                </div>
+                <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-orgs">委託單位</div>
+            </div>
+
+            <div class="text-center border-l border-slate-100 group">
+                <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
+                    980<span class="text-xl ml-1">+</span>
+                </div>
+                <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-projects">執行計畫數</div>
+            </div>
+
+            <div class="text-center border-l border-slate-100 group">
+                <div class="text-4xl md:text-5xl font-black text-slate-800 mb-2 transition-transform group-hover:scale-110">
+                    18<span class="text-xl ml-1">y</span>
+                </div>
+                <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-exp">專業營運經驗</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+    <section class="py-16 bg-slate-50 overflow-hidden">
+    <div class="container mx-auto px-4">
+        <h3 class="text-3xl md:text-4xl font-black text-center text-slate-800 mb-8 uppercase tracking-widest" data-i18n="workflow-title">服務流程</h3>
+
+        <div class="flex justify-center space-x-2 md:space-x-4 mb-12">
+    <button onclick="switchWorkflow('academic')" id="btn-academic" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-tiffany text-white shadow-md" data-i18n="tab-academic">學研單位</button>
+    <button onclick="switchWorkflow('industry')" id="btn-industry" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white text-slate-600 hover:bg-slate-100" data-i18n="tab-industry">產業界</button>
+    <button onclick="switchWorkflow('internal')" id="btn-internal" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white text-slate-600 hover:bg-slate-100" data-i18n="tab-internal">院內同仁</button>
+</div>
+
+        <div id="workflow-content" class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-y-12 md:gap-x-6 relative animate-fadeIn">
+            </div>
+    </div>
+</section>
+
+    <section id="services-area" class="py-16 md:py-20 container mx-auto px-4 bg-white rounded-[2rem] shadow-inner">
+        <h3 class="text-2xl md:text-4xl font-black text-center text-slate-800 mb-12">
+    <span data-i18n="service-title">核心服務領域</span>
+    <span class="text-tiffany text-lg md:text-2xl font-bold block mt-2" data-i18n="service-subtitle">
+        (點擊查看費用)
+    </span>
+</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12">
+    <div onclick="openModal('neuro')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
+        <i class="fas fa-brain text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+        <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-neuro">神經行為</h4>
+    </div>
+
+    <div onclick="openModal('pathology')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
+        <i class="fas fa-microscope text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+        <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-pathology">病理分析</h4>
+    </div>
+
+    <div onclick="openModal('metabolism')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
+        <i class="fas fa-apple-alt text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+        <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-metabolism">生理代謝</h4>
+    </div>
+
+    <div onclick="openModal('cardio')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
+        <i class="fas fa-heartbeat text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+        <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-cardio">心血管</h4>
+    </div>
+
+    <div onclick="openModal('imaging')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
+        <i class="fas fa-video text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+        <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-imaging">動物影像</h4>
+    </div>
+
+    <div onclick="openModal('immunology')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
+        <i class="fas fa-shield-virus text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+        <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-immunology">免疫疾病</h4>
+    </div>
+
+    <div onclick="openModal('animal_room')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
+        <i class="fas fa-home text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+        <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-animal-room-services">動物房服務</h4>
+    </div>
+
+    <div onclick="openModal('other_services')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
+        <i class="fas fa-ellipsis-h text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+        <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-others">其他服務</h4>
+    </div>
+</div>
+    </section>
+
+    <div id="serviceModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-10 transition-all duration-300">
+    
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md cursor-pointer" onclick="closeModal()"></div>
+    
+    <div class="relative w-full max-w-6xl bg-white rounded-[2.5rem] shadow-2xl transform transition-all overflow-hidden max-h-[85vh] flex flex-col z-10">
+        
+        <button onclick="closeModal()" class="absolute top-8 right-8 text-slate-400 hover:text-tiffany hover:rotate-90 transition-all duration-300 z-20">
+            <i class="fas fa-times text-3xl"></i>
+        </button>
+
+        <div id="modalBody" class="p-10 md:p-20 overflow-y-auto custom-scrollbar">
+            </div>
+    </div>
+</div>
+    
+    <div id="aboutModal" class="modal" onclick="if(event.target == this) closeAbout()">
+        <div class="modal-content relative">
+            <button onclick="closeAbout()" class="absolute top-4 right-4 text-slate-400 text-4xl hover:text-slate-600 transition">×</button>
+            <div id="aboutBody"></div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-white py-12 border-t border-slate-800"> <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+            
+            <div class="md:col-span-3 space-y-5">
+                <div class="flex items-center space-x-3 mb-6"> <div class="w-10 h-10 rounded-full bg-tiffany/10 border border-tiffany/20 flex items-center justify-center">
+                        <span class="text-tiffany font-black text-xl">T</span>
+                    </div>
+                    <h3 class="text-tiffany font-black text-2xl tracking-tight">Taiwan Mouse Clinic</h3>
+                </div>
+                
+                <div class="space-y-2.5 text-slate-400 text-sm font-medium"> <p class="flex items-center group">
+                        <i class="fas fa-envelope w-6 text-tiffany/70 group-hover:text-tiffany transition-colors"></i>
+                        <a href="mailto:service@tmc.sinica.edu.tw" class="hover:text-tiffany transition-colors decoration-tiffany/30 underline-offset-4 hover:underline">
+                       service@tmc.sinica.edu.tw
+                         </a>
+                    </p>
+                    <p class="flex items-center group">
+                        <i class="fas fa-phone w-6 text-tiffany/70 group-hover:text-tiffany transition-colors"></i>
+                        <span>+886-2-7750-5507</span>
+                    </p>
+                    <p class="flex items-center group">
+                        <i class="fas fa-fax w-6 text-tiffany/70 group-hover:text-tiffany transition-colors"></i>
+                        <span data-i18n="footer-fax">傳真: 02-7750-5505</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="md:col-span-6 space-y-5 pt-[72px]"> <div class="flex items-start group">
+                    <i class="fas fa-map-marker-alt w-6 mt-1 text-tiffany/70 group-hover:text-tiffany"></i>
+                    <a href="https://maps.app.goo.gl/xukPkjhpaB8NYTre8" target="_blank" class="block hover:opacity-80 transition-opacity">
+                        <p class="text-slate-200 font-bold leading-relaxed whitespace-nowrap" data-i18n="footer-addr-main">
+                            115 台北市南港區研究院路一段130巷99號 (國家生技園區 A 棟)
+                        </p>
+                        <p class="text-[11px] text-slate-500 italic mt-0.5 font-light tracking-wide"> Building A, No. 99, Ln. 130, Sec. 1, Academia Rd., Taipei 115, Taiwan
+                        </p>
+                    </a>
+                </div>
+
+                <div class="flex flex-row justify-between gap-3 pt-1"> <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-4 py-2 rounded-lg transition-all text-sm flex items-center justify-center space-x-2">
+                        <b class="text-tiffany font-black text-xs">7F</b>
+                        <span class="text-slate-600 text-xs font-light">|</span> <div class="flex items-baseline space-x-1.5 text-slate-300">
+                            <span class="font-bold text-[12px]" data-i18n="footer-floor-7">行政室</span>
+                            <span class="text-[9px] uppercase tracking-tighter text-slate-500">Administration</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-4 py-2 rounded-lg transition-all text-sm flex items-center justify-center space-x-2">
+                        <b class="text-tiffany font-black text-xs">8F</b>
+                        <span class="text-slate-600 text-xs font-light">|</span> <div class="flex items-baseline space-x-1.5 text-slate-300">
+                            <span class="font-bold text-[12px]" data-i18n="footer-floor-8">檢體送樣</span>
+                            <span class="text-[9px] uppercase tracking-tighter text-slate-500">Submission</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-4 py-2 rounded-lg transition-all text-sm flex items-center justify-center space-x-2">
+                        <b class="text-tiffany font-black text-xs">B1</b>
+                        <span class="text-slate-600 text-xs font-light">|</span> <div class="flex items-baseline space-x-1.5 text-slate-300">
+                            <span class="font-bold text-[12px]" data-i18n="footer-floor-b1">動物接送</span>
+                            <span class="text-[9px] uppercase tracking-tighter text-slate-500">Deliver / Pickup</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-3 flex flex-col items-end space-y-5 pt-[72px]">
+                <a href="https://line.me/ti/p/@724ektvk?ts=03241747" target="_blank" class="flex items-center bg-[#06C755] hover:bg-[#05a346] text-white px-5 py-2 rounded-full transition-all transform hover:scale-105 shadow-lg group border border-white/10">
+                    <i class="fab fa-line text-2xl mr-2"></i>
+                    <div class="text-left">
+                        <p class="text-[9px] leading-tight opacity-80 uppercase font-bold" data-i18n="line-sub">Service</p>
+                        <p class="text-sm font-bold leading-tight" data-i18n="line-main">加入 LINE 好友</p>
+                    </div>
+                </a>
+
+                <div class="flex justify-end gap-3 pt-1"> <div class="bg-white/5 p-2.5 rounded-xl border border-white/10 hover:border-tiffany/50 transition-all cursor-pointer group" onclick="openAbout('cert-taf')">
+                        <p class="text-[8px] font-bold text-tiffany mb-1 text-right uppercase">GLP</p>
+                        <img src="images/TAF_150.png" class="h-6 w-auto grayscale group-hover:grayscale-0 transition-all" alt="TAF">
+                    </div>
+                    <div class="bg-white/5 p-2.5 rounded-xl border border-white/10 hover:border-tiffany/50 transition-all cursor-pointer group" onclick="openAbout('cert-aaalac')">
+                        <p class="text-[8px] font-bold text-tiffany mb-1 text-right uppercase">AAALAC</p>
+                        <img src="images/aaalac_150.png" class="h-6 w-auto grayscale group-hover:grayscale-0 transition-all" alt="AAALAC">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 pt-5 border-t border-white/5 text-center"> <p class="text-slate-600 text-[10px] font-mono uppercase tracking-[0.3em]">
+                © 2026 Taiwan Mouse Clinic. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let currLang = 'zh';
+
+// 1. 跑馬燈的消息資料
+const newsData = [
+    { 
+        title: "2026 年度服務費用更新公告", 
+        content: "本中心 2026 年度之服務費用已進行微調，詳細清單請參考各服務領域說明或下載最新價目表。若有長期合作計畫需求，歡迎來信諮詢專家建議。",
+        endDate: "2026-04-30" 
+    },
+    { 
+        title: "歡迎點擊「關於我們」查看成員分機", 
+        content: "為了提升溝通效率，我們已更新「診所成員」頁面。您可以點擊導覽列中的關於我們 -> 診所成員，直接查看各實驗室負責人及技術人員的校內分機與專業領域。",
+        endDate: "2026-04-30" 
+    },
+    { 
+        title: "中心 TAF GLP 認證展延成功", 
+        content: "臺灣小鼠診所已順利通過 2026 年度 TAF GLP (良好實驗室規範) 認證展延，持續提供符合國際標準的毒理與藥效測試服務，確保數據的精準性與國際認可度。",
+        endDate: "2026-04-30" 
+    }
+];
+
+// 2. 渲染跑馬燈函式
+let marqueePos = 0;
+let isDragging = false;
+let startX;
+let scrollLeft;
+let autoScrollSpeed = 1; // 自動捲動速度，數字越大越快
+let animationId;
+
+function renderMarquee() {
+    const container = document.getElementById('marquee-container');
+    if(!container) return;
+
+    // 篩選未過期消息 (保留你之前的邏輯)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const activeNews = newsData.filter(news => !news.endDate || today <= new Date(news.endDate));
+
+    if (activeNews.length === 0) { container.style.display = 'none'; return; }
+
+    const marqueeContent = activeNews.map((news, index) => {
+        const originalIndex = newsData.indexOf(news);
+        return `
+        <span onclick="if(!isDragging) showNewsModal(${originalIndex})" class="mx-8 font-bold group inline-block">
+            <i class="fas fa-bullhorn mr-2 text-amber-400 group-hover:scale-110 transition-transform"></i>
+            <span class="text-amber-400 hover:text-white cursor-pointer">${news.title}</span>
+        </span>
+    `}).join('');
+
+    container.innerHTML = `
+        <div class="bg-slate-800 text-white py-3 overflow-hidden relative border-b border-tiffany/30 shadow-lg select-none" id="marquee-inner">
+            <div class="marquee-content-container" id="marquee-list">
+                <div class="inline-block" id="marquee-items">${marqueeContent}${marqueeContent}${marqueeContent}</div>
+            </div>
+        </div>
+    `;
+
+    initMarqueeEvents();
+}
+
+function initMarqueeEvents() {
+    const inner = document.getElementById('marquee-inner');
+    const list = document.getElementById('marquee-list');
+    const items = document.getElementById('marquee-items');
+    
+    // 自動捲動邏輯
+    function step() {
+        if (!isDragging) {
+            marqueePos -= autoScrollSpeed;
+            // 無限循環：當捲動超過三分之一寬度時重置（因為我們放了三份內容）
+            if (Math.abs(marqueePos) >= items.offsetWidth / 3) {
+                marqueePos = 0;
+            }
+            list.style.transform = `translateX(${marqueePos}px)`;
+        }
+        animationId = requestAnimationFrame(step);
+    }
+
+    // 拖曳事件處理
+    inner.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX;
+        scrollLeft = marqueePos;
+        cancelAnimationFrame(animationId); // 拖曳時停止自動捲動
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX;
+        const walk = (x - startX) * 1.5; // 1.5 是拖曳靈敏度
+        marqueePos = scrollLeft + walk;
+        list.style.transform = `translateX(${marqueePos}px)`;
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            step(); // 放開後恢復自動捲動
+        }
+    });
+
+    // 啟動動畫
+    step();
+}
+
+// 3. 顯示消息詳情彈窗
+function showNewsModal(index) {
+    const news = newsData[index];
+    const modal = document.createElement('div');
+    modal.className = "fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn";
+    modal.id = "news-modal";
+
+    modal.innerHTML = `
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden transform transition-all animate-slideUp">
+            <div class="bg-tiffany p-4 flex justify-between items-center text-white">
+                <h3 class="font-black text-lg flex items-center"><i class="fas fa-info-circle mr-2"></i>最新公告</h3>
+                <button onclick="closeNewsModal()" class="hover:rotate-90 transition duration-300"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="p-8">
+                <h2 class="text-2xl font-black text-slate-800 mb-4">${news.title}</h2>
+                <div class="h-1 w-12 bg-tiffany mb-6"></div>
+                <p class="text-slate-600 leading-relaxed text-lg whitespace-pre-line">${news.content}</p>
+                <div class="mt-8 pt-6 border-t border-slate-100 flex justify-end">
+                    <button onclick="closeNewsModal()" class="px-6 py-2 bg-slate-800 text-white rounded-full font-bold hover:bg-slate-700 transition">關閉視窗</button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeNewsModal() {
+    const modal = document.getElementById('news-modal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// 4. 重要：在頁面載入完成後啟動跑馬燈
+window.addEventListener('DOMContentLoaded', () => {
+    renderMarquee();    // 原本的跑馬燈初始化
+    switchWorkflow('academic'); // 新增：服務流程初始化，預設顯示學研單位
+});
+
+        // 服務數據
+        const serviceData = {
+    neuro: {
+        title: { zh: "神經行為評估", en: "Neurobehavioral Evaluation" },
+        costs: [
+            ["A12-A-4.1.1", { zh: "飼養籠內行為分析 (1小時)", en: "Home Cage Activity (1hr)" }, "$480", "$1,600"],
+            ["A12-A-4.1.2", { zh: "飼養籠內行為分析 (24小時)", en: "Home Cage Activity (24hr)" }, "$1,250", "$2,800"],
+            ["A12-A-4.2", { zh: "開放空間移動軌跡分析", en: "Open Field Test" }, "$350", "$1,600"],
+            ["A12-A-4.3", { zh: "小鼠跑步測試", en: "Treadmill Test" }, "$500", "$1,500"],
+            ["A12-A-4.4", { zh: "小鼠冷熱痛覺測試", en: "Hot/Cold Plate Test" }, "$140", "$500"],
+            ["A12-A-4.5", { zh: "疼痛閃尾測試", en: "Tail Flick Test" }, "$140", "$500"],
+            ["A12-A-4.6", { zh: "電子式馮佛雷纖細絲測試", en: "Electronic Von Frey Test" }, "$150", "$500"],
+            ["A12-A-4.7", { zh: "行為及外觀檢測 (58 項)", en: "SHIRPA (58 items)" }, "$340", "$1,200"],
+            ["A12-A-4.8", { zh: "拉力測試", en: "Grip Strength Test" }, "$200", "$600"],
+            ["A12-A-4.9", { zh: "Y 形迷宮", en: "Y-Maze Test" }, "$350", "$1,400"],
+            ["A12-A-4.10", { zh: "抬高式十字迷津", en: "Elevated Plus Maze" }, "$350", "$1,400"],
+            ["A12-A-4.11", { zh: "莫氏水迷津", en: "Morris Water Maze" }, "$3,500", "$7,000"],
+            ["A12-A-4.12", { zh: "動態重量分布測試", en: "Dynamic Weight Bearing" }, "$400", "$1,500"],
+            ["A12-A-4.13", { zh: "懸尾試驗", en: "Tail Suspension Test" }, "$350", "$1,400"],
+            ["A12-A-4.14", { zh: "小鼠壓痛覺測定", en: "Pressure Pain Test" }, "$600", "$2,200"]
+        ],
+        footerNotes: {
+            zh: ["電子式馮佛雷纖細絲測試：上述收費標準為每試驗 (每隻小鼠測1腳掌)"],
+            en: ["Note: Electronic Von Frey Test fee is per test (one hind paw per mouse)."]
+        }
+    },
+    pathology: {
+        title: { zh: "病理分析", en: "Pathology" },
+        costs: [
+            ["A12-A-2.1.26", { zh: "血清生化分析(一) - AST, ALT, CPK, LDH, ALP, GLU, BUN, CRE, UA, TG, TBIL, Ca, TP, ALB, IP, AMYL", en: "Biochemistry Panel I" }, "$80", "$250"],
+            ["A12-A-2.1.27", { zh: "血清生化分析(二) - TCHO, HDL-C, CKMB, Mg, NH3-W & Na, K, Cl", en: "Biochemistry Panel II" }, "$150", "$380"],
+            ["A12-B-6.1", { zh: "灌流 (Perfusion)", en: "Perfusion" }, "$370", "$800"],
+            ["A12-B-6.2", { zh: "組織修剪 (Trimming)", en: "Trimming" }, "$65", "$160"],
+            ["A12-B-6.3", { zh: "脫鈣 (Decalcification)", en: "Decalcification" }, "$120", "$260"],
+            ["A12-B-6.4", { zh: "組織脫水及包埋 (1組織/蠟塊)", en: "Embedding" }, "$150", "$240"],
+            ["A12-B-6.5", { zh: "石蠟切片 (Paraffin sectioning)", en: "Sectioning" }, "$80", "$130"],
+            ["A12-B-6.6.1", { zh: "H&E 染色 (每片)", en: "H&E Staining" }, "$70", "$130"],
+            ["A12-B-6.6.3", { zh: "膠原纖維染色 (Masson's Trichrome)", en: "Masson's Trichrome" }, "$240", "$500"],
+            ["A12-B-6.7", { zh: "全血球計數 (CBC)", en: "CBC" }, "$295", "$500"],
+            ["A12-B-6.8", { zh: "血液收集 (Blood collection)", en: "Blood collection" }, "$70", "$260"],
+            ["A12-B-6.10", { zh: "尿液收集 (Urine collection)", en: "Urine collection" }, "$120", "$400"],
+            ["A12-B-6.11", { zh: "腦脊髓液抽取 (CSF collection)", en: "CSF collection" }, "$400", "$1,200"],
+            ["A12-B-6.12", { zh: "血小板凝集檢測", en: "Platelet Aggregation" }, "$1,400", "$2,500"],
+            ["A12-B-6.13", { zh: "血小板凝集及ATP 釋放檢測", en: "Aggregation & ATP Release" }, "$2,900", "$4,900"],
+            ["A12-B-6.9.1", { zh: "玻片掃描 (200 X, 含DVD)", en: "Slide Scanning (200X)" }, "$100", "$270"],
+            ["A12-B-6.9.2", { zh: "玻片掃描 (螢光, 含DVD)", en: "Fluorescent Scanning" }, "$320", "$900"],
+            ["A12-B-6.9.3", { zh: "玻片掃描-組織陣列切片 (含DVD)", en: "TMA Slide Scanning" }, "$240", "$500"]
+        ],
+        footerNotes: {
+            zh: [
+                "1. H&E 染色包含每片玻片提供兩個切片，有其他需求請另行商議。",
+                "2. 動物入室當天欲進行病理實驗，請於中午前送達。",
+                "3. 請於兩個工作天前提出申請，急件處理將以兩倍收費。"
+            ],
+            en: [
+                "1. H&E staining includes two sections per slide.",
+                "2. Animals must arrive before noon for same-day pathology.",
+                "3. Urgent requests incur double charges."]
+        }
+    },
+    metabolism: {
+        title: { zh: "生理代謝", en: "Metabolic Analysis" },
+        costs: [
+            ["A12-A-2.2.4", { zh: "TSE 代謝系統分析 (24小時)", en: "TSE Metabolic System (24h)" }, "$1,200", "$4,000"],
+            ["A12-A-2.2.4.2", { zh: "TSE - 攝食及飲水監測", en: "TSE Food/Water Monitoring" }, "$100", "$700"],
+            ["A12-A-2.2.4.3", { zh: "TSE - 活力測試", en: "TSE Activity Test" }, "$150", "$800"],
+            ["<s>A12-A-2.3.2</s>", { zh: "<s>代謝籠-飼料與水份攝取量 (24小時)</s>", en: "<s>Metabolic Cage - Food and Water Intake (24h)</s>" }, "<s>$120</s>", "<s>$760</s>"],
+            ["A12-A-2.3.3", { zh: "大鼠代謝籠 (24小時)", en: "Metabolic Cage for rats (24h)" }, "$240", "$1,000"],
+            ["A12-A-2.4", { zh: "體組成分析", en: "Body Composition Analysis" }, "$160", "$480"]
+        ],
+        footerNotes: {
+            zh: ["體組成的動物禁用帶有磁性的金屬耳標。"],
+            en: ["Animals for body composition analysis must not have magnetic metal ear tags."]
+        }
+    },
+    cardio: {
+        title: { zh: "心血管測試", en: "Cardiovascular Testing" },
+        costs: [
+            ["A12-A-3.1.1", { zh: "心電圖 (麻醉)", en: "ECG (Anesthetized)" }, "$230", "$600"],
+            ["A12-A-3.1.3", { zh: "遙測心電圖分析", en: "Telemetry ECG Analysis" }, "$1,500", "$6,800"],
+            ["A12-A-3.2.1", { zh: "非侵入式血壓 (3天)", en: "Non-invasive Blood Pressure (3d)" }, "$280", "$1,000"]
+        ],
+        footerNotes: {
+            zh: ["遙測心電圖僅接受藥物開發相關實驗。"],
+            en: ["Telemetry ECG is only available for drug development studies."]
+        }
+    },
+    imaging: {
+        title: { zh: "動物影像", en: "Animal Imaging" },
+        costs: [
+            ["A12-B-7.2.11", { zh: "斷層掃描 (活體)", en: "Micro-CT (In vivo)" }, "$800/30m", "$1,800/30m"],
+            ["A12-B-7.2.12", { zh: "斷層掃描 (非活體)", en: "Micro-CT (Ex vivo)" }, "$650/30m", "$1,400/30m"],
+            ["A12-B-7.2.13", { zh: "影像分析", en: "Image Analysis" }, "$500/30m", "$1,000/30m"],
+            ["A12-B-7.4.1", { zh: "螢光造影 - 小鼠", en: "Fluorescence - Mouse" }, "$150", "$550"],
+            ["A12-B-7.4.2", { zh: "螢光造影 - 大鼠", en: "Fluorescence (in vivo) – Rat" }, "$450/30m", "$1,100/30m"],
+            ["A12-B-7.4.3", { zh: "細胞螢光造影", en: "Fluorescence (vitro)" }, "$240/96孔", "$865/96孔"],
+            ["A12-B-7.4.4", { zh: "冷光造影 - 小鼠", en: "Bioluminescence - Mouse" }, "$250", "$650"],
+            ["A12-B-7.4.5", { zh: "冷光造影 - 大鼠", en: "Luminescence – Rat" }, "$1,210/30m", "$1,945/30m"],
+            ["A12-B-7.5.1", { zh: "高頻超音波掃描", en: "High-Freq Ultrasound" }, "$850/hr", "$2,600/hr"],
+            ["A12-B-7.5.2", { zh: "光聲超音波影像", en: "Photoacoustic Imaging" }, "$1,000/hr", "$5,500/hr"]
+        ],
+        footerNotes: {
+            zh: ["註：影像分析收費標準為每 30 分鐘計費一次。"],
+            en: ["Note: Image analysis is billed per 30 minutes."]
+        }
+    },
+    immunology: {
+        title: { zh: "免疫疾病", en: "Immunology & Respiratory" },
+        costs: [
+            ["A12-A-5.8", { zh: "體外體溫偵測", en: "Infrared Body Temp" }, "$65", "$350"],
+            ["A12-A-5.9", { zh: "體內體溫偵測", en: "Core Body Temp" }, "$60/次", "$350/次"],
+            ["A12-A-5.10", { zh: "氣喘致敏", en: "Asthma Induction" }, "$2,400", "$7,000"],
+            ["A12-A-5.11", { zh: "肺功能檢測", en: "Pulmonary Function" }, "$600", "$1,700"],
+            ["A12-A-5.12", { zh: "X射線照射", en: "X-Ray Irradiation" }, "$120/cage", "$600/cage"],
+            ["A12-A-5.13", { zh: "阻力與順應性呼吸測試", en: "Resistance & Compliance" }, "$800", "$3,200"]
+        ]
+    }, 
+animal_room: {
+        title: { zh: "動物房服務", en: "Animal Room Services" },
+        costs: [
+            ["A12-A-6.1.1", { zh: "小鼠代養 (第1-7天固定收費)", en: "Mouse Husbandry (Day 1-7 Flat Rate)" }, "$210", "$385"],
+            ["-", { zh: "小鼠代養 (第8天起，每日計費)", en: "Mouse Husbandry (From Day 8, Daily)" }, { zh:"$30 / 籠", en: "$30 / cage"}, { zh:"$55 / 籠", en: "$55 / cage"}],
+            ["A12-A-6.1.2", { zh: "大鼠代養 (第1-7天固定收費)", en: "Rat Husbandry (Day 1-7 Flat Rate)" }, "$700", "$840"],
+            ["-", { zh: "大鼠代養 (第8天起，每日計費)", en: "Rat Husbandry (From Day 8, Daily)" }, { zh:"$100 / 籠", en: "$100 / cage"}, { zh:"$120 / 籠", en: "$120 / cage"}],
+            ["A12-A-6.1.3", { zh: "動物寄養手續費 (每10籠為一單位)", en: "Boarding Service Fee (per 10 cages)" }, "$120", { zh: "依實際狀況", en: "Case by case" }],
+            ["A12-A-7.3.1", { zh: "藥物實驗動物代買", en: "Experimental Animal Procurement" }, { zh: "依品系、週齡、體重、性別訂定", en: "Based on strain, age, weight, and sex" }, { zh: "同左", en: "Same as left" }
+            ]
+        ],
+        footerNotes: {
+            zh: [
+                "1. 為反映成本，小鼠住房1-7天統一收費(學術210元/產業385元)，第8天起按日計費。",
+                "2. 大鼠住房1-7天統一收費(學術700元/產業840元)，第8天起按日計費。",
+                "3. 藥物實驗動物代買僅限無 IACUC 之實驗室申請，實驗結束後動物須直接於診所犧牲。來源為 NLAC 或 BioLASCO。",
+                "4. 入室手續費：學術界每批小鼠 120元/10籠；大鼠 240元/10籠 (犧牲費不另計)。"
+            ],
+            en: [
+                "1. Mouse husbandry: Flat rate for Day 1-7 (Academia $210 / Industry $385); daily rate from Day 8.",
+                "2. Rat husbandry: Flat rate for Day 1-7 (Academia $700 / Industry $840); daily rate from Day 8.",
+                "3. Procurement service is limited to labs without IACUC for drug evaluation; animals must be sacrificed at TMC.",
+                "4. Processing fee: Academia $120 per 10 cages for mice; $240 for rats (Sacrifice fee included)."
+            ]
+        }
+    },
+
+    // 新增：其他服務
+    other_services: {
+        title: { zh: "其他核心服務", en: "Other Core Services" },
+        costs: [
+            ["A12-A-6.2", { zh: "SPF 小鼠淨化服務", en: "SPF Mouse Re-derivation" }, "請洽專員", "請洽專員"],
+            ["A12-A-7.1", { zh: "藥物代謝動力學分析 (PK)", en: "Pharmacokinetics (PK)" }, "專案報價", "專案報價"],
+            ["A12-A-7.2", { zh: "藥效評估試驗 (PD)", en: "Pharmacodynamics (PD)" }, "專案報價", "專案報價"]
+        ],
+        footerNotes: {
+            zh: ["更多特殊實驗需求或長期計畫，歡迎來信諮詢。"],
+            en: ["For customized experiments or long-term projects, please contact us for a consultation."]
+        }
+    }
+};
+
+        const translations = {
+        zh: {
+            "nav-about": "關於我們", 
+            "nav-intro": "TMC 簡介",
+            "nav-org": "組織架構", 
+            "nav-comm": "委員會成員", 
+            "nav-members": "診所成員", 
+            "nav-location": "地理位置",
+            "nav-animal-room": "動物房", 
+            "ar-intro": "簡介",
+            "ar-env": "環境與飼養管理",
+            "ar-health": "健康監測",
+            "ar-env-mon": "環境監測",
+            "ar-checkin": "動物入住申請",
+            "ar-checkout": "動物退房申請",
+            "ar-transport": "運送路線&包裝規範",
+            "ar-spf": "SPF 小鼠淨化服務",
+            "nav-info": "其他資訊", 
+            "nav-sample": "檢體製備",
+            "nav-sop": "標準實驗程序",
+            "nav-database": "小鼠資料庫",
+            "nav-publications": "文獻發表",
+            "nav-events": "歷年活動",
+            "nav-links": "友站連結",
+            "link-intl": "國外機構",
+            "link-domestic": "國內設施",
+            "link-collab": "合作核心設施",
+            "link-network": "聯合服務網",
+            "btn-lims": "登入 LIMS",
+            "hero-title": "國家綜合小鼠表現型暨藥物測試中心",
+            "hero-subtitle": "精準表型分析 · 專業藥物測試 · 國家級核心設施",
+            "stat-service": "服務人次",
+            "stat-orgs": "委託單位",
+            "stat-projects": "執行計畫數",
+            "stat-exp": "專業營運經驗",            
+            "workflow-title": "服務流程",
+            "tab-academic": "學研單位",
+            "tab-industry": "產業界/海外",
+            "tab-internal": "NBRP進駐單位",
+            "step-1": "01 專家諮詢",
+            "step-1-sub": "確認實驗設計細節",
+            "step-2": "02 敲定日期",
+            "step-2-sub": "排定時程與資源確認",
+            "step-3": "03 完成報價",
+            "step-3-sub": "確認所需費用與是否執行",
+            "step-4": "04 系統註冊",
+            "step-4-sub": "帳號與計畫申請",
+            "step-5": "05 購買點數",
+            "step-5-sub": "做多少買多少避免有餘款",
+            "step-6": "06 申請實驗", 
+            "step-6-sub": "動物/檢體實驗申請",
+            "step-7": "07 動物入住/遞交檢體",
+            "step-7-sub": "依規範提供動物或檢體",
+            "step-8": "08 執行實驗",
+            "step-8-sub": "專業團隊標準化作業",
+            "step-9": "09 動物退房/領回檢體",
+            "step-9-sub": "約定時間領回動物或檢體",
+            "step-10": "10 數據交付",
+            "step-10-sub": "上LIMS系統下載實驗數據",
+            "cat-neuro": "神經行為", 
+            "cat-pathology": "病理分析", 
+            "cat-metabolism": "生理代謝", 
+            "cat-cardio": "心血管", 
+            "cat-imaging": "動物影像", 
+            "cat-immunology": "免疫疾病",
+            "cat-animal-room-services": "動物房服務",
+            "cat-others": "其他服務",
+            "th-code": "代號", 
+            "th-item": "項目", 
+            "th-acad": "學術界", 
+            "th-ind": "產業界",
+            "cert-taf-tag": "GLP 認證", 
+            "cert-aaalac-tag": "AAALAC 認證", 
+            "service-title": "核心服務領域",
+            "service-subtitle": "(點擊查看費用)",         
+            "nav-members": "診所成員",
+            "cat-pi": "計畫主持人",
+            "cat-mgmt": "營運管理層",
+            "cat-research": "研究部與專業人員",
+            "cat-pathology": "病理分析",
+            "cat-vets": "專業獸醫師",
+            "cat-animal": "動物設施組",
+            "cat-admin": "行政與資訊組",
+            "group-photos": "團隊合照",
+            "spec": "專長",
+            "phone": "電話",
+        },
+        en: {
+            "nav-about": "About Us", 
+            "nav-intro": "TMC Intro",
+            "nav-org": "Organization", 
+            "nav-comm": "Committees", 
+            "nav-members": "Members", 
+            "nav-location": "Location",
+            "nav-animal-room": "Animal Facility", 
+            "ar-intro": "Introduction",
+            "ar-env": "Environment & Husbandry",
+            "ar-health": "Health Monitoring",
+            "ar-env-mon": "Environmental Monitoring",
+            "ar-checkin": "Check-in Application",
+            "ar-checkout": "Check-out Application",
+            "ar-transport": "Transport & Packaging",
+            "ar-spf": "SPF Rederivation Service",
+            "nav-info": "Other Information",
+            "nav-sample": "Sample Preparation",
+            "nav-sop": "SOPs",
+            "nav-database": "Mouse Database",
+            "nav-publications": "Publications",
+            "nav-events": "Events",
+            "nav-links": "Useful Links", 
+            "link-intl": "International Institutes",
+            "link-domestic": "Domestic Facilities",
+            "link-collab": "Collaborative Facilities",
+            "link-network": "Network Service",
+            "btn-lims": "Login LIMS",
+            "hero-title": "National Comprehensive Mouse Phenotyping & Drug Testing Center",
+            "hero-subtitle": "Precision Phenotyping · Professional Drug Testing · National Core Facility",
+            "stat-service": "Service Visits",
+            "stat-orgs": "Partner Orgs",
+            "stat-projects": "Projects",
+            "stat-exp": "Years of Experience",
+            "workflow-title": "Service Workflow",
+            "step-1": "01 Consultation",
+            "step-1-sub": "Confirm experimental design details",
+            "step-2": "02 Schedule Date",
+            "step-2-sub": "Timeline and resource confirmation",
+            "step-3": "03 Quoting",
+            "step-3-sub": "Funding and budget application",
+            "step-4": "04 Registration",
+            "step-4-sub": "Account and project application",
+            "step-5": "05 Purchase Credits",
+            "step-5-sub": "Prepayment and billing process",
+            "step-6": "06 Case application", 
+            "step-6-sub": "Animal/Specimen study application",
+            "step-7": "07 Admission/Submission",
+            "step-7-sub": "Provide animals or specimens accordingly",
+            "step-8": "08 Execution",
+            "step-8-sub": "Standardized operation by experts",
+            "step-9": "09 Check-out/Collection",
+            "step-9-sub": "Collect at scheduled time",
+            "step-10": "10 Data Delivery",
+            "step-10-sub": "Download experimental data from LIMS system",
+            "cat-neuro": "Neurobehavior", 
+            "cat-pathology": "Pathology", 
+            "cat-metabolism": "Metabolism", 
+            "cat-cardio": "Cardio", 
+            "cat-imaging": "Imaging", 
+            "cat-immunology": "Immunology",
+            "cat-animal-room-services": "Animal Room Services",
+            "cat-others": "Other Core Services",
+            "th-code": "Code", 
+            "th-item": "Service Item", 
+            "th-acad": "Academic", 
+            "th-ind": "Industry",
+            "cert-taf-tag": "GLP Certified", 
+            "cert-aaalac-tag": "AAALAC Accredited", 
+            "service-title": "Core Service Areas",
+            "service-subtitle": "(Click to View Rates)", 
+            "nav-members": "Our Team",
+            "cat-pi": "Principal Investigator",
+            "cat-mgmt": "Management",
+            "cat-research": "Research & Professional Staff",
+            "cat-pathology": "Pathology",
+            "cat-vets": "Veterinarians",
+            "cat-animal": "Animal Facility Unit",
+            "cat-admin": "Administration & IT",
+            "group-photos": "Group Photos",
+            "spec": "Expertise",
+            "phone": "Ext",
+            "tab-academic": "Academic",
+            "tab-industry": "Industry/International User",
+            "tab-internal": "NBRP Internal",
+        }
+    };
+
+        const aboutData = {
+        org: {
+    title: { zh: "組織架構", en: "Organizational Structure" },
+    content: {
+        zh: `
+            <div class="max-w-[1500px] mx-auto p-4 font-sans text-slate-800">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                    <div class="bg-yellow-100 border-2 border-yellow-400 p-6 rounded-2xl flex flex-col justify-center items-center shadow-md text-center hover:shadow-lg hover:border-yellow-500 transition-all duration-300 cursor-default">
+                        <span class="font-black text-yellow-800 text-xl mb-2">病理毒理顧問</span>
+                        <span class="text-xl font-bold">黃坤正 博士</span>
+                        <span class="text-base opacity-75 mt-1">(DVM, PhD, JCVP)</span>
+                    </div>
+                    <div class="bg-blue-100 border-2 border-blue-300 p-6 rounded-2xl flex flex-col justify-center items-center shadow-md text-center hover:shadow-lg hover:border-blue-500 transition-all duration-300 cursor-default">
+                        <span class="font-black text-blue-800 text-xl mb-2">主持人</span>
+                        <span class="text-xl font-bold">陳志成 博士</span>
+                    </div>
+                    <div class="bg-blue-100 border-2 border-blue-300 p-6 rounded-2xl flex flex-col justify-center items-center shadow-md text-center hover:shadow-lg hover:border-blue-500 transition-all duration-300 cursor-default">
+                        <span class="font-black text-blue-800 text-xl mb-2">召集人</span>
+                        <span class="text-xl font-bold">楊瑞彬 博士</span>
+                    </div>
+                    <div class="bg-yellow-100 border-2 border-yellow-400 p-6 rounded-2xl flex flex-col justify-center items-center shadow-md text-center hover:shadow-lg hover:border-yellow-500 transition-all duration-300 cursor-default">
+                        <span class="font-black text-yellow-800 text-xl mb-2">顧問</span>
+                        <span class="text-xl font-bold">杉山大介 教授</span>
+                        <span class="text-base opacity-75 mt-1">(日本九州大學)</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center mb-12">
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white px-16 py-8 rounded-2xl shadow-xl text-center hover:brightness-110 transition-all duration-300 cursor-default">
+                        <div class="text-lg opacity-90 uppercase tracking-[0.2em] mb-2 font-bold">營運長 (COO)</div>
+                        <div class="font-black text-3xl">賴超坤 博士</div>
+                    </div>
+                    
+                    <div class="flex flex-wrap justify-center gap-8 md:gap-24 mt-10">
+                        <div class="bg-orange-400 text-white px-12 py-5 rounded-2xl shadow-lg text-center min-w-[200px] hover:bg-orange-500 transition-all duration-300 cursor-default">
+                            <div class="text-base opacity-90 font-bold mb-1">副營運長</div>
+                            <div class="font-black text-2xl">沈映伶 博士</div>
+                        </div>
+                        <div class="bg-orange-400 text-white px-12 py-5 rounded-2xl shadow-lg text-center min-w-[200px] hover:bg-orange-500 transition-all duration-300 cursor-default">
+                            <div class="text-base opacity-90 font-bold mb-1">品保 (QA)</div>
+                            <div class="font-black text-2xl">陳俐穎 博士</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 items-stretch">
+                    
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="bg-stone-700 text-white py-4 rounded-xl text-center font-black text-xl shadow-sm">技術部門</div>
+                        <div class="grid grid-cols-2 gap-3 flex-grow">
+                            <div class="bg-stone-50 p-4 rounded-xl text-center border-2 border-stone-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">動物影像</div>
+                            <div class="bg-stone-50 p-4 rounded-xl text-center border-2 border-stone-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">表現型測試</div>
+                            <div class="bg-stone-50 p-4 rounded-xl text-center border-2 border-stone-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">動物飼育</div>
+                            <div class="bg-stone-50 p-4 rounded-xl text-center border-2 border-stone-200 font-black text-orange-700 hover:bg-white hover:border-orange-300 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">獸醫師</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="bg-slate-800 text-white py-4 rounded-xl text-center font-black text-xl shadow-sm">業務發展部門</div>
+                        <div class="grid grid-cols-1 gap-3 flex-grow">
+                            <div class="bg-slate-50 p-4 rounded-xl text-center border-2 border-slate-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">專案管理組</div>
+                            <div class="bg-slate-50 p-4 rounded-xl text-center border-2 border-slate-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">研發組</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="bg-emerald-900 text-white py-4 rounded-xl text-center font-black text-xl shadow-sm">行政部門</div>
+                        <div class="grid grid-cols-1 gap-3 flex-grow">
+                            <div class="bg-emerald-50 p-4 rounded-xl text-center border-2 border-emerald-100 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">會計、秘書</div>
+                            <div class="bg-emerald-50 p-4 rounded-xl text-center border-2 border-emerald-100 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">資訊 IT</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="bg-emerald-800 text-white py-4 rounded-xl text-center font-black text-xl shadow-sm">學術公關部門</div>
+                        <div class="flex flex-grow">
+                            <div class="w-full bg-slate-50 p-4 rounded-xl text-center border-2 border-slate-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">
+                                學術推廣 <br class="hidden md:block"> 與公關
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`,
+        en: `
+            <div class="max-w-[1500px] mx-auto p-4 font-sans text-slate-800">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                    <div class="bg-yellow-100 border-2 border-yellow-400 p-6 rounded-2xl flex flex-col justify-center items-center shadow-md text-center hover:shadow-lg hover:border-yellow-500 transition-all duration-300 cursor-default">
+                        <span class="font-black text-yellow-800 text-xl mb-2">Pathology Advisor</span>
+                        <span class="text-xl font-bold">Dr. Kun-Zheng Huang</span>
+                    </div>
+                    <div class="bg-blue-100 border-2 border-blue-300 p-6 rounded-2xl flex flex-col justify-center items-center shadow-md text-center hover:shadow-lg hover:border-blue-500 transition-all duration-300 cursor-default">
+                        <span class="font-black text-blue-800 text-xl mb-2">Director</span>
+                        <span class="text-xl font-bold">Dr. Chih-Cheng Chen</span>
+                    </div>
+                    <div class="bg-blue-100 border-2 border-blue-300 p-6 rounded-2xl flex flex-col justify-center items-center shadow-md text-center hover:shadow-lg hover:border-blue-500 transition-all duration-300 cursor-default">
+                        <span class="font-black text-blue-800 text-xl mb-2">Convener</span>
+                        <span class="text-xl font-bold">Dr. Ruey-Bing Yang</span>
+                    </div>
+                    <div class="bg-yellow-100 border-2 border-yellow-400 p-6 rounded-2xl flex flex-col justify-center items-center shadow-md text-center hover:shadow-lg hover:border-yellow-500 transition-all duration-300 cursor-default">
+                        <span class="font-black text-yellow-800 text-xl mb-2">Advisor</span>
+                        <span class="text-xl font-bold">Prof. Daisuke Sugiyama</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center mb-12">
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white px-16 py-8 rounded-2xl shadow-xl text-center hover:brightness-110 transition-all duration-300 cursor-default">
+                        <div class="text-lg opacity-90 uppercase tracking-[0.2em] mb-2 font-bold">COO</div>
+                        <div class="font-black text-3xl">Dr. Chao-Hung Lai</div>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-8 md:gap-24 mt-10">
+                        <div class="bg-orange-400 text-white px-12 py-5 rounded-2xl shadow-lg text-center min-w-[200px] hover:bg-orange-500 transition-all duration-300 cursor-default">
+                            <div class="text-base opacity-90 font-bold mb-1">Deputy COO</div>
+                            <div class="font-black text-2xl">Dr. Ying-Ling Shen</div>
+                        </div>
+                        <div class="bg-orange-400 text-white px-12 py-5 rounded-2xl shadow-lg text-center min-w-[200px] hover:bg-orange-500 transition-all duration-300 cursor-default">
+                            <div class="text-base opacity-90 font-bold mb-1">QA</div>
+                            <div class="font-black text-2xl">Dr. Li-Ying Chen</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 items-stretch">
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="bg-stone-700 text-white py-4 rounded-xl text-center font-black text-xl shadow-sm">Technical</div>
+                        <div class="grid grid-cols-2 gap-3 flex-grow">
+                            <div class="bg-stone-50 p-4 rounded-xl text-center border-2 border-stone-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">Imaging</div>
+                            <div class="bg-stone-50 p-4 rounded-xl text-center border-2 border-stone-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">Phenotyping</div>
+                            <div class="bg-stone-50 p-4 rounded-xl text-center border-2 border-stone-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">Housing</div>
+                            <div class="bg-stone-50 p-4 rounded-xl text-center border-2 border-stone-200 font-black text-orange-700 hover:bg-white hover:border-orange-300 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">Veterinarians</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="bg-slate-800 text-white py-4 rounded-xl text-center font-black text-xl shadow-sm">Biz Dev</div>
+                        <div class="grid grid-cols-1 gap-3 flex-grow">
+                            <div class="bg-slate-50 p-4 rounded-xl text-center border-2 border-slate-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">Project Mgmt</div>
+                            <div class="bg-slate-50 p-4 rounded-xl text-center border-2 border-slate-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">R&D</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="bg-emerald-900 text-white py-4 rounded-xl text-center font-black text-xl shadow-sm">Administration</div>
+                        <div class="grid grid-cols-1 gap-3 flex-grow">
+                            <div class="bg-emerald-50 p-4 rounded-xl text-center border-2 border-emerald-100 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">Accounting/Sec</div>
+                            <div class="bg-emerald-50 p-4 rounded-xl text-center border-2 border-emerald-100 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">IT Service</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="bg-emerald-800 text-white py-4 rounded-xl text-center font-black text-xl shadow-sm">PR Dept</div>
+                        <div class="flex flex-grow">
+                            <div class="w-full bg-slate-50 p-4 rounded-xl text-center border-2 border-slate-200 font-bold hover:bg-white hover:border-tiffany/50 hover:shadow-md transition-all duration-300 flex items-center justify-center cursor-default">
+                                Academic <br> & PR
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`,
+    }
+},
+
+comm: {
+        title: { zh: "委員會成員", en: "Advisory Committee" },
+        content: {
+            zh: `
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-2">
+                ${[
+                    { name: "蔡亭芬 博士", title: "特聘教授", dept: "國立陽明交通大學 生命科學系暨基因體科學研究所", url: "https://dls.nycu.edu.tw/faculty/faculty-member/tftsai.html" },
+                    { name: "戴明泓 博士", title: "特聘教授", dept: "國立中山大學 生物醫學研究所", url: "https://ibms.nsysu.edu.tw/p/405-1332-60665,c23637.php?Lang=zh-tw" },
+                    { name: "陳儀莊 博士", title: "所長 / 特聘研究員", dept: "中央研究院 生物醫學研究所", url: "https://www.ibms.sinica.edu.tw/yijuang-chern/ch/" },
+                    { name: "游麗如 博士", title: "教授", dept: "國立陽明交通大學 生化暨分子生物研究所", url: "https://biochem.nycu.edu.tw/faculty/full-time/you-li-ru/" },
+                    { name: "林以文 博士", title: "教授", dept: "中國醫藥大學 針灸研究所", url: "https://webap.cmu.edu.tw/TchEportfolio/index_1/yiwenlin" },
+                    { name: "陳佑宗 博士", title: "副教授", dept: "國立臺灣大學 基因體暨蛋白體醫學研究所", url: "https://www.mc.ntu.edu.tw/medgenpro/Vcard.action?q_type=A01&q_itemCode=377&l=en_US&l=en_US" },
+                    { name: "馬國興 博士", title: "教授", dept: "國防醫學院 生物及解剖學科暨研究所", url: "https://wwwndmc.ndmutsgh.edu.tw/DocDet/191/100029/275/115" },
+                    { name: "郭立威 博士", title: "副研究員", dept: "國家衛生研究院 生醫工程與奈米醫學研究所", url: "https://iben.nhri.edu.tw/tw_pi/tw_pi_li_wei_kuo/" },
+                    { name: "蘇家豪 博士", title: "教授", dept: "長庚大學 通識教育中心", url: "https://www.cgu.edu.tw/ge/Contents/?nodeId=16581&isCms=true" }
+                ].map(member => `
+                    <div class="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group border-b-4 hover:border-b-tiffany">
+                        <div>
+                            <a href="${member.url}" target="_blank" class="text-2xl font-black text-tiffany hover:text-slate-800 transition-colors inline-flex items-center">
+                                ${member.name}
+                                <i class="fas fa-external-link-alt ml-2 text-xs opacity-30 group-hover:opacity-100"></i>
+                            </a>
+                            <p class="text-slate-800 font-bold mt-3 text-lg leading-snug">${member.dept}</p>
+                            <p class="text-slate-500 font-medium mt-1">${member.title}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>`,
+            en: `
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-2 text-left">
+    ${[
+        { name: "Dr. Ting-Fen Tsai", title: "Distinguished Professor", dept: "Dept. of Life Sciences and Institute of Genome Sciences, NYCU", url: "https://dls.nycu.edu.tw/faculty/faculty-member/tftsai.html" },
+        { name: "Dr. Ming-Hong Tai", title: "Distinguished Professor", dept: "Institute of Biomedical Sciences, NSYSU", url: "https://ibms.nsysu.edu.tw/p/405-1332-60665,c23637.php?Lang=zh-tw" },
+        { name: "Dr. Yi-Juang Chern", title: "Director / Distinguished Research Fellow", dept: "Institute of Biomedical Sciences, Academia Sinica", url: "https://www.ibms.sinica.edu.tw/yijuang-chern/ch/" },
+        { name: "Dr. Li-Ru You", title: "Professor", dept: "Institute of Biochemistry and Molecular Biology, NYCU", url: "https://biochem.nycu.edu.tw/faculty/full-time/you-li-ru/" },
+        { name: "Dr. Yi-Wen Lin", title: "Professor", dept: "Graduate Institute of Acupuncture Science, CMU", url: "https://webap.cmu.edu.tw/TchEportfolio/index_1/yiwenlin" },
+        { name: "Dr. Yu-Tsung Chen", title: "Associate Professor", dept: "Graduate Institute of Medical Genomics and Proteomics, NTU", url: "https://www.mc.ntu.edu.tw/medgenpro/Vcard.action?q_type=A01&q_itemCode=377&l=en_US" },
+        { name: "Dr. Kuo-Hsing Ma", title: "Professor", dept: "Dept. of Biology and Anatomy, NDMC", url: "https://wwwndmc.ndmutsgh.edu.tw/DocDet/191/100029/275/115" },
+        { name: "Dr. Li-Wei Kuo", title: "Associate Investigator", dept: "Institute of Biomedical Engineering and Nanomedicine, NHRI", url: "https://iben.nhri.edu.tw/tw_pi/tw_pi_li_wei_kuo/" },
+        { name: "Dr. Chia-Hao Su", title: "Professor", dept: "Center for General Education, CGU", url: "https://www.cgu.edu.tw/ge/Contents/?nodeId=16581&isCms=true" }
+    ].map(member => `
+        <div class="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+            <a href="${member.url}" target="_blank" class="text-xl font-black text-tiffany hover:text-slate-800 transition-colors block">
+                ${member.name}
+            </a>
+            <p class="text-slate-800 font-bold mt-2 text-sm leading-tight">${member.dept}</p>
+            <p class="text-slate-400 font-medium mt-1 text-sm italic">${member.title}</p>
+        </div>
+    `).join('')}
+</div>`,
+        }
+    },
+
+       location: {
+    title: { zh: "地理位置", en: "Our Location" },
+    content: {
+        zh: `
+            <div class="grid md:grid-cols-[1fr_2fr] gap-8 text-left items-stretch">
+                <div class="flex flex-col justify-between space-y-4">
+                    <div class="">
+                        <p class="font-black text-tiffany text-3xl mb-1">國家生技研究園區 (A棟)</p>
+                        <p class="text-slate-600 text-lg leading-snug">115 台北市南港區研究院路一段130巷99號A788室</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-amber-50 p-6 rounded-2xl border-2 border-amber-100 shadow-sm group">
+                            <div class="flex items-center text-amber-600 mb-2">
+                                <div class="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-md mr-3 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-car text-lg"></i>
+                                </div>
+                                <span class="font-black text-xl">導航導引</span>
+                            </div>
+                            <p class="text-slate-700 font-bold text-lg leading-tight">
+                                開車請導航至此大門
+                            </p>
+                            <div class="mt-3 flex items-center text-amber-500 animate-bounce-h">
+                                <span class="text-sm font-bold mr-2 uppercase">Entrance</span>
+                                <i class="fas fa-long-arrow-alt-right text-2xl"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 p-5 rounded-2xl border-2 border-blue-100 shadow-sm">
+                            <a href="https://nbrp.sinica.edu.tw/pages/96" target="_blank" class="group flex items-center justify-between">
+                                <p class="font-black text-blue-700 group-hover:text-blue-900 transition flex items-center text-lg">
+                                    <i class="fas fa-bus-alt mr-2"></i> 大眾運輸資訊
+                                </p>
+                                <i class="fas fa-external-link-alt text-sm text-blue-300"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounded-3xl overflow-hidden shadow-lg h-[400px] md:h-auto min-h-[450px]">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8675.180623972332!2d121.61302573853135!3d25.048979425463557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442ab000623578b%3A0x560f4604f16cbacd!2z5ZyL5a6255Sf5oqA56CU56m25ZyS5Y2A5aSn6ZaA5Y-j!5e1!3m2!1szh-TW!2stw!4v1774618629429!5m2!1szh-TW!2stw" width="650" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>`,
+        en: `
+            <div class="grid md:grid-cols-[1fr_2fr] gap-8 text-left items-stretch">
+                <div class="flex flex-col justify-between space-y-4">
+                    <div>
+                        <p class="font-black text-tiffany text-3xl mb-1">NBRP (Building A)</p>
+                        <p class="text-slate-600 text-lg leading-snug">Rm A788, No. 99, Ln. 130, Sec. 2, Academia Rd., Taipei</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-amber-50 p-6 rounded-2xl border-2 border-amber-100 shadow-sm group">
+                            <div class="flex items-center text-amber-600 mb-2">
+                                <div class="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-md mr-3">
+                                    <i class="fas fa-car text-lg"></i>
+                                </div>
+                                <span class="font-black text-xl">Driving Guide</span>
+                            </div>
+                            <p class="text-slate-700 font-bold text-lg leading-tight">Please navigate to this gate</p>
+                            <div class="mt-3 flex items-center text-amber-500 animate-bounce-h">
+                                <span class="text-sm font-bold mr-2 uppercase">Go Right</span>
+                                <i class="fas fa-long-arrow-alt-right text-2xl"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 p-5 rounded-2xl border-2 border-blue-100 shadow-sm">
+                            <a href="https://nbrp.sinica.edu.tw/pages/96" target="_blank" class="group flex items-center justify-between">
+                                <p class="font-black text-blue-700 text-lg"><i class="fas fa-bus-alt mr-2"></i> Transport Info</p>
+                                <i class="fas fa-external-link-alt text-sm text-blue-300"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounded-3xl overflow-hidden shadow-lg h-[400px] md:h-auto min-h-[450px]">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8675.180623972332!2d121.61302573853135!3d25.048979425463557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442ab000623578b%3A0x560f4604f16cbacd!2z5ZyL5a6255Sf5oqA56CU56m25ZyS5Y2A5aSn6ZaA5Y-j!5e1!3m2!1szh-TW!2stw!4v1774618629429!5m2!1szh-TW!2stw" width="650" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>`
+    }
+},
+
+        'cert-taf': {
+    title: { zh: "GLP 認證", en: "GLP Certification" },
+    content: {
+        zh: `
+            <div class="bg-slate-50 p-6 rounded-2xl border-l-8 border-tiffany mb-8 shadow-sm text-left">
+                <p class="text-lg text-slate-700">本診所符合經濟部標準檢驗局 GLP 規範，確保實驗數據之真實性、完整性與品質。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="aspect-[3/4] overflow-hidden rounded-xl shadow-md border group">
+                    <img src="images/GLP_c_1.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="GLP Certificate 1">
+                </div>
+                <div class="aspect-[3/4] overflow-hidden rounded-xl shadow-md border group">
+                    <img src="images/GLP_c_2.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="GLP Certificate 2">
+                </div>
+                <div class="aspect-[3/4] overflow-hidden rounded-xl shadow-md border group">
+                    <img src="images/TFDA GLP_1.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="TFDA GLP Certificate">
+                </div>
+            </div>
+        `,
+        en: `
+            <div class="bg-slate-50 p-6 rounded-2xl border-l-8 border-tiffany mb-8 shadow-sm text-left">
+                <p class="text-lg text-slate-700">Our center complies with OECD GLP principles, ensuring the integrity and quality of experimental data.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="aspect-[3/4] overflow-hidden rounded-xl shadow-md border group">
+                    <img src="images/GLP_c_1.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="GLP Certificate 1">
+                </div>
+                <div class="aspect-[3/4] overflow-hidden rounded-xl shadow-md border group">
+                    <img src="images/GLP_c_2.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="GLP Certificate 2">
+                </div>
+                <div class="aspect-[3/4] overflow-hidden rounded-xl shadow-md border group">
+                    <img src="images/TFDA GLP_1.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="TFDA GLP Certificate">
+                </div>
+            </div>
+        `
+    }
+},
+        'cert-aaalac': {
+    title: { zh: "AAALAC 認證", en: "AAALAC International" },
+    content: {
+        zh: `
+            <p class="mb-6">本診所通過 AAALAC 國際認證，致力於維護實驗動物之最高福利與照護標準。</p>
+            <div class="flex justify-center mt-8">
+                <img src="images/aaalac_01.png" class="max-w-full md:max-w-[600px] rounded-2xl shadow-xl border hover:scale-105 transition duration-300" alt="AAALAC 認證證書">
+            </div>
+        `,
+        en: `
+            <p class="mb-6">We are fully accredited by AAALAC International, demonstrating our commitment to responsible animal care and use.</p>
+            <div class="flex justify-center mt-8">
+                <img src="images/aaalac_01.png" class="max-w-full md:max-w-[600px] rounded-2xl shadow-xl border hover:scale-105 transition duration-300" alt="AAALAC Accreditation Certificate">
+            </div>
+        `
+    }
+}
+    };
+
+        function openAbout(type) {
+   const body = document.getElementById('aboutBody');
+    const modal = document.getElementById('aboutModal');
+    body.dataset.currentType = type;
+    const isEn = currLang === 'en';
+    
+    if (type === 'people') {
+    const isEn = currLang === 'en';
+    body.innerHTML = `
+        <div class="space-y-12">
+            <h2 class="text-3xl font-black text-slate-800 border-l-8 border-tiffany pl-4 mb-8">
+                ${isEn ? 'Our Team' : '診所成員與專業團隊'}
+            </h2>
+            
+            ${renderCategory(isEn ? 'Principal Investigator' : '計畫主持人', [
+                { 
+                    name: isEn ? 'Chih-Cheng Chen, Ph.D.' : '陳志成 博士', 
+                    spec: isEn ? 'Pain, Neuroscience, Mechanotransduction' : '痛覺、神經科學及感覺神經元力學傳導', 
+                    tel: '02-2652-3917', 
+                    img: 'images/people1.jpg' 
+                }
+            ])}
+
+            ${renderCategory(isEn ? 'Management' : '營運管理層', [
+                { 
+                    name: isEn ? 'Chao-Kwan Chou, Ph.D., DVM' : '賴超坤 博士 (營運長/獸醫師)', 
+                    spec: isEn ? 'Drug Screening & Development, Lab Animal Veterinarian' : '藥物篩選及開發、動物房獸醫師', 
+                    tel: '02-7750-5514', 
+                    img: 'images/people2.jpg' 
+                },
+                { 
+                    name: isEn ? 'Ying-Ling Shen, Ph.D.' : '沈映伶 博士 (副營運長)', 
+                    spec: isEn ? 'Neuroscience, Behavioral Tests, Disease Models' : '神經科學、精神疾病動物模式、藥物篩選及動物行為測試', 
+                    tel: '02-7750-5511', 
+                    img: 'images/people3.jpg' 
+                },
+                { 
+                    name: isEn ? 'Li-Ying Chen, Ph.D.' : '陳俐穎 博士 (副營運長/TAF經理)', 
+                    spec: isEn ? 'Immunology, Atopic Dermatitis Models, Germ-free Mouse' : '免疫學、異位性皮膚炎模式鼠研究、無菌鼠及腸道菌接種', 
+                    tel: '02-7750-5513', 
+                    img: 'images/people4.jpg' 
+                }
+            ])}
+
+            ${renderCategory(isEn ? 'Research Staff & Specialists' : '研究部與專業人員', [
+                { 
+                    name: isEn ? 'Hsu-Hui Feng, Ph.D.' : '馮旭輝 博士', 
+                    spec: isEn ? 'Wireless Telemetry ECG, Temp Monitoring, Pain Mouse Models' : '無線遙測心電圖、小鼠體溫偵測、酸誘發肌肉長期疼痛模式研究', 
+                    tel: '02-2789-9057', 
+                    img: 'images/people5.jpg' 
+                },
+                { 
+                    name: isEn ? 'Han-Hsiung Chi, Ph.D.' : '紀瀚雄 博士', 
+                    spec: isEn ? 'Neuroscience, Animal Models for Drug Screening' : '神經科學、藥物篩選之疾病動物模式', 
+                    tel: '02-7750-5512', 
+                    img: 'images/people6.jpg' 
+                },
+                { 
+                    name: isEn ? 'Wei-Wei Chiang' : '江偉微 (研究部經理)', 
+                    spec: isEn ? 'Neuroscience' : '神經科學', 
+                    tel: '02-7750-5500 #1761', 
+                    img: 'images/people10.jpg' 
+                },
+                { 
+                    name: isEn ? 'Yi-Chi Yang' : '楊毅奇 (研究部經理)', 
+                    spec: isEn ? 'Cardiovascular, Imaging (BLI/FLI), Photoacoustic Ultrasound' : '心血管疾病、冷光/螢光照影及光聲超音波', 
+                    tel: '02-7750-5500 #1760', 
+                    img: 'images/people11.jpg' 
+                },
+                { 
+                    name: isEn ? 'Yen-Chen Liu' : '劉晏禎 (研究部經理)', 
+                    spec: isEn ? 'uCT, TD-NMR, X-ray Irradiation' : '斷層掃描(uCT)、體組成分析(TD-NMR)、輻射劑量照射', 
+                    tel: '02-7750-5519', 
+                    img: 'images/people18.jpg' 
+                },
+                { 
+                    name: isEn ? 'Cheng-Wei Lo' : '羅正威 (研究部經理)', 
+                    spec: isEn ? 'Immunology, Exposure Tower' : '免疫疾病、暴露塔', 
+                    tel: '02-7750-5500 #1758', 
+                    img: 'images/people19.jpg' 
+                },
+                { 
+                    name: isEn ? 'Wan-Chen Chao' : '趙琬貞', 
+                    spec: isEn ? 'Physiology & Metabolism' : '生理代謝', 
+                    tel: '02-7750-5500 #1757', 
+                    img: 'images/people17.jpg' 
+                }
+            ])}
+
+            ${renderCategory(isEn ? 'Pathology Unit' : '病理部', [
+                { name: isEn ? 'Yu-Chang Chen' : '陳昱彰 (經理)', spec: isEn ? 'Pathology & Slide Scan' : '病理研究及玻片掃描', tel: '02-7750-5520', img: 'images/people12.jpg' },
+                { name: isEn ? 'Yu-Fang Lin' : '林郁芳', spec: isEn ? 'Pathology & Slide Scan' : '病理研究及玻片掃描', tel: '02-7750-5520', img: 'images/people13.jpg' },
+                { name: isEn ? 'Yi-Fen Tsai' : '蔡宜芬', spec: isEn ? 'Pathology & Slide Scan' : '病理研究及玻片掃描', tel: '02-7750-5520', img: 'images/people14.jpg' },
+                { name: isEn ? 'Shih-Ting Huang' : '黃詩婷', spec: isEn ? 'Pathology & Special Stain' : '病理研究及特殊染色', tel: '02-7750-5520', img: 'images/people15.jpg' },
+                { name: isEn ? 'Tse-Hsun Liu' : '劉澤峋', spec: isEn ? 'Pathology & Slide Scan' : '病理研究及玻片掃描', tel: '02-7750-5520', img: 'images/people16.jpg' }
+            ])}
+
+            ${renderCategory(isEn ? 'Veterinarians' : '專業獸醫師', [
+                { 
+                    name: isEn ? 'Yen-Po Chen, DVM' : '陳彥伯 (病理獸醫師)', 
+                    spec: isEn ? 'Gross & Histopathology' : '肉眼與組織病理學', 
+                    tel: '02-7750-5500 #1757', 
+                    img: 'images/people20.jpg' 
+                },
+                { 
+                    name: isEn ? 'Hui-Yu Yeh, DVM' : '葉蕙瑜', 
+                    spec: isEn ? 'Facility Inspection, IACUC Review' : '實驗動物巡查、IACUC審查', 
+                    tel: '02-7750-5516', 
+                    img: 'images/people21.jpg' 
+                },
+                { 
+                    name: isEn ? 'Chih-Jung Chang, DVM' : '張芷榕', 
+                    spec: isEn ? 'IACUC, Behavioral Tests, Pain Assessment' : '實驗動物申請審查、行為及外觀檢測、壓痛覺測定', 
+                    tel: '02-7750-5516', 
+                    img: 'images/people22.jpg' 
+                }
+            ])}
+
+            ${renderCategory(isEn ? 'Animal Facility' : '動物設施組', [
+                { name: isEn ? 'Hsiao-Han Hung' : '洪小涵 (組長)', spec: isEn ? 'Facility Management' : '動物房例行事務', tel: '02-7750-5517', img: 'images/people23.jpg' },
+                { name: isEn ? 'Yung-Chiao Shao' : '永喬少 (副組長)', spec: isEn ? 'Facility Management' : '動物房例行事務', tel: '02-7750-5517', img: 'images/people24.jpg' },
+                { name: isEn ? 'Chun-Hsiang Fang' : '方俊翔', spec: isEn ? 'Animal Care' : '動物房例行事務', tel: '02-7750-5517', img: 'images/people25.jpg' },
+                { name: isEn ? 'Yi-Chen Chiang' : '江宜臻', spec: isEn ? 'Animal Care' : '動物房例行事務', tel: '02-7750-5517', img: 'images/people26.jpg' },
+                { name: isEn ? 'Yi-Fang Lin' : '林怡芳', spec: isEn ? 'Animal Care' : '動物房例行事務', tel: '02-7750-5517', img: 'images/people27.jpg' },
+                { name: isEn ? 'Hung-Ming Sung' : '松泓銘', spec: isEn ? 'Animal Reception & Sterilization' : '動物房例行事務、動物接收及滅菌', tel: '02-7750-5500 #1883', img: 'images/people28.jpg' }
+            ])}
+
+            ${renderCategory(isEn ? 'Admin & IT' : '行政與資訊組', [
+                { name: isEn ? 'Shu-Fen Lu' : '呂淑芬 (資深經理)', spec: isEn ? 'Administration' : '行政部門管理', tel: '02-7750-5506', img: 'images/people7.jpg' },
+                { name: isEn ? 'Chia-Pei Tu' : '杜佳蓓 (秘書)', spec: isEn ? 'Secretarial Support' : '秘書業務', tel: '02-7750-5507', img: 'images/people8.jpg' },
+                { name: isEn ? 'Tai-Hsun Wu' : '吳泰勳 (資訊)', spec: isEn ? 'IT Specialist' : '資訊系統管理', tel: '02-7750-5522', img: 'images/people9.jpg' }
+            ])}
+
+            <div class="mt-16 pt-8 border-t-2 border-slate-100">
+                <h3 class="text-2xl font-bold text-slate-700 mb-6 text-center">${isEn ? 'Group Photos' : '團隊合照'}</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <img src="images/group1.jpg" class="rounded-xl shadow-lg hover:scale-105 transition duration-300 w-full h-64 object-cover">
+                    <img src="images/group2.jpg" class="rounded-xl shadow-lg hover:scale-105 transition duration-300 w-full h-64 object-cover">
+                    <img src="images/group3.png" class="rounded-xl shadow-lg hover:scale-105 transition duration-300 w-full h-64 object-cover">
+                </div>
+            </div>
+        </div>
+    `;
+}
+    
+    else if (type === 'intro') {
+        let introHTML = '';
+        if (currLang === 'zh') {
+            introHTML = `
+                <div class="p-2 md:p-4 text-justify">
+                    <h2 class="text-3xl md:text-4xl font-black text-tiffany mb-8 border-l-[12px] border-tiffany pl-6 uppercase tracking-tight">TMC 簡介</h2>
+                    <div class="text-lg md:text-xl text-slate-600 leading-[2.2] space-y-6">
+                        <p><strong class="text-slate-900">台灣小鼠診所 (Taiwan Mouse Clinic; TMC)</strong> 乃由國家科學及技術委員會生技醫藥核心設施平台及中央研究院生醫轉譯研究中心核心設施服務營運計畫補助的核心設施。</p>
+                        <p>目標為提供先進與多元化的表現型分析服務，及建立各式樣藥物安全性及藥效評估的標準化及客制化套裝服務，以協助學研界與產業界新藥之開發。</p>
+                        <p>我們提供服務包括：<span class="text-tiffany font-bold">人類疾病動物模式、藥效測試、藥物安全、神經行為、心血管疾病、病理研究、生理代謝、動物影像和免疫疾病</span>。針對特殊的需求，我們提供套組式或客製化之服務。</p>
+                        <p>您有各方面的實驗需求，由我們的執行長或研究部經理提供專業的解答及實驗服務之安排。</p>
+                        <div class="mt-10 pt-8 border-t border-slate-100">
+                            <p class="mb-4 text-slate-500 font-medium italic">如有任何問題或申請委託服務，煩請：</p>
+                            <a href="mailto:service@tmc.sinica.edu.tw" class="inline-flex items-center px-8 py-4 bg-tiffany text-white rounded-full font-black text-xl hover:bg-slate-800 shadow-lg transition-all transform hover:-translate-y-1">
+                                <i class="fas fa-envelope-open-text mr-3"></i>填寫 TMC 需求諮詢
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            introHTML = `
+                <div class="p-2 md:p-4 text-justify">
+                    <h2 class="text-3xl md:text-4xl font-black text-tiffany mb-8 border-l-[12px] border-tiffany pl-6 uppercase tracking-tight">About TMC</h2>
+                    <div class="text-lg md:text-xl text-slate-600 leading-[1.8] space-y-6 font-light">
+                        <p><strong class="text-slate-900 font-bold">The Taiwan Mouse Clinic (TMC)</strong> is a national core facility supported by the National Science and Technology Council (NSTC) and the Bio-Translational Research Center (BioTReC) of Academia Sinica.</p>
+                        <p>Our mission is to provide advanced and diverse phenotyping services, and to establish standardized and customized packages for drug safety and efficacy evaluation, accelerating drug development for both academia and industry.</p>
+                        <p>Our comprehensive services include: <span class="text-tiffany font-bold italic">Human Disease Models, Efficacy Testing, Drug Safety, Neurobehavior, Cardiovascular, Pathology, Metabolism, Animal Imaging, and Immunology</span>. We offer both modular and bespoke service packages tailored to specific research needs.</p>
+                        <p>For professional consultation and service arrangements, our CEO and Research Managers are available to provide expert guidance for your experimental requirements.</p>
+                        <div class="mt-10 pt-8 border-t border-slate-100">
+                            <p class="mb-4 text-slate-500 font-medium italic">For inquiries or service applications, please:</p>
+                            <a href="mailto:service@tmc.sinica.edu.tw" class="inline-flex items-center px-8 py-4 bg-tiffany text-white rounded-full font-black text-xl hover:bg-slate-800 shadow-lg transition-all transform hover:-translate-y-1">
+                                <i class="fas fa-envelope-open-text mr-3"></i>Contact TMC Service
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        body.innerHTML = introHTML;
+    }
+
+    else if (type === 'animal-intro') {
+        const isEn = currLang === 'en';
+        body.innerHTML = `
+            <div class="space-y-12 animate-fadeIn text-slate-700 pb-10">
+                <div class="border-l-[10px] border-tiffany pl-8 mb-10">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight">
+                        ${isEn ? 'Animal Facility' : '動物房簡介'}
+                    </h2>
+                    <p class="text-tiffany text-xl md:text-2xl font-bold mt-2">
+                        ${isEn ? 'SPF Environment & Infrastructure' : 'SPF 等級環境與設施規格'}
+                    </p>
+                </div>
+
+                <section>
+                    <h3 class="flex items-center text-2xl md:text-3xl font-bold text-slate-800 mb-8 bg-slate-100 p-4 rounded-xl">
+                        <i class="fas fa-tools mr-4 text-tiffany"></i> 
+                        ${isEn ? 'Facility Design' : '建材設計'}
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm hover:border-tiffany transition-all">
+                            <h4 class="text-xl font-black mb-4 text-tiffany"><i class="fas fa-layer-group mr-2"></i>${isEn ? 'Seamless Flooring' : '無縫橡膠地坪'}</h4>
+                            <p class="text-lg leading-relaxed text-slate-600">
+                                ${isEn ? 'Seamless rubber flooring reduces contamination risk and withstands chemical disinfectants while remaining easy to repair.' : '採用無縫橡膠地坪，降低藏污納垢機會，耐消毒藥劑清潔，同時方便維修。'}
+                            </p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm hover:border-tiffany transition-all">
+                            <h4 class="text-xl font-black mb-4 text-tiffany"><i class="fas fa-lightbulb mr-2"></i>${isEn ? 'Sealed Lighting' : '密閉燈罩'}</h4>
+                            <p class="text-lg leading-relaxed text-slate-600">
+                                ${isEn ? 'Ceiling lights feature sealed covers to prevent external contamination and allow maintenance without disrupting operations.' : '天花板燈具採用密閉燈罩，避免外界污染，方便維修且不干擾動物房正常運作。'}
+                            </p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm hover:border-tiffany transition-all">
+                            <h4 class="text-xl font-black mb-4 text-tiffany"><i class="fas fa-shield-alt mr-2"></i>${isEn ? 'Stainless & R-Corners' : '不鏽鋼與 R 角'}</h4>
+                            <p class="text-lg leading-relaxed text-slate-600">
+                                ${isEn ? 'Stainless steel surfaces with R-corner designs and silicone sealing prevent dirt accumulation in corners.' : '庫版牆採耐藥劑不鏽鋼材質。所有邊緣均以矽膠填補，角落採 R 角圓弧設計，徹底避免藏污納垢。'}
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-slate-50 rounded-[40px] p-8 md:p-12 border border-slate-200 shadow-inner">
+                    <h3 class="flex items-center text-2xl md:text-3xl font-bold text-slate-800 mb-8">
+                        <i class="fas fa-wind mr-4 text-tiffany"></i> 
+                        ${isEn ? 'Airflow & Barrier Systems' : '氣流屏障'}
+                    </h3>
+                    <div class="space-y-8">
+                        <div class="flex flex-col md:flex-row gap-6 items-start border-b border-slate-200 pb-6">
+                            <div class="min-w-[180px] font-black text-2xl text-slate-800">HEPA Filter</div>
+                            <p class="text-lg leading-relaxed">
+                                ${isEn ? 'Incoming air is filtered through 99.97% HEPA filters. External air and recirculation systems maintain a constant temperature.' : '進入飼養區之空氣均經過 99.97% 之 HEPA 高效率濾網過濾，避免病原侵入，並建立恆溫環境。'}
+                            </p>
+                        </div>
+                        
+                        <div class="flex flex-col md:flex-row gap-6 items-start border-b border-slate-200 pb-6">
+                            <div class="min-w-[180px] font-black text-2xl text-tiffany">IVC System</div>
+                            <p class="text-lg leading-relaxed">
+                                ${isEn ? 'We use <a href="https://www.allentowninc.com/rodent-housing/nexgen/" target="_blank" class="text-tiffany font-bold hover:underline">Allentown (USA) NexGen IVC</a> systems. Air is 99.99% HEPA filtered with 50 air changes per hour and +1pa micro-positive pressure.' : '採用美國 <a href="https://www.allentowninc.com/rodent-housing/nexgen/" target="_blank" class="text-tiffany font-bold hover:underline">Allentown IVC</a> 系統。進出氣一律經 99.99% HEPA 過濾，維持微正壓 (+1pa)，換氣率每小時 50 次，避免交叉感染。'}
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-tiffany">
+                                <span class="block font-black text-xl text-slate-800 mb-2">${isEn ? 'Pressure Gradient' : '梯度正壓差'}</span>
+                                <p class="text-sm font-mono text-slate-500">
+                                    ${isEn ? 'Room (+20pa) > Anteroom (+15pa) > Corridor (+10pa) > Buffer (+0pa)' : '動物房(+20pa) ＞ 前室(+15pa) ＞ 走道(+10pa) ＞ 緩衝區(+0pa)'}
+                                </p>
+                            </div>
+                            <a href="https://tmc.sinica.edu.tw/images/Air_Shower.jpg" target="_blank" 
+                               class="bg-slate-800 p-6 rounded-2xl shadow-sm border-l-8 border-tiffany group hover:bg-slate-700 transition-all flex justify-between items-center">
+                                <div>
+                                    <span class="block font-black text-xl text-white mb-1">${isEn ? 'Air Shower (View Image)' : '氣淨室 (點擊查看圖片)'}</span>
+                                    <p class="text-sm text-slate-400">${isEn ? 'High-velocity air jets remove dust particles from personnel.' : '進入通道加裝氣淨裝置，清除人員身上之粉塵顆粒。'}</p>
+                                </div>
+                                <i class="fas fa-external-link-alt text-tiffany text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="space-y-6">
+                        <h3 class="flex items-center text-2xl font-bold text-slate-800"><i class="fas fa-desktop mr-4 text-tiffany"></i> ${isEn ? 'Monitoring' : '監控系統'}</h3>
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 space-y-4">
+                            <p class="text-lg"><b>${isEn ? 'Environment' : '環境監控'}：</b> ${isEn ? 'Constant temp/humidity, 12h light cycle.' : '保持恆溫、恆濕、固定壓差及 12 小時光週期。'}</p>
+                            <p class="text-lg"><b>${isEn ? 'Surveillance' : '監視攝影'}：</b> ${isEn ? '24/7 real-time video monitoring.' : '各處設有即時影像系統，監測人員及環境狀況。'}</p>
+                            <p class="text-lg"><b>${isEn ? 'Access Control' : '門禁管制'}：</b> ${isEn ? 'Strict identity logging for all entries.' : '入口及房間均設管制系統，嚴格紀錄進出狀況。'}</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <h3 class="flex items-center text-2xl font-bold text-slate-800"><i class="fas fa-check-double mr-4 text-tiffany"></i> ${isEn ? 'Regular Testing' : '定期監測'}</h3>
+                        <div class="bg-tiffany/5 p-6 rounded-2xl border border-tiffany/20 space-y-4">
+                            <p class="text-lg"><b>${isEn ? 'Health' : '健康監測'}：</b> ${isEn ? 'Quarterly SPF sentinel mice screening (ELISA).' : '符合 SPF 等級，每季對衛兵鼠進行病原體檢查。'}</p>
+                            <p class="text-lg"><b>${isEn ? 'Microbial' : '落菌監測'}：</b> ${isEn ? 'Monthly air quality and HEPA efficiency tests.' : '每月進行落菌監測，確保空氣品質與效能。'}</p>
+                            <p class="text-lg"><b>${isEn ? 'Water' : '水質監測'}：</b> ${isEn ? 'Daily RO water monitoring and monthly bacteria tests.' : '每日監控 RO 水質，每月進行生菌數監測。'}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+else if (type === 'animal-env') {
+        const isEn = currLang === 'en';
+        body.innerHTML = `
+            <div class="space-y-12 animate-fadeIn text-slate-700 pb-10">
+                <div class="border-l-[10px] border-tiffany pl-8 mb-10">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight">
+                        ${isEn ? 'Environment & Husbandry' : '環境與飼養管理'}
+                    </h2>
+                    <p class="text-tiffany text-xl md:text-2xl font-bold mt-2">
+                        ${isEn ? 'Standardized Care & SPF Monitoring' : '標準化飼養環境與 SPF 監測規範'}
+                    </p>
+                </div>
+
+                <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-3xl border-2 border-slate-100 shadow-sm">
+                        <h3 class="text-2xl font-black mb-6 text-slate-800 flex items-center">
+                            <i class="fas fa-sun mr-3 text-orange-400"></i> ${isEn ? 'Photoperiod' : '光照週期'}
+                        </h3>
+                        <p class="text-xl leading-relaxed">
+                            A 12 light / 12 dark cycle <br>
+                            <span class="text-slate-500 text-lg">(7:00 am to 7:00 pm lights on)</span>
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border-2 border-slate-100 shadow-sm">
+                        <h3 class="text-2xl font-black mb-6 text-slate-800 flex items-center">
+                            <i class="fas fa-thermometer-half mr-3 text-red-400"></i> ${isEn ? 'Temp & Humidity' : '溫度及溼度'}
+                        </h3>
+                        <p class="text-xl leading-relaxed font-mono">
+                            18 ~ 26 ℃ <br>
+                            30 ~ 70 % RH
+                        </p>
+                    </div>
+                </section>
+
+                <section class="space-y-8">
+                    <div class="bg-slate-50 p-8 rounded-[40px] border border-slate-200 shadow-inner">
+                        <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8 flex items-center">
+                            <i class="fas fa-utensils mr-4 text-tiffany"></i> ${isEn ? 'Diet & Bedding' : '飲水、飼料與墊料'}
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="space-y-4">
+                                <h4 class="text-xl font-black text-tiffany underline underline-offset-8">${isEn ? 'Water' : '飲水'}</h4>
+                                <p class="text-lg leading-relaxed">
+                                    ${isEn ? 'Fresh RO water treated with UV irradiation is available at all times.' : '動物必須隨時能得到乾淨、新鮮的飲水（經紫外線照射之 RO 水）。'}
+                                </p>
+                            </div>
+                            <div class="space-y-4">
+                                <h4 class="text-xl font-black text-tiffany underline underline-offset-8">${isEn ? 'Diet' : '飼料'}</h4>
+                                <p class="text-lg leading-relaxed">
+                                    <b class="text-slate-900">5053-PicoLab® Rodent Diet 20</b><br>
+                                    <span class="text-base text-slate-600">${isEn ? '(Protein: 21%, Fat: 11.3%, etc.)' : '(含 Protein 21%, Fat 11.3% 等)'}</span>
+                                </p>
+                            </div>
+                            <div class="space-y-4">
+                                <h4 class="text-xl font-black text-tiffany underline underline-offset-8">${isEn ? 'Bedding' : '墊料'}</h4>
+                                <p class="text-lg leading-relaxed">
+                                    <b class="text-slate-900">LIGNOCEL® 3-4 S</b><br>
+                                    <span class="text-base text-slate-600">
+                                        ${isEn ? 'Spruce fiber, 2.0-4.0mm, Dust free (<0.5%).' : '原料：杉木、原木纖維化顆粒、大小：2.0-4.0mm、低粉塵 (<0.5%)。'}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="flex items-center text-2xl md:text-3xl font-bold text-slate-800 mb-8 bg-slate-800 text-white p-4 rounded-xl">
+                        <i class="fas fa-microscope mr-4 text-tiffany"></i> 
+                        ${isEn ? 'SPF Health Monitoring List' : 'SPF 項目監測清單'}
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div class="bg-white border-2 border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+                            <div class="bg-tiffany p-4 text-white">
+                                <h4 class="text-2xl font-black text-center">Mice SPF List (12 items)</h4>
+                                <p class="text-center text-sm opacity-90 mt-1">Method: ELISA / Frequency: Seasonal</p>
+                            </div>
+                            <ul class="p-6 grid grid-cols-1 gap-2 text-lg">
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Ectromelia virus (Mouse Pox)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50 font-italic italic"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Mycoplasma pulmonis</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Mouse hepatitis virus (MHV)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Pneumonia virus of mice (PVM)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> TMEV (GD VII)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Lymphocytic choriomeningitis virus (LCMV)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Minute virus of mice (MVM)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Mouse adenovirus (MAd)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Hantaan virus</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Sendai virus</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Mouse parvovirus (MPV)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Reovirus 3 (Reo3)</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white border-2 border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+                            <div class="bg-slate-700 p-4 text-white">
+                                <h4 class="text-2xl font-black text-center">Rat SPF List (10 items)</h4>
+                                <p class="text-center text-sm opacity-90 mt-1">Method: ELISA / Frequency: Seasonal</p>
+                            </div>
+                            <ul class="p-6 grid grid-cols-1 gap-2 text-lg">
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Kilham rat virus (KRV)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50 font-italic italic"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Mycoplasma pulmonis</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Lymphocytic choriomeningitis virus (LCMV)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Pneumonia virus of mice (PVM)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Rat parvovirus (RPV)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Rat Theilovirus (RTV)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Sialodacryoadenitis virus (SDAV)</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Sendai virus</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Hantaan virus</li>
+                                <li class="flex items-center py-1 border-b border-slate-50"><i class="fas fa-check text-tiffany mr-3 text-sm"></i> Reovirus 3 (Reo3)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        `;
+    }
+
+    else if (type === 'animal-checkin') {
+        window.open('https://drive.google.com/file/d/1xGTd8uCdYMZXV83LOYKNF_qle5gUGjtl/view?usp=drive_link', '_blank');
+        return; // 直接跳轉，不開啟 Modal
+    }
+    else if (type === 'animal-checkout') {
+        window.open('https://drive.google.com/file/d/1cpMRfbdxoq45jtAKJ0saV3xNEkA4dlTV/view?usp=drive_link', '_blank');
+        return;
+    }
+    else if (type === 'animal-transport') {
+        window.open('https://drive.google.com/file/d/1YoU3ltqYx-C_2tkDzdbGEvVkx9FOQjlM/view?usp=drive_link', '_blank');
+        return;
+    }
+else if (type === 'animal-spf') {
+        const isEn = currLang === 'en';
+        body.innerHTML = `
+            <div class="space-y-12 animate-fadeIn text-slate-700 pb-10">
+                <div class="border-l-[10px] border-tiffany pl-8 mb-10">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight">
+                        ${isEn ? 'SPF Rederivation Service' : 'SPF 小鼠淨化服務'}
+                    </h2>
+                    <p class="text-tiffany text-xl md:text-2xl font-bold mt-2">
+                        ${isEn ? 'Non-rederivation via Embryo Transfer' : '非 sacrificed 式胚胎移植淨化技術'}
+                    </p>
+                </div>
+
+                <section class="bg-slate-900 p-8 md:p-10 rounded-[30px] text-white shadow-xl">
+                    <h3 class="text-2xl font-black mb-6 flex items-center text-tiffany">
+                        <i class="fas fa-check-circle mr-3"></i> 
+                        ${isEn ? 'Key Technology Advantage' : '技術關鍵優勢'}
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg md:text-xl leading-relaxed">
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-tiffany/80 border-b border-tiffany/20 pb-2">${isEn ? 'Traditional Method' : '傳統淨化技術'}</h4>
+                            <p class="text-slate-300">
+                                ${isEn ? 'Traditionally, rederivation requires sacrificing the valuable founder animals to harvest embryos.' : '過去的淨化技術需犧牲種原將胚胎取出。'}
+                            </p>
+                        </div>
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-tiffany/80 border-b border-tiffany/20 pb-2">${isEn ? 'Our Service' : 'TMC 之優化服務'}</h4>
+                            <p class="text-white">
+                                ${isEn ? 'We provide a purified rederivation service that DOES NOT require sacrificing the valuable founder animals.' : '本單位提供之動物淨化服務可不需犧牲種源。'}
+                                <br><strong class="text-tiffany">${isEn ? 'This allows the direct lineage of precious strains to be preserved.' : '對於較珍貴品系動物可延續使用。'}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="flex items-center text-2xl md:text-3xl font-bold text-slate-800 mb-8 bg-slate-100 p-4 rounded-xl">
+                        <i class="fas fa-route mr-4 text-tiffany"></i> 
+                        ${isEn ? 'Standardized Purified Rederivation Workflow' : '標準化胚胎移植淨化流程'}
+                    </h3>
+                    
+                    <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm transition hover:shadow-lg text-center">
+                        <img src="images/upgrade_SPF.jpg" 
+                             onerror="this.src='https://via.placeholder.com/800x600?text=images/upgrade_SPF.jpg+Not+Found"
+                             class="max-w-full h-auto rounded-xl mx-auto" 
+                             alt="${isEn ? 'SPF Rederivation Workflow Chart' : 'SPF 小鼠淨化服務流程圖'}">
+                        <p class="text-sm text-slate-500 mt-4 italic">
+                            ${isEn ? '*Workflow chart: Upgrade SPF standard without rederivation by means of embryo transfer.' : '*本流程展示「非 sacrificed 式胚胎移植技術」升級小鼠 SPF 標準。'}
+                        </p>
+                    </div>
+                </section>
+
+                <section class="bg-slate-50 p-6 rounded-3xl">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center text-xl"><i class="fas fa-exclamation-triangle mr-2 text-red-400"></i> ${isEn ? 'Service Inquiry' : '注意事項與申請諮詢'}</h3>
+                    <ul class="text-lg space-y-3 text-slate-600">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-tiffany mt-1 mr-3 text-sm"></i> ${isEn ? 'Strains with severe immunodeficiency may require bespoke consultation.' : '嚴重免疫缺陷品系之淨化可能需客製化諮詢。'}</li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-tiffany mt-1 mr-3 text-sm"></i> ${isEn ? 'Founders must pass health screening before transfer. (elisa-12)' : '種原入室前需符合規定之12項病原體檢疫通過 (ELISA-12)。'}</li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-tiffany mt-1 mr-3 text-sm"></i> ${isEn ? 'For professional consultation and service arrangements, please contact us.' : '如有任何問題或申請委託服務，由營運長提供專業的解答及服務之安排。'}</li>
+                    </ul>
+                </section>
+            </div>
+        `;
+    }
+
+else if (type === 'animal-health') {
+        const isEn = currLang === 'en';
+        const allRocYears = [];
+        for (let y = 114; y >= 98; y--) { allRocYears.push(y); }
+
+        const zones = [
+            { id: 'tmc', zh: 'Mouse/Rat Hotel', en: 'Mouse/Rat Hotel', start: 99 },
+            { id: 'AIF', zh: '動物影像設施飼育房', en: 'Animal Imaging Facility', start: 109 },
+            { id: 'RAA', zh: '進駐廠商飼育區', en: 'Resident Vendor Area', start: 109 },
+            { id: 'OPT', zh: '進駐單位飼育區', en: 'Resident Unit Area', start: 109 }
+        ];
+
+        // 動態更新年份下拉選單（根據區域起始年份）
+        window.updateHealthYearOptions = function() {
+            const zoneId = document.getElementById('health-zone-select').value;
+            const zone = zones.find(z => z.id === zoneId);
+            const yearSelect = document.getElementById('health-year-select');
+            const currentSelected = yearSelect.value;
+            
+            // 過濾年份
+            const filteredYears = allRocYears.filter(y => y >= zone.start);
+            
+            yearSelect.innerHTML = filteredYears.map(y => 
+                `<option value="${y}" ${y == currentSelected ? 'selected' : ''}>${y}${isEn ? ' Year' : ' 年度'} (${y+1911})</option>`
+            ).join('');
+
+            // 如果原本選的年份在該區域不存在，強制選最新一年
+            if (parseInt(currentSelected) < zone.start) {
+                yearSelect.value = filteredYears[0];
+            }
+            
+            window.updateHealthReport();
+        };
+
+        window.updateHealthReport = function() {
+            const year = document.getElementById('health-year-select').value;
+            const suffix = document.getElementById('health-zone-select').value;
+            const adYear = parseInt(year) + 1911;
+            const grid = document.getElementById('health-reports-grid');
+            if(!grid) return;
+
+            const quarters = [
+                { q: 1, m: '03', name: isEn ? 'Q1 (Mar)' : '第一季 (3月)' },
+                { q: 2, m: '06', name: isEn ? 'Q2 (Jun)' : '第二季 (6月)' },
+                { q: 3, m: '09', name: isEn ? 'Q3 (Sep)' : '第三季 (9月)' },
+                { q: 4, m: '12', name: isEn ? 'Q4 (Dec)' : '第四季 (12月)' }
+            ];
+
+            grid.innerHTML = quarters.map(item => {
+                const pdfUrl = `https://tmc.sinica.edu.tw/files/${adYear}.${item.m}_${suffix}.pdf`;
+                return `
+                <a href="${pdfUrl}" target="_blank" class="flex flex-col items-center justify-center p-8 rounded-[2.5rem] border-2 border-slate-100 bg-white hover:border-tiffany hover:shadow-2xl hover:-translate-y-2 transition-all group animate-slideUp">
+                    <div class="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-4 group-hover:bg-tiffany/10 transition-all">
+                        <i class="fas fa-file-medical-alt text-3xl text-slate-300 group-hover:text-tiffany transition-all"></i>
+                    </div>
+                    <span class="text-[10px] font-black text-tiffany uppercase tracking-widest mb-1">Quarter ${item.q}</span>
+                    <span class="text-xl font-black text-slate-700 group-hover:text-tiffany">${item.name}</span>
+                    <div class="mt-6 flex items-center text-xs font-bold text-slate-400 group-hover:text-slate-800 transition-colors">
+                        <i class="fas fa-cloud-download-alt mr-2"></i> ${isEn ? 'VIEW PDF' : '查看報告'}
+                    </div>
+                </a>`;
+            }).join('');
+        };
+
+        body.innerHTML = `
+            <div class="space-y-8 animate-fadeIn pb-10">
+                <div class="border-l-[12px] border-tiffany pl-6">
+                    <h2 class="text-3xl font-black text-slate-800">${isEn ? 'Health Monitoring' : '健康監測報告'}</h2>
+                </div>
+                <div class="bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-3">
+                        <label class="text-[18px] font-black text-slate-500 uppercase tracking-widest ml-1">${isEn ? '1. Select Area' : '1. 選擇區域'}</label>
+                        <select id="health-zone-select" onchange="updateHealthYearOptions()" class="w-full bg-slate-800 border-none rounded-2xl px-6 py-4 font-bold text-white focus:ring-2 focus:ring-tiffany outline-none cursor-pointer appearance-none transition-all hover:bg-slate-700">
+                            ${zones.map(z => `<option value="${z.id}">${isEn ? z.en : z.zh}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="text-[18px] font-black text-slate-500 uppercase tracking-widest ml-1">${isEn ? '2. Select Year' : '2. 選擇年份'}</label>
+                        <select id="health-year-select" onchange="updateHealthReport()" class="w-full bg-slate-800 border-none rounded-2xl px-6 py-4 font-bold text-white focus:ring-2 focus:ring-tiffany outline-none cursor-pointer appearance-none transition-all hover:bg-slate-700">
+                            </select>
+                    </div>
+                </div>
+                <div class="bg-slate-50/50 rounded-[3.5rem] p-8 border-2 border-dashed border-slate-200">
+                    <div id="health-reports-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+                </div>
+            </div>`;
+
+        // 初始執行：先更新選單，再渲染報告
+        setTimeout(() => updateHealthYearOptions(), 10);
+    }
+
+else if (type === 'animal-env-mon') {
+        const isEn = currLang === 'en';
+        // 建立年份清單 (民國 114 ~ 98)
+        const rocYears = [];
+        for (let y = 114; y >= 98; y--) { rocYears.push(y); }
+
+        // 核心渲染函式：更新月份網格
+        window.updateEnvYear = function(selectedRocYear) {
+            const adYear = parseInt(selectedRocYear) + 1911;
+            const grid = document.getElementById('env-months-grid');
+            if(!grid) return;
+
+            // 產生 12 個月份的按鈕 (倒序排列)
+            grid.innerHTML = Array.from({length: 12}, (_, i) => i + 1).reverse().map(m => {
+                const monthStr = m < 10 ? '0' + m : m;
+                // 連結規則：https://tmc.sinica.edu.tw/files/YYYY.MM.pdf
+                const pdfUrl = `https://tmc.sinica.edu.tw/files/${adYear}.${monthStr}.pdf`;
+                
+                return `
+                <a href="${pdfUrl}" target="_blank" 
+                   class="flex flex-col items-center justify-center p-6 rounded-3xl border-2 border-slate-100 bg-white hover:border-tiffany hover:shadow-2xl hover:-translate-y-1 transition-all group animate-slideUp">
+                    <span class="text-2xl font-black text-slate-700 group-hover:text-tiffany">${m}${isEn ? 'M' : '月'}</span>
+                    <div class="mt-2 flex items-center text-slate-300 group-hover:text-tiffany/60 transition-colors">
+                        <i class="fas fa-file-pdf mr-1"></i>
+                        <span class="text-[10px] font-bold">PDF</span>
+                    </div>
+                </a>
+                `;
+            }).join('');
+        };
+
+        body.innerHTML = `
+            <div class="space-y-8 animate-fadeIn pb-10">
+                <div class="border-l-[12px] border-tiffany pl-6">
+                    <h2 class="text-3xl font-black text-slate-800 tracking-tight">${isEn ? 'Environmental Monitoring' : '環境監測報告'}</h2>
+                    <p class="text-tiffany font-bold text-sm tracking-wide uppercase opacity-80">Climate Control Logs</p>
+                </div>
+
+                <div class="bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+                        <div class="space-y-3">
+                            <label class="text-[18px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1 flex items-center">
+                                <i class="fas fa-search mr-2 text-tiffany"></i>
+                                ${isEn ? 'Quick Search' : '快速檢索'}
+                            </label>
+                            <div class="text-white font-medium text-md opacity-60 ml-1">
+                                ${isEn ? 'View monthly temperature and humidity logs.' : '查看各年度每月溫濕度與光照紀錄。'}
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="text-[18px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1 flex items-center">
+                                <i class="fas fa-calendar-alt mr-2 text-tiffany"></i>
+                                ${isEn ? 'Select Year' : '選擇年度'}
+                            </label>
+                            <select id="env-year-select" onchange="updateEnvYear(this.value)" class="w-full bg-slate-800 border-none rounded-2xl px-6 py-4 font-bold text-white focus:ring-2 focus:ring-tiffany outline-none cursor-pointer appearance-none transition-all hover:bg-slate-700">
+                                ${rocYears.map(y => `<option value="${y}">${y}${isEn ? ' Year' : ' 年度'} (${y+1911})</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50/50 rounded-[3.5rem] p-8 md:p-12 border-2 border-dashed border-slate-200">
+                    <div id="env-months-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
+                        </div>
+                </div>
+
+                <div class="flex flex-col items-center text-slate-400 space-y-2">
+                    <div class="h-px w-20 bg-slate-200"></div>
+                    <p class="text-[11px] font-medium tracking-wide">
+                        <i class="fas fa-info-circle text-tiffany/60 mr-1"></i> 
+                        ${isEn ? 'Data updated monthly based on sensor readings.' : '數據根據感測器紀錄每月定期更新。'}
+                    </p>
+                </div>
+            </div>
+        `;
+
+        // 初始載入：預設置頂年份 (rocYears[0] 即 114年)
+        setTimeout(() => updateEnvYear(rocYears[0]), 10);
+    }
+
+    else if (aboutData[type]) {
+        const data = aboutData[type];
+        if (!data) return;
+// 如果是組織架構，我們可以針對其容器增加一個特定的 class 來放大字體
+    const extraClass = type === 'org' ? 'text-lg md:text-xl' : '';
+        body.innerHTML = `
+            <h2 class="text-2xl md:text-3xl font-black text-tiffany mb-6">${data.title[currLang]}</h2>
+            <div class="prose max-w-none text-slate-700 ${extraClass}">${data.content[currLang]}</div>
+        `;
+    }
+
+    // 最後統一顯示 Modal 並鎖定捲軸
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+// 輔助函式：渲染類別區塊
+function renderCategory(title, members) {
+    return `
+        <div class="mb-14">
+            <h3 class="text-xl font-bold text-tiffany mb-8 flex items-center">
+                <span class="w-8 h-1 bg-tiffany mr-3"></span>
+                ${title}
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                ${members.map(m => `
+                    <div class="flex items-start p-5 bg-slate-50 rounded-2xl border border-slate-100 transition hover:shadow-lg group">
+                        
+                        <div class="w-24 h-24 rounded-full border-2 border-white shadow-sm flex-shrink-0 overflow-hidden">
+                            <img src="${m.img}" 
+                                 class="w-full h-full object-cover transition duration-300 transform group-hover:scale-110" 
+                                 onerror="this.src='https://via.placeholder.com/150?text=No+Image'"
+                                 alt="${m.name}">
+                        </div>
+
+                        <div class="ml-5 flex-1">
+                            <h4 class="text-lg font-black text-slate-800">${m.name}</h4>
+                            <p class="text-sm text-slate-600 leading-snug mb-3">${m.spec}</p>
+                            
+                            <div class="flex items-center text-sm text-tiffany font-bold font-mono bg-white inline-block px-2 py-1 rounded-lg border border-tiffany/20 shadow-sm">
+                                <i class="fas fa-phone-alt mr-2 opacity-80"></i>
+                                ${m.tel}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function openOther(type) {
+    if (type === 'links') {
+        const title = currLang === 'zh' ? '友站連結' : 'Useful Links';
+        
+        let html = `
+            <div class="animate-fadeIn">
+                <h2 class="text-3xl font-black text-slate-800 mb-8 border-l-8 border-tiffany pl-4">${title}</h2>
+                
+                <div class="mb-10">
+                    <h3 class="text-xl font-bold text-tiffany mb-4 flex items-center">
+                        <i class="fas fa-globe-americas mr-2"></i>
+                        <span data-i18n="link-intl">${currLang === 'zh' ? '國外機構' : 'International Institutes'}</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${createLinkCard("Toronto Centre for Phenogenomics", "加拿大 TCP", "https://phenogenomics.ca/", "fa-map-marker-alt")}
+                        ${createLinkCard("Institut clinique de la Souris", "法國 ICS", "https://ics-mci.fr/en/", "fa-map-marker-alt")}
+                        ${createLinkCard("German Mouse Clinic", "德國 GMC", "https://www.mouseclinic.de/", "fa-map-marker-alt")}
+                        ${createLinkCard("MRC Harwell", "英國 MRC", "https://www.har.mrc.ac.uk/", "fa-map-marker-alt")}
+                        ${createLinkCard("Riken", "日本 Riken", "https://www.riken.jp/en/", "fa-map-marker-alt")}
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-tiffany mb-4 flex items-center">
+                        <i class="fas fa-landmark mr-2"></i>
+                        <span data-i18n="link-domestic">${currLang === 'zh' ? '國內設施' : 'Domestic Facilities'}</span>
+                    </h3>
+                    
+                    <h4 class="font-bold text-slate-600 mb-3 ml-2">1. ${currLang === 'zh' ? '合作核心設施' : 'Collaborative Facilities'}</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        ${createLinkCard("NYCU Small Animal Imaging Core", "陽明交大腦科學小動物影像", "https://saic.brc.nycu.edu.tw/", "fa-microscope")}
+                        ${createLinkCard("Animal Magnetic Resonance Imaging", "動物影像設施", "https://tmc.sinica.edu.tw/magnetic_c.html", "fa-wave-square")}
+                        ${createLinkCard("NCKU-Lac", "成大醫學院實驗動物中心", "https://animal.ncku.edu.tw/index.php", "fa-hospital")}
+                        ${createLinkCard("KCGMH Phenomics Lab", "高雄長庚病原診斷核心實驗室", "https://www.cgmh.org.tw/intr/intr4/c8s110/index.html", "fa-stethoscope")}
+                    </div>
+
+                    <h4 class="font-bold text-slate-600 mb-3 ml-2">2. ${currLang === 'zh' ? '聯合服務網' : 'Network Service'}</h4>
+                    <div class="grid grid-cols-1">
+                        ${createLinkCard("Preclinical Core Facility (Stroke Models)", "心血管與中風再生醫學前臨床設施", "https://www.ibms.sinica.edu.tw/cvscore/index.html", "fa-heartbeat")}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('aboutBody').innerHTML = html;
+        document.getElementById('aboutModal').style.display = 'block';
+    }
+}
+
+// 輔助函式：建立美觀的連結卡片
+function createLinkCard(enName, zhName, url, icon) {
+    return `
+        <a href="${url}" target="_blank" class="flex items-center p-4 bg-slate-50 rounded-xl border border-transparent hover:border-tiffany hover:bg-white hover:shadow-lg transition-all group">
+            <div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-tiffany shadow-md mr-4 group-hover:scale-110 transition-transform">
+                <i class="fas ${icon} text-xl"></i>
+            </div>
+            <div>
+                <div class="text-md font-bold text-slate-800">${currLang === 'zh' ? zhName : enName}</div>
+                <div class="text-sm text-slate-500 truncate w-48 md:w-64">${enName}</div>
+            </div>
+            <i class="fas fa-external-link-alt ml-auto text-slate-300 group-hover:text-tiffany text-xs"></i>
+        </a>
+    `;
+}
+
+        function closeAbout() {
+        document.getElementById('aboutModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+       function openModal(category) {
+    const data = serviceData[category];
+    if (!data) return;
+
+    // 1. 定義雙語備註內容
+    const notes = {
+        'neuro': {
+            zh: '電子式馮佛雷纖維細絲測試：上述收費標準為每試驗(每隻小鼠測1腳掌)',
+            en: 'Electronic von Frey test: The above rate is per trial (one hind paw per mouse).'
+        },
+        'cardio': {
+            zh: '遙測心電圖分析因耗人力，僅接受藥物篩檢和藥物開發實驗之申請。',
+            en: 'Telemetry ECG analysis is labor-intensive; applications are only accepted for drug screening and development experiments.'
+        },
+        'pathology': {
+            zh: '1. 常規病理組織 H&E 染色服務包括每片玻片上提供兩個組織切片。其他類型的切片服務和價格可另行商議。。<br>2. 血清生化及全血球計數請於兩個工作天前提出申請，否則將以急件處理(兩倍收費)。<br>3. 動物入室當天擬進行病理實驗，請於中午前將動物送達 TMC，否則實驗將延後進行。',
+            en: '1. Routine H&E staining includes two sections per slide.<br>2. Biochemistry and CBC requests must be submitted 2 working days in advance.<br>3. Animals must arrive at TMC before noon on the pathological experiment day. Otherwise, the experiments will be postponed.'
+        },
+        'metabolism': {
+            zh: '1. A12-A-2.2.4 TSE 代謝系統分析含新陳代謝率、實驗前後之體重及滾輪測量。<br>2. A12-A-2.2.4.2 及 2.2.4.3 需搭配 2.2.4 一同進行。<br>3. TSE 變溫實驗最低消費最少10隻小鼠。<br>4. 檢測 A12-A-2.4 體組成分析之小鼠請勿帶有磁性金屬耳標。',
+            en: '1. A12-A-2.2.4 includes metabolic rate, body weight before/after the test, and running wheel.<br>2. 2.2.4.2 & 2.2.4.3 must be performed with 2.2.4.<br>3. Minimum charge for TSE temperature experiment is 10 mice.<br>4. For A12-A-2.4 body composition, please avoid placing any megnetic metal tags on tested mice.'
+        }
+    };
+
+    // 核心邏輯：優先抓 data 裡的 footerNotes，沒有才抓 notes
+    let currentNote = "";
+    if (data.footerNotes && data.footerNotes[currLang]) {
+        currentNote = Array.isArray(data.footerNotes[currLang]) 
+                      ? data.footerNotes[currLang].join('<br>') 
+                      : data.footerNotes[currLang];
+    } else if (notes[category] && notes[category][currLang]) {
+        currentNote = notes[category][currLang];
+    }
+
+    const noteLabel = currLang === 'zh' ? '備註' : 'Note';
+
+    // 2. 組合 HTML 結構
+    let tableHTML = `
+        <div class="flex flex-col md:flex-row md:items-start gap-4 mb-8">
+            <h2 class="text-3xl font-black border-l-8 border-tiffany pl-4 whitespace-nowrap">
+                ${data.title[currLang]}
+            </h2>
+            
+            ${currentNote ? `
+                <div class="flex-1 bg-amber-50 border border-amber-200 p-4 rounded-xl shadow-sm">
+                    <p class="text-amber-700 text-sm font-bold leading-relaxed">
+                        <i class="fas fa-exclamation-circle mr-1"></i> ${noteLabel}：<br>
+                        <span class="font-medium">${currentNote}</span>
+                    </p>
+                </div>
+            ` : ''}
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-slate-800 text-white">
+                        <th class="p-4 text-left">${translations[currLang]['th-code']}</th>
+                        <th class="p-4 text-left">${translations[currLang]['th-item']}</th>
+                        <th class="p-4 text-center">${translations[currLang]['th-acad']}</th>
+                        <th class="p-4 text-center">${translations[currLang]['th-ind']}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.costs.map(row => {
+                        const isPaused = typeof row[0] === 'string' && row[0].includes('<s>');
+                        
+                        // 設定 Row 樣式
+                        const rowClass = isPaused ? 'border-b text-slate-400 opacity-60' : 'border-b hover:bg-slate-50 transition-colors';
+                        const codeClass = isPaused ? 'p-4 font-mono text-slate-400' : 'p-4 font-mono text-tiffany font-bold';
+                        const acadClass = isPaused ? 'p-4 text-center text-slate-400' : 'p-4 text-center text-tiffany font-bold text-lg';
+                        const indClass = isPaused ? 'p-4 text-center text-slate-400' : 'p-4 text-center font-bold text-slate-700 text-lg';
+
+                        // 處理金額欄位的中英物件判斷
+                        const acadPrice = typeof row[2] === 'object' ? row[2][currLang] : row[2];
+                        const indPrice = typeof row[3] === 'object' ? row[3][currLang] : row[3];
+
+                        return `
+                            <tr class="${rowClass}">
+                                <td class="${codeClass}">${row[0]}</td>
+                                <td class="p-4 ${isPaused ? 'font-normal' : ''}">
+                                    <b class="${isPaused ? 'text-slate-400' : 'text-slate-800'}">${row[1][currLang]}</b>
+                                    ${isPaused ? '<span class="ml-2 text-xs font-bold text-red-400 px-1 border border-red-200 rounded">PAUSED</span>' : ''}
+                                    <br>
+                                    <small class="${isPaused ? 'text-slate-300' : 'text-slate-400 font-medium'}">${row[1][currLang === 'zh' ? 'en' : 'zh']}</small>
+                                </td>
+                                <td class="${acadClass}">${acadPrice}</td>
+                                <td class="${indClass}">${indPrice}</td>
+                            </tr>
+                        `;
+                    }).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    document.getElementById('modalBody').innerHTML = tableHTML;
+    document.getElementById('serviceModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('serviceModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+const workflows = {
+    academic: [
+        { step: "01", title: "專家諮詢", titleEn: "Consultation", sub: "確認實驗設計細節", subEn: "Experimental Design", icon: "fa-chevron-right" },
+        { step: "02", title: "敲定日期", titleEn: "Scheduling", sub: "排定時程與資源確認", subEn: "Resource Allocation", icon: "fa-chevron-right" },
+        { step: "03", title: "完成報價", titleEn: "Quotation", sub: "確認費用與執行與否", subEn: "Cost Confirmation", icon: "fa-chevron-right" },
+        { step: "04", title: "系統註冊", titleEn: "Registration", sub: "帳號與計畫申請", subEn: "LIMS Account & Project", icon: "fa-chevron-right", link: "https://lims.tmc.sinica.edu.tw/tac/home" },
+        { step: "05", title: "購買點數", titleEn: "Credit Purchase", sub: "做多少買多少，避免餘款", subEn: "Buy only what you need to avoid outstanding payments", icon: "fa-chevron-right" },
+        { step: "06", title: "申請實驗", titleEn: "Application", sub: "動物/檢體實驗申請", subEn: "Study Request", icon: "fa-chevron-right", link: "#services-area" },
+        { step: "07", title: "動物入住/遞交檢體", titleEn: "Submission", sub: "依規範提供動物/檢體", subEn: "Animal/Sample Delivery", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1xGTd8uCdYMZXV83LOYKNF_qle5gUGjtl/view?usp=drive_link" },
+        { step: "08", title: "執行實驗", titleEn: "Execution", sub: "專業團隊標準化作業", subEn: "Standardized Operation", icon: "fa-chevron-right" },
+        { step: "09", title: "動物退房/領回檢體", titleEn: "Retrieval", sub: "約定時間領回", subEn: "Animal/Sample Pick-up", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1cpMRfbdxoq45jtAKJ0saV3xNEkA4dlTV/view?usp=drive_link" },
+        { step: "10", title: "數據交付", titleEn: "Data Delivery", sub: "LIMS系統下載實驗數據", subEn: "Download Data from LIMS", icon: "fa-chevron-right", link: "https://lims.tmc.sinica.edu.tw/tac/home" }
+    ],
+    industry: [
+        { step: "01", title: "需求洽談", titleEn: "Inquiry", sub: "NDA 簽署與對接", subEn: "NDA & Consultation", icon: "fa-chevron-right" },
+        { step: "02", title: "合約簽訂", titleEn: "Contracting", sub: "法律與財務流程", subEn: "Legal & Finance", icon: "fa-chevron-right" },
+        { step: "03", title: "專案報價", titleEn: "Project Quote", sub: "客製化實驗規劃", subEn: "Customized Planning", icon: "fa-chevron-right" },
+        { step: "04", title: "委託執行", titleEn: "Execution", sub: "符合 GLP 規範作業", subEn: "GLP Compliant", icon: "fa-chevron-right" },
+        { step: "05", title: "數據交付", titleEn: "Reporting", sub: "正式報告與結案", subEn: "Final Report & Closing", icon: "" }
+    ],
+    internal: [
+        { step: "01", title: "院內申請", titleEn: "Internal App", sub: "確認經費支應編號", subEn: "Budget Code Verify", icon: "fa-chevron-right" },
+        { step: "02", title: "預約時段", titleEn: "Booking", sub: "儀器優先排程", subEn: "Priority Scheduling", icon: "fa-chevron-right" },
+        { step: "03", title: "自主操作", titleEn: "Operation", sub: "技術輔導或代工", subEn: "Assistance or DIY", icon: "fa-chevron-right" },
+        { step: "04", title: "數據讀取", titleEn: "Data Access", sub: "院內網路直接傳輸", subEn: "Intranet Transfer", icon: "fa-chevron-right" },
+        { step: "05", title: "內部分攤", titleEn: "Cost Sharing", sub: "月底統一扣帳", subEn: "Monthly Deduction", icon: "" }
+    ]
+};
+
+function switchWorkflow(type) {
+    const container = document.getElementById('workflow-content');
+    const data = workflows[type.toLowerCase()]; 
+    if (!container || !data) return;
+
+    // 1. 更新按鈕樣式
+    document.querySelectorAll('.workflow-tab').forEach(btn => {
+        btn.classList.remove('bg-tiffany', 'text-white', 'shadow-md');
+        btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-100');
+    });
+    
+    const activeBtn = document.getElementById('btn-' + type.toLowerCase());
+    if (activeBtn) {
+        activeBtn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-100');
+        activeBtn.classList.add('bg-tiffany', 'text-white', 'shadow-md');
+    }
+
+    // 2. 渲染流程內容
+    container.innerHTML = data.map((item, index) => {
+        const displayTitle = (currLang === 'en') ? (item.titleEn || item.title) : item.title;
+        const displaySub = (currLang === 'en') ? (item.subEn || item.sub) : item.sub;
+
+        // 智慧連結圖示
+        let linkIcon = '';
+        if (item.link) {
+            if (item.link.startsWith('#')) {
+                linkIcon = '<i class="fas fa-chevron-down ml-2 text-xs opacity-70"></i>';
+            } else {
+                linkIcon = '<i class="fas fa-external-link-alt ml-2 text-xs opacity-60"></i>';
+            }
+        }
+
+        const borderCol = index % 2 === 0 ? 'border-tiffany' : 'border-slate-800';
+        const textCol = index % 2 === 0 ? 'text-tiffany' : 'text-slate-800';
+        
+        const isLink = !!item.link;
+        const tag = isLink ? 'a' : 'div';
+        const targetAttr = (isLink && item.link.startsWith('#')) ? '_self' : '_blank';
+        const hrefAttr = isLink ? `href="${item.link}" target="${targetAttr}"` : '';
+
+        return `
+            <div class="relative flex items-center justify-center">
+                <${tag} ${hrefAttr} 
+                    class="w-full relative p-6 bg-white rounded-2xl shadow-sm border-t-8 ${borderCol} 
+                           transition-all duration-300 ease-out
+                           hover:-translate-y-3 hover:shadow-2xl hover:z-20 z-10
+                           ${isLink ? 'cursor-pointer' : 'cursor-default'}">
+                    
+                    <div class="${textCol} font-black text-lg md:text-xl mb-2 flex items-center justify-center flex-wrap">
+                        <span>${item.step} ${displayTitle}</span>
+                        ${linkIcon}
+                    </div>
+                    <div class="text-xs md:text-sm text-slate-500 font-medium leading-relaxed text-center">
+                        ${displaySub}
+                    </div>
+                </${tag}>
+
+                ${index < data.length - 1 ? `
+                    <div class="hidden md:block absolute -right-2 lg:-right-3 z-0 text-slate-500 scale-75 lg:scale-90 pointer-events-none">
+                        <i class="fas fa-chevron-right text-xl animate-arrowSide"></i>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }).join('');
+}
+
+// 支援 ESC 鍵關閉
+window.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' || event.keyCode === 27) {
+        // 1. 關閉服務費用 Modal
+        if (typeof closeModal === 'function') closeModal();
+        
+        // 2. 關閉關於我們 Modal (直接呼叫您的 closeAbout 函數)
+        closeAbout();
+    }
+});
+        function switchLang(lang) {
+    currLang = lang;
+
+    // 1. 更新按鈕顏色
+    const btnZh = document.getElementById('lang-zh');
+    const btnEn = document.getElementById('lang-en');
+    if (lang === 'zh') {
+        btnZh.className = "text-tiffany mr-2 font-bold";
+        btnEn.className = "ml-2 hover:text-tiffany font-bold text-slate-400";
+        document.getElementById('nav-title-zh').innerText = "臺灣小鼠診所";
+    } else {
+        btnEn.className = "ml-2 text-tiffany font-bold";
+        btnZh.className = "text-slate-400 mr-2 hover:text-tiffany font-bold";
+        document.getElementById('nav-title-zh').innerText = "Taiwan Mouse Clinic";
+    }
+
+    // 2. 更新所有帶有 data-i18n 屬性的靜態文字
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+            el.innerText = translations[lang][key];
+        }
+    });
+
+    // 3. 重新渲染當前流程圖 (非常重要！)
+    const activeTab = document.querySelector('.workflow-tab.bg-tiffany');
+    if (activeTab) {
+        const type = activeTab.id.replace('btn-', '');
+        switchWorkflow(type);
+    }
+    
+    // 4. 如果有開著的 Modal，也需要手動關閉或重新渲染 (建議關閉最簡單)
+    closeModal();
+    closeAbout();
+}
+
+    function toggleMobileMenu() {
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+
+    function handleSearch(isMobile = false) {
+        const query = document.getElementById(isMobile ? 'serviceSearchMobile' : 'serviceSearch').value;
+        if(query) alert(currLang === 'zh' ? '正在搜尋：' + query : 'Searching: ' + query);
+    }
+
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeModal();
+            closeAbout();
+        }
+    }
+</script>
+</body>
+</html>
