@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-426CXZ7BCN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-426CXZ7BCN');
+</script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -124,13 +126,13 @@ html { scroll-behavior: smooth; }
         .search-icon { position: absolute; right: 12px; cursor: pointer; color: #94a3b8; transition: color 0.3s; z-index: 10; }
         .search-wrapper:hover .search-icon { color: var(--tiffany); }
         .step-title {
-        display: inline-block;    /* 讓容器寬度生效 */
-        width: 4.2em;             /* 設定 4 個字的寬度 */
-        text-align: justify;      /* 分散對齊 */
-        text-align-last: justify; /* 強制每一行都頭尾對齊 */
+        display: block;           /* 改為 block 讓文字可以使用整個格子的寬度 */
+        width: 100%;              /* 釋放寬度限制，容納更長的文字 */
+        text-align: center;       /* 建議改為置中 (或 left 靠左)，排版會更自然 */
         line-height: 1.4;         /* 調整行距 */
-        word-break: break-all;    /* 確保斷行正常 */
-        vertical-align: top;      /* 確保對齊頂部 */
+        word-break: normal;       /* 🌟 讓英文以「完整單字」為單位換行，不切斷字母 */
+        overflow-wrap: break-word;/* 🌟 萬一遇到超級長的網址或單字，才會強制斷行保護版面 */
+        vertical-align: top;
     }
 </style>
     </style>
@@ -140,18 +142,17 @@ html { scroll-behavior: smooth; }
     <nav class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-tiffany">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         
-        <div class="flex items-center -ml-4 md:-ml-8 transition-all">
+        <div class="flex items-center -ml-4 md:-ml-8 transition-all flex-wrap lg:flex-nowrap">
             
-<a href="#" class="flex items-center -ml-4 md:-ml-6 transition-all group">
-            <img src="images/TMC_logo.jpg" 
-                 onerror="this.src='https://via.placeholder.com/150?text=TMC'" 
-                 class="h-16 md:h-18 w-auto object-contain mr-4 transition-transform group-hover:scale-110" 
-                 alt="Taiwan Mouse Clinic Logo">
+            <button onclick="openVideosModal()" class="group focus:outline-none cursor-pointer transition-transform duration-300 hover:scale-105" title="點擊觀看形象影片">
+                <img src="images/TMC_logo.jpg" onerror="this.src='https://via.placeholder.com/150?text=TMC'" alt="TMC Logo" class="h-16 md:h-18 w-auto object-contain mr-4 drop-shadow-sm ml-4 lg:ml-6">
+            </button>
+
+            <a href="test2.html" class="flex flex-col justify-center leading-tight group mb-2 lg:mb-0">
+                <span id="nav-main-title" class="text-xl md:text-3xl font-black text-slate-800 tracking-tight group-hover:text-tiffany transition-colors" data-i18n="logo-tw">臺灣小鼠診所</span>
+                <span id="nav-sub-title" class="text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mt-0.5" data-i18n="logo-en">TAIWAN MOUSE CLINIC</span>
+            </a>
             
-            <div class="flex flex-col justify-center leading-tight">
-    <span id="nav-main-title" class="text-xl md:text-3xl font-black text-slate-800 tracking-tight">臺灣小鼠診所</span>
-    <span id="nav-sub-title" class="text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider">TAIWAN MOUSE CLINIC</span>
-</div>
         </div>
             
             <div class="hidden lg:flex items-center space-x-8 font-bold text-lg">
@@ -332,7 +333,7 @@ html { scroll-behavior: smooth; }
         <div class="flex justify-center space-x-2 md:space-x-4 mb-12">
     <button onclick="switchWorkflow('academic')" id="btn-academic" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-tiffany text-white shadow-md" data-i18n="tab-academic">學研單位</button>
     <button onclick="switchWorkflow('industry')" id="btn-industry" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white text-slate-600 hover:bg-slate-100" data-i18n="tab-industry">產業界/海外</button>
-    <button onclick="switchWorkflow('internal')" id="btn-internal" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white text-slate-600 hover:bg-slate-100" data-i18n="tab-internal">NBRP進駐單位</button>
+    <button onclick="switchWorkflow('internal')" id="btn-internal" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white text-slate-600 hover:bg-slate-100" data-i18n="tab-internal">租借飼育區</button>
 </div>
 
         <div id="workflow-content" class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-y-12 md:gap-x-6 relative animate-fadeIn">
@@ -507,12 +508,60 @@ html { scroll-behavior: smooth; }
             </div>
         </div>
 
-        <div class="mt-10 pt-5 border-t border-white/5 text-center"> <p class="text-slate-600 text-[10px] font-mono uppercase tracking-[0.3em]">
+        <div class="mt-10 pt-5 border-t border-white/5 text-center"> 
+            <p class="text-slate-600 text-[10px] font-mono uppercase tracking-[0.3em] mb-4">
                 © 2026 Taiwan Mouse Clinic. All rights reserved.
             </p>
-        </div>
+            
+            <div class="flex items-center justify-center space-x-4 text-slate-500 text-xs font-mono mt-4">
+                
+                <div class="flex items-center space-x-2">
+                    <span data-i18n="visitor-count">自2008.10.5 累積造訪人次：</span>
+                    <a href="https://www.hitwebcounter.com/" target="_blank" class="opacity-70 hover:opacity-100 transition-opacity">
+                        <img src="https://hitwebcounter.com/counter/counter.php?page=21487104&style=0036&nbdigits=6&type=page&initCount=126345" title="Free Tools" Alt="Free Tools" border="0" />
+                    </a>
+                </div>
+
+                <div class="w-px h-4 bg-slate-600"></div>
+
+                <a href="dashboard.html" target="_blank" class="flex items-center text-slate-400 hover:text-tiffany transition-colors font-bold group">
+                    <i class="fas fa-chart-pie mr-1.5 group-hover:scale-110 transition-transform"></i>
+                    <span data-i18n="public-dashboard">詳細數據儀表板</span>
+                </a>
+</div>
+            </div>
     </div>
 </footer>
+
+<div id="videosModal" class="fixed inset-0 z-[100] hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-300">
+        <div class="bg-slate-900 rounded-2xl w-full max-w-5xl overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300 border border-white/10 flex flex-col max-h-[90vh]" id="videosModalContent">
+            
+            <div class="flex justify-between items-center p-4 border-b border-white/10 bg-slate-800">
+                <h3 class="text-white text-lg font-bold flex items-center"><i class="fas fa-film text-tiffany mr-2"></i><span data-i18n="modal-video-title">TMC 形象影片</span></h3>
+                <button onclick="closeVideosModal()" class="bg-black/40 hover:bg-rose-600 text-white w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm border border-white/20">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="p-4 md:p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-900 custom-scrollbar">
+                
+                <div class="space-y-3">
+                    <div class="aspect-video w-full rounded-xl overflow-hidden bg-black shadow-lg border border-white/5">
+                        <iframe id="youtubeIframe1" class="w-full h-full" src="" title="2018 Opening Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-center text-slate-300 font-bold text-sm tracking-wide" data-i18n="video-2018">2018 喬遷開幕</p>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="aspect-video w-full rounded-xl overflow-hidden bg-black shadow-lg border border-white/5">
+                        <iframe id="youtubeIframe2" class="w-full h-full" src="" title="Happy Mouse Town Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-center text-slate-300 font-bold text-sm tracking-wide" data-i18n="video-mouse">快樂小鼠鎮</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <script>
         let currLang = 'zh';
@@ -1352,6 +1401,11 @@ animal_room: {
 
         const translations = {
         zh: {
+               "logo-tw": "臺灣小鼠診所",
+             "logo-en": "TAIWAN MOUSE CLINIC",
+             "modal-video-title": "TMC 形象影片",
+             "video-2018": "2018 喬遷開幕",
+             "video-mouse": "快樂小鼠鎮",
             "nav-about": "關於我們", 
             "nav-intro": "TMC 簡介",
             "nav-org": "組織架構", 
@@ -1389,7 +1443,7 @@ animal_room: {
             "workflow-title": "服務流程",
             "tab-academic": "學研單位",
             "tab-industry": "產業界/海外",
-            "tab-internal": "NBRP進駐單位",
+            "tab-internal": "租借飼育區",
             "step-1": "01 專家諮詢",
             "step-1-sub": "確認實驗設計細節",
             "step-2": "02 敲定日期",
@@ -1437,8 +1491,15 @@ animal_room: {
             "group-photos": "團隊合照",
             "spec": "專長",
             "phone": "電話",
+               "visitor-count": "自2008.10.5 累積造訪人次：",
+               "public-dashboard": "詳細數據儀表板",
         },
         en: {
+               "logo-tw": "TAIWAN MOUSE CLINIC",
+             "logo-en": "台灣小鼠診所",
+             "modal-video-title": "TMC Introduction Videos",
+             "video-2018": "2018 Opening",
+             "video-mouse": "Happy Mouse Town",
             "nav-about": "About Us", 
             "nav-intro": "TMC Intro",
             "nav-org": "Organization", 
@@ -1523,7 +1584,9 @@ animal_room: {
             "phone": "Ext",
             "tab-academic": "Academic",
             "tab-industry": "Industry/International User",
-            "tab-internal": "NBRP Internal",
+            "tab-internal": "Animal Room Renters",
+               "visitor-count": "Total Visitors (Since Oct 5, 2008): ",
+               "public-dashboard": "Data Dashboard"
         }
     };
 
@@ -5070,11 +5133,40 @@ const workflows = {
           }
     ],
     internal: [
-        { step: "01", title: "院內申請", titleEn: "Internal App", sub: "確認經費支應編號", subEn: "Budget Code Verify", icon: "fa-chevron-right" },
-        { step: "02", title: "預約時段", titleEn: "Booking", sub: "儀器優先排程", subEn: "Priority Scheduling", icon: "fa-chevron-right" },
-        { step: "03", title: "自主操作", titleEn: "Operation", sub: "技術輔導或代工", subEn: "Assistance or DIY", icon: "fa-chevron-right" },
-        { step: "04", title: "數據讀取", titleEn: "Data Access", sub: "院內網路直接傳輸", subEn: "Intranet Transfer", icon: "fa-chevron-right" },
-        { step: "05", title: "內部分攤", titleEn: "Cost Sharing", sub: "月底統一扣帳", subEn: "Monthly Deduction", icon: "" }
+       { 
+            step: "01", 
+            title: "僅限NBRP進駐單位/廠商", titleEn: "Translational medicine research projects funded by BioTReC and companies stationed in NBRP", 
+            sub: "", subEn: "", 
+            icon: "fa-chevron-right" 
+        },
+        { 
+            step: "02", 
+            title: "預約使用區域", titleEn: "Facility Reservation", 
+            sub: "窗口: 02-77505517 洪組長", subEn: "Contact: Leader Hung, 02-7750-5517", 
+            icon: "fa-chevron-right" 
+        },
+        { 
+            step: "03", 
+            title: "教育訓練&環境導覽", titleEn: "Training & Orientation", 
+            sub: "完成後始具使用資格", subEn: "Required for facility access", 
+            icon: "fa-chevron-right" 
+        },
+        { 
+            step: "04", 
+            title: "申請動物入住", titleEn: "Check-in Application", 
+            sub: "依規範完成申請", subEn: "Submit application per guidelines", 
+            icon: "fa-chevron-right", 
+            link: "https://drive.google.com/file/d/1xGTd8uCdYMZXV83LOYKNF_qle5gUGjtl/view?usp=drive_link",
+            linkIcon: "fa-external-link-alt" // 加入外部連結圖示
+        },
+        { 
+            step: "05", 
+            title: "動物運送", titleEn: "Animal Delivery", 
+            sub: "依規範提供動物", subEn: "Deliver animals per guidelines", 
+            icon: "fa-chevron-right", 
+            link: "https://drive.google.com/file/d/1YoU3ltqYx-C_2tkDzdbGEvVkx9FOQjlM/view?usp=drive_link",
+            linkIcon: "fa-external-link-alt" // 加入外部連結圖示
+        }
     ]
 };
 
@@ -5119,19 +5211,23 @@ function switchWorkflow(type) {
         const hrefAttr = isLink ? `href="${item.link}" target="${targetAttr}"` : '';
 
         return `
-            <div class="relative flex items-center justify-center">
+            <div class="relative flex items-center justify-center animate-slideUp">
                 <${tag} ${hrefAttr} 
-                    class="w-full relative p-6 bg-white rounded-2xl shadow-sm border-t-8 ${borderCol} 
-                           transition-all duration-300 ease-out
-                           hover:-translate-y-3 hover:shadow-2xl hover:z-20 z-10
-                           ${isLink ? 'cursor-pointer' : 'cursor-default'}">
+                    class="w-full relative p-3 md:p-4 bg-white rounded-xl shadow-sm border-t-4 md:border-t-8 ${borderCol} 
+                           transition-all duration-300 ease-out flex flex-col items-center text-center
+                           hover:-translate-y-2 hover:shadow-lg hover:z-20 z-10
+                           ${isLink ? 'cursor-pointer' : 'cursor-default'} group">
                     
-                    <div class="${textCol} font-black text-lg md:text-xl mb-2 flex items-center justify-center flex-wrap">
-                        <span class="mr-2">${item.step}</span>
-                        <span class="step-title">${displayTitle}</span>
-                        ${linkIcon}
+                    <div class="${textCol} flex items-center justify-center mb-1.5 flex-nowrap">
+                        <span class="text-2xl md:text-3xl font-black font-mono tracking-tighter mr-1.5">${item.step}</span>
+                        ${linkIcon ? `<span class="opacity-60 transition-transform group-hover:translate-x-1">${linkIcon}</span>` : ''}
                     </div>
-                    <div class="text-xs md:text-sm text-slate-500 font-medium leading-relaxed text-center">
+                    
+                    <div class="w-full font-bold ${textCol} text-sm md:text-base leading-tight mb-1 break-words">
+                        ${displayTitle}
+                    </div>
+                    
+                    <div class="w-full text-[10px] md:text-xs text-slate-500 font-medium leading-snug">
                         ${displaySub}
                     </div>
                 </${tag}>
@@ -6831,6 +6927,66 @@ document.addEventListener('keydown', function(event) {
     closeModal();
     closeAbout();
 }
+
+// ==========================================
+    // 雙影片彈出視窗控制
+    // ==========================================
+    function openVideosModal() {
+        const modal = document.getElementById('videosModal');
+        const iframe1 = document.getElementById('youtubeIframe1');
+        const iframe2 = document.getElementById('youtubeIframe2');
+        const content = document.getElementById('videosModalContent');
+        
+        // 載入 YouTube 網址 (取消 autoplay，讓使用者自己決定點哪一支看)
+        iframe1.src = "https://www.youtube.com/embed/PHVZ_pjXuFk?rel=0";
+        iframe2.src = "https://www.youtube.com/embed/sS9VqbTD-l4?rel=0";
+        
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; 
+        
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            content.classList.remove('scale-95');
+        }, 10);
+    }
+
+    function closeVideosModal() {
+        const modal = document.getElementById('videosModal');
+        const iframe1 = document.getElementById('youtubeIframe1');
+        const iframe2 = document.getElementById('youtubeIframe2');
+        const content = document.getElementById('videosModalContent');
+        
+        modal.classList.add('opacity-0');
+        content.classList.add('scale-95');
+        
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            iframe1.src = ''; 
+            iframe2.src = ''; 
+            document.body.style.overflow = ''; 
+        }, 300);
+    }
+
+    // 點擊黑色背景也可以關閉
+    document.getElementById('videosModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeVideosModal();
+        }
+    });
+
+// ==========================================
+    // 新增：監聽鍵盤事件 (按下 ESC 關閉影片視窗)
+    // ==========================================
+    document.addEventListener('keydown', function(event) {
+        // 判斷是否按下 ESC 鍵 (Escape)
+        if (event.key === 'Escape') {
+            const videosModal = document.getElementById('videosModal');
+            // 如果影片視窗存在，而且「沒有」被隱藏 (代表正在開啟中)，就執行關閉
+            if (videosModal && !videosModal.classList.contains('hidden')) {
+                closeVideosModal();
+            }
+        }
+    });
 
     function toggleMobileMenu() {
         document.getElementById('mobileMenu').classList.toggle('hidden');
