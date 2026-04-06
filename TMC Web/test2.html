@@ -5054,9 +5054,9 @@ const workflows = {
         { step: "04", title: "系統註冊", titleEn: "Registration", sub: "帳號與計畫申請", subEn: "LIMS Account & Project", icon: "fa-chevron-right", link: "https://lims.tmc.sinica.edu.tw/tac/home" },
         { step: "05", title: "購買點數", titleEn: "Credit Purchase", sub: "做多少買多少，避免餘款", subEn: "Buy only what you need to avoid outstanding payments", icon: "fa-chevron-right" },
         { step: "06", title: "申請動物入住", titleEn: "Check-in Application", sub: "檢體實驗者只需申請實驗", subEn: "Specimen Test Subjects Only Need to Apply for General Testing", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1xGTd8uCdYMZXV83LOYKNF_qle5gUGjtl/view?usp=drive_link" },
-        { step: "07", title: "動物運送<br>遞交檢體", titleEn: "Animal Delivery<br>/ Sample Submission", sub: "依規範提供動物/檢體", subEn: "Deliver animals/samples accordingly", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1YoU3ltqYx-C_2tkDzdbGEvVkx9FOQjlM/view?usp=drive_link" },
+        { step: "07", title: "動物運送/遞交檢體", titleEn: "Animal Delivery<br>/ Sample Submission", sub: "依規範提供動物/檢體", subEn: "Deliver animals/samples accordingly", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1YoU3ltqYx-C_2tkDzdbGEvVkx9FOQjlM/view?usp=drive_link" },
         { step: "08", title: "執行實驗", titleEn: "Execution", sub: "專業團隊標準化作業", subEn: "Standardized Operation", icon: "fa-chevron-right" },
-        { step: "09", title: "動物退房<br>領回檢體", titleEn: "Retrieval", sub: "約定時間領回", subEn: "Animal/Sample Pick-up", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1cpMRfbdxoq45jtAKJ0saV3xNEkA4dlTV/view?usp=drive_link" },
+        { step: "09", title: "動物退房/領回檢體", titleEn: "Retrieval", sub: "約定時間領回", subEn: "Animal/Sample Pick-up", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1cpMRfbdxoq45jtAKJ0saV3xNEkA4dlTV/view?usp=drive_link" },
         { step: "10", title: "數據交付", titleEn: "Data Delivery", sub: "LIMS系統下載實驗數據", subEn: "Download Data from LIMS", icon: "fa-chevron-right", link: "https://lims.tmc.sinica.edu.tw/tac/home" }
     ],
     industry: [
@@ -5105,7 +5105,7 @@ const workflows = {
         },
         { 
             step: "07", 
-            title: "動物運送<br>遞交檢體", titleEn: "Animal Delivery<br>/ Sample Submission", 
+            title: "動物運送/遞交檢體", titleEn: "Animal Delivery<br>/ Sample Submission", 
             sub: "依規範提供動物/檢體", subEn: "Deliver animals/samples accordingly", 
             icon: "fa-chevron-right", 
             link: "https://drive.google.com/file/d/1YoU3ltqYx-C_2tkDzdbGEvVkx9FOQjlM/view?usp=drive_link",
@@ -5119,7 +5119,7 @@ const workflows = {
         },
         { 
             step: "09", 
-            title: "動物退房<br>領回檢體", titleEn: "Animal Check-out<br>/ Sample Retrieval", 
+            title: "動物退房/領回檢體", titleEn: "Animal Check-out<br>/ Sample Retrieval", 
             sub: "約定時間領回", subEn: "Scheduled pick-up", 
             icon: "fa-chevron-right", 
             link: "https://drive.google.com/file/d/1cpMRfbdxoq45jtAKJ0saV3xNEkA4dlTV/view?usp=drive_link",
@@ -5223,11 +5223,11 @@ function switchWorkflow(type) {
                         ${linkIcon ? `<span class="opacity-60 transition-transform group-hover:translate-x-1">${linkIcon}</span>` : ''}
                     </div>
                     
-                    <div class="w-full font-bold ${textCol} text-sm md:text-base leading-tight mb-1 break-words">
+                    <div class="w-full font-bold ${textCol} text-base md:text-xl leading-tight mb-1 break-words">
                         ${displayTitle}
                     </div>
                     
-                    <div class="w-full text-[10px] md:text-xs text-slate-500 font-medium leading-snug">
+                    <div class="w-full text-xs md:text-sm text-slate-500 font-medium leading-snug">
                         ${displaySub}
                     </div>
                 </${tag}>
