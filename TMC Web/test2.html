@@ -13,7 +13,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>臺灣小鼠診所 TAIWAN MOUSE CLINIC</title>
+    <title>台灣小鼠診所 TAIWAN MOUSE CLINIC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -125,17 +125,28 @@ html { scroll-behavior: smooth; }
         .search-wrapper:hover .search-input, .search-input:focus { width: 240px; padding: 8px 40px 8px 16px; opacity: 1; background: #f1f5f9; border-color: #cbd5e1; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05); }
         .search-icon { position: absolute; right: 12px; cursor: pointer; color: #94a3b8; transition: color 0.3s; z-index: 10; }
         .search-wrapper:hover .search-icon { color: var(--tiffany); }
-        .step-title {
-        display: block;           /* 改為 block 讓文字可以使用整個格子的寬度 */
-        width: 100%;              /* 釋放寬度限制，容納更長的文字 */
-        text-align: center;       /* 建議改為置中 (或 left 靠左)，排版會更自然 */
-        line-height: 1.4;         /* 調整行距 */
-        word-break: normal;       /* 🌟 讓英文以「完整單字」為單位換行，不切斷字母 */
-        overflow-wrap: break-word;/* 🌟 萬一遇到超級長的網址或單字，才會強制斷行保護版面 */
-        vertical-align: top;
+        /* ==========================================
+       新增：光暈緩慢漂浮動畫 (大範圍移動版)
+       ========================================== */
+    @keyframes drift1 {
+        0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+        33% { transform: translate(150px, -100px) scale(1.3) rotate(10deg); }
+        66% { transform: translate(-100px, 150px) scale(0.8) rotate(-10deg); }
+        100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+    }
+    @keyframes drift2 {
+        0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+        33% { transform: translate(-150px, 150px) scale(1.4) rotate(-15deg); }
+        66% { transform: translate(100px, -100px) scale(0.8) rotate(15deg); }
+        100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+    }
+    .animate-drift-slow {
+        animation: drift1 15s infinite ease-in-out; /* 正常播放 15秒一圈 */
+    }
+    .animate-drift-slow-reverse {
+        animation: drift2 18s infinite ease-in-out; /* 正常播放 18秒一圈 */
     }
 </style>
-    </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
 
@@ -149,7 +160,7 @@ html { scroll-behavior: smooth; }
             </button>
 
             <a href="test2.html" class="flex flex-col justify-center leading-tight group mb-2 lg:mb-0">
-                <span id="nav-main-title" class="text-xl md:text-3xl font-black text-slate-800 tracking-tight group-hover:text-tiffany transition-colors" data-i18n="logo-tw">臺灣小鼠診所</span>
+                <span id="nav-main-title" class="text-xl md:text-3xl font-black text-slate-800 tracking-tight group-hover:text-tiffany transition-colors" data-i18n="logo-tw">台灣小鼠診所</span>
                 <span id="nav-sub-title" class="text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mt-0.5" data-i18n="logo-en">TAIWAN MOUSE CLINIC</span>
             </a>
             
@@ -292,7 +303,7 @@ html { scroll-behavior: smooth; }
 
 <section class="bg-white py-12 border-b border-slate-100 shadow-sm relative z-10">
     <div class="container mx-auto px-4">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-4">
             
             <div class="text-center group">
                 <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
@@ -302,21 +313,14 @@ html { scroll-behavior: smooth; }
             </div>
 
             <div class="text-center border-l border-slate-100 group">
-                <div class="text-4xl md:text-5xl font-black text-slate-800 mb-2 transition-transform group-hover:scale-110">
+                <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
                     150<span class="text-xl ml-1">+</span>
                 </div>
                 <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-orgs">委託單位</div>
             </div>
 
             <div class="text-center border-l border-slate-100 group">
-                <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
-                    980<span class="text-xl ml-1">+</span>
-                </div>
-                <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-projects">執行計畫數</div>
-            </div>
-
-            <div class="text-center border-l border-slate-100 group">
-    <div class="text-4xl md:text-5xl font-black text-slate-800 mb-2 transition-transform group-hover:scale-110">
+    <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
         <span id="experience-years">18</span><span class="text-xl ml-1">y</span>
     </div>
     <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-exp">專業營運經驗</div>
@@ -326,69 +330,81 @@ html { scroll-behavior: smooth; }
     </div>
 </section>
 
-    <section class="py-16 bg-slate-50 overflow-hidden">
-    <div class="container mx-auto px-4">
-        <h3 class="text-3xl md:text-4xl font-black text-center text-slate-800 mb-8 uppercase tracking-widest" data-i18n="workflow-title">服務流程</h3>
+    <section id="services-area" class="relative py-16 md:py-24 container mx-auto px-4 bg-white/40 rounded-[2rem] shadow-sm border border-slate-50 overflow-hidden mt-8 md:mt-12 z-10">
+        
+        <div class="absolute -top-32 -left-32 w-[35rem] h-[35rem] bg-[#0ABAB5]/30 rounded-full mix-blend-multiply filter blur-[80px] pointer-events-none animate-drift-slow"></div>
+        <div class="absolute -bottom-32 -right-32 w-[35rem] h-[35rem] bg-sky-300/40 rounded-full mix-blend-multiply filter blur-[80px] pointer-events-none animate-drift-slow-reverse"></div>
 
-        <div class="flex justify-center space-x-2 md:space-x-4 mb-12">
-    <button onclick="switchWorkflow('academic')" id="btn-academic" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-tiffany text-white shadow-md" data-i18n="tab-academic">學研單位</button>
-    <button onclick="switchWorkflow('industry')" id="btn-industry" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white text-slate-600 hover:bg-slate-100" data-i18n="tab-industry">產業界/海外</button>
-    <button onclick="switchWorkflow('internal')" id="btn-internal" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white text-slate-600 hover:bg-slate-100" data-i18n="tab-internal">租借飼育區</button>
-</div>
+        <div class="relative z-10">
+            <h3 class="text-2xl md:text-4xl font-black text-center text-slate-800 mb-12">
+                <span data-i18n="service-title">核心服務領域</span>
+                <span class="text-tiffany text-lg md:text-2xl font-bold block mt-2" data-i18n="service-subtitle">
+                    (點擊查看費用)新台幣
+                </span>
+            </h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12">
+                <div onclick="openModal('neuro')" class="p-6 md:p-10 bg-white/50 backdrop-blur-md rounded-3xl shadow-lg border border-white/60 border-b-4 border-b-transparent hover:border-b-tiffany hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 cursor-pointer text-center transition-all duration-300 group">
+                    <i class="fas fa-brain text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+                    <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-neuro">神經行為</h4>
+                </div>
 
-        <div id="workflow-content" class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-y-12 md:gap-x-6 relative animate-fadeIn">
+                <div onclick="openModal('pathology')" class="p-6 md:p-10 bg-white/50 backdrop-blur-md rounded-3xl shadow-lg border border-white/60 border-b-4 border-b-transparent hover:border-b-tiffany hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 cursor-pointer text-center transition-all duration-300 group">
+                    <i class="fas fa-microscope text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+                    <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-pathology">病理分析</h4>
+                </div>
+
+                <div onclick="openModal('metabolism')" class="p-6 md:p-10 bg-white/50 backdrop-blur-md rounded-3xl shadow-lg border border-white/60 border-b-4 border-b-transparent hover:border-b-tiffany hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 cursor-pointer text-center transition-all duration-300 group">
+                    <i class="fas fa-apple-alt text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+                    <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-metabolism">生理代謝</h4>
+                </div>
+
+                <div onclick="openModal('cardio')" class="p-6 md:p-10 bg-white/50 backdrop-blur-md rounded-3xl shadow-lg border border-white/60 border-b-4 border-b-transparent hover:border-b-tiffany hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 cursor-pointer text-center transition-all duration-300 group">
+                    <i class="fas fa-heartbeat text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+                    <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-cardio">心血管</h4>
+                </div>
+
+                <div onclick="openModal('imaging')" class="p-6 md:p-10 bg-white/50 backdrop-blur-md rounded-3xl shadow-lg border border-white/60 border-b-4 border-b-transparent hover:border-b-tiffany hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 cursor-pointer text-center transition-all duration-300 group">
+                    <i class="fas fa-video text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+                    <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-imaging">動物影像</h4>
+                </div>
+
+                <div onclick="openModal('immunology')" class="p-6 md:p-10 bg-white/50 backdrop-blur-md rounded-3xl shadow-lg border border-white/60 border-b-4 border-b-transparent hover:border-b-tiffany hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 cursor-pointer text-center transition-all duration-300 group">
+                    <i class="fas fa-shield-virus text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+                    <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-immunology">免疫疾病</h4>
+                </div>
+
+                <div onclick="openModal('animal_room')" class="p-6 md:p-10 bg-white/50 backdrop-blur-md rounded-3xl shadow-lg border border-white/60 border-b-4 border-b-transparent hover:border-b-tiffany hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 cursor-pointer text-center transition-all duration-300 group">
+                    <i class="fas fa-home text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+                    <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-animal-room-services">動物房服務</h4>
+                </div>
+
+                <div onclick="openModal('other_services')" class="p-6 md:p-10 bg-white/50 backdrop-blur-md rounded-3xl shadow-lg border border-white/60 border-b-4 border-b-transparent hover:border-b-tiffany hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 cursor-pointer text-center transition-all duration-300 group">
+                    <i class="fas fa-ellipsis-h text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
+                    <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-others">其他服務</h4>
+                </div>
             </div>
-    </div>
-</section>
+        </div>
+    </section>
 
-    <section id="services-area" class="py-16 md:py-20 container mx-auto px-4 bg-white rounded-[2rem] shadow-inner">
-        <h3 class="text-2xl md:text-4xl font-black text-center text-slate-800 mb-12">
-    <span data-i18n="service-title">核心服務領域</span>
-    <span class="text-tiffany text-lg md:text-2xl font-bold block mt-2" data-i18n="service-subtitle">
-        (點擊查看費用)新台幣
-    </span>
-</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12">
-    <div onclick="openModal('neuro')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
-        <i class="fas fa-brain text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
-        <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-neuro">神經行為</h4>
-    </div>
+    <section class="relative py-20 bg-slate-100 overflow-hidden mt-8 md:mt-16">
+        
+        <div class="absolute inset-0 bg-[radial-gradient(#94a3b8_2px,transparent_2px)] [background-size:24px_24px] opacity-100 mix-blend-multiply"></div>
+        
+        <div class="absolute top-1/2 -right-32 transform -translate-y-1/2 w-[30rem] h-[30rem] border-[60px] border-white/40 rounded-full pointer-events-none"></div>
 
-    <div onclick="openModal('pathology')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
-        <i class="fas fa-microscope text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
-        <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-pathology">病理分析</h4>
-    </div>
+        <div class="relative z-10 container mx-auto px-4">
+            <h3 class="text-3xl md:text-4xl font-black text-center text-slate-800 mb-8 uppercase tracking-widest drop-shadow-[0_0_15px_rgba(255,255,255,1)]" data-i18n="workflow-title">服務流程</h3>
 
-    <div onclick="openModal('metabolism')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
-        <i class="fas fa-apple-alt text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
-        <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-metabolism">生理代謝</h4>
-    </div>
+            <div class="flex justify-center space-x-2 md:space-x-4 mb-12">
+                <button onclick="switchWorkflow('academic')" id="btn-academic" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-tiffany text-white shadow-lg border border-transparent" data-i18n="tab-academic">學研單位</button>
+                <button onclick="switchWorkflow('industry')" id="btn-industry" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white/60 backdrop-blur-md text-slate-700 border border-white/80 shadow-sm hover:bg-white hover:shadow-md" data-i18n="tab-industry">產業界/海外</button>
+                <button onclick="switchWorkflow('internal')" id="btn-internal" class="workflow-tab px-6 py-2 rounded-full font-bold transition-all bg-white/60 backdrop-blur-md text-slate-700 border border-white/80 shadow-sm hover:bg-white hover:shadow-md" data-i18n="tab-internal">租借飼育區</button>
+            </div>
 
-    <div onclick="openModal('cardio')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
-        <i class="fas fa-heartbeat text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
-        <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-cardio">心血管</h4>
-    </div>
-
-    <div onclick="openModal('imaging')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
-        <i class="fas fa-video text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
-        <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-imaging">動物影像</h4>
-    </div>
-
-    <div onclick="openModal('immunology')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
-        <i class="fas fa-shield-virus text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
-        <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-immunology">免疫疾病</h4>
-    </div>
-
-    <div onclick="openModal('animal_room')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
-        <i class="fas fa-home text-4xl md:text-5xl text-tiffany mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
-        <h4 class="font-bold text-lg md:text-xl text-slate-700 group-hover:text-tiffany" data-i18n="cat-animal-room-services">動物房服務</h4>
-    </div>
-
-    <div onclick="openModal('other_services')" class="p-6 md:p-10 bg-white rounded-3xl shadow-md border-b-4 border-transparent hover:border-tiffany hover:-translate-y-2 hover:shadow-2xl cursor-pointer text-center transition-all duration-300 group">
-        <i class="fas fa-ellipsis-h text-4xl md:text-5xl text-slate-800 mb-4 md:mb-6 transition-transform group-hover:scale-110"></i>
-        <h4 class="font-bold text-lg md:text-xl text-tiffany" data-i18n="cat-others">其他服務</h4>
-    </div>
-</div>
+            <div id="workflow-content" class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-y-12 md:gap-x-6 relative animate-fadeIn">
+                </div>
+        </div>
     </section>
 
     <div id="drawerOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[110] hidden transition-opacity duration-300 opacity-0" onclick="closeServiceDrawer()"></div>
@@ -440,15 +456,72 @@ html { scroll-behavior: smooth; }
                         <a href="mailto:service@tmc.sinica.edu.tw" class="hover:text-tiffany transition-colors decoration-tiffany/30 underline-offset-4 hover:underline">
                        service@tmc.sinica.edu.tw
                          </a>
-                    </p>
-                    <p class="flex items-center group">
+                    <div class="flex items-center group relative mb-3">
                         <i class="fas fa-phone w-6 text-tiffany/70 group-hover:text-tiffany transition-colors"></i>
-                        <span>+886-2-7750-5507</span>
-                    </p>
+                        
+                        <div class="flex items-center cursor-pointer">
+                            <span>+886-2-7750-5507</span>
+                            <i class="fas fa-chevron-up text-[10px] ml-2 opacity-70 group-hover:-translate-y-1 transition-transform duration-300"></i>
+                        </div>
+
+                        <div class="absolute bottom-full left-6 mb-3 w-72 bg-white rounded-xl shadow-2xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-y-auto max-h-[60vh] origin-bottom custom-scrollbar">
+                            
+                            <a href="tel:+886277505507" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-sec">秘書 / 總機</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5507</span>
+                            </a>
+                            <a href="tel:+886277505514" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-coo">營運長</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5514</span>
+                            </a>
+                            <a href="tel:+886277505508" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-sys">系統</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5508</span>
+                            </a>
+                            <a href="tel:+886277505516" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-vet">獸醫</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5516</span>
+                            </a>
+                            <a href="tel:+886277505517" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-breed">飼育</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5517</span>
+                            </a>
+                            <a href="tel:+886277505519" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-img">影像</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5519</span>
+                            </a>
+                            <a href="tel:+886277505520" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-path">病理</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5520</span>
+                            </a>
+                            <a href="tel:+886277505500,1757" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-necropsy">剖檢</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5500 #1757</span>
+                            </a>
+                            <a href="tel:+886277505500,1757" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-meta">代謝</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5500 #1757</span>
+                            </a>
+                            <a href="tel:+886277505500,1758" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-immuno">免疫</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5500 #1758</span>
+                            </a>
+                            <a href="tel:+886277505500,1760" class="flex flex-col px-5 py-3 hover:bg-slate-50 border-b border-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-cardio">心血管</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5500 #1760</span>
+                            </a>
+                            <a href="tel:+886277505500,1761" class="flex flex-col px-5 py-3 hover:bg-slate-50 transition-colors">
+                                <span class="text-xs md:text-sm text-slate-500 font-bold mb-1" data-i18n="phone-neuro">神經行為</span>
+                                <span class="text-base md:text-lg text-slate-800 font-mono font-bold">+886-2-7750-5500 #1761</span>
+                            </a>
+                        </div>
+                    </div>
+
                     <p class="flex items-center group">
                         <i class="fas fa-fax w-6 text-tiffany/70 group-hover:text-tiffany transition-colors"></i>
                         <span data-i18n="footer-fax">FAX: 02-7750-5505</span>
                     </p>
+                    
                 </div>
             </div>
 
@@ -1040,7 +1113,7 @@ const newsData = [
     },
     { 
         title: "中心 TAF GLP 認證展延成功", 
-        content: "臺灣小鼠診所已順利通過 2026 年度 TAF GLP (良好實驗室規範) 認證展延，持續提供符合國際標準的毒理與藥效測試服務，確保數據的精準性與國際認可度。",
+        content: "台灣小鼠診所已順利通過 2026 年度 TAF GLP (良好實驗室規範) 認證展延，持續提供符合國際標準的毒理與藥效測試服務，確保數據的精準性與國際認可度。",
         endDate: "2026-04-30" 
     }
 ];
@@ -1401,7 +1474,7 @@ animal_room: {
 
         const translations = {
         zh: {
-               "logo-tw": "臺灣小鼠診所",
+               "logo-tw": "台灣小鼠診所",
              "logo-en": "TAIWAN MOUSE CLINIC",
              "modal-video-title": "TMC 形象影片",
              "video-2018": "2018 喬遷開幕",
@@ -1438,7 +1511,6 @@ animal_room: {
             "hero-subtitle": "精準表型分析 · 專業藥物測試 · 國家級核心設施",
             "stat-service": "服務人次",
             "stat-orgs": "委託單位",
-            "stat-projects": "執行計畫數",
             "stat-exp": "專業營運經驗",            
             "workflow-title": "服務流程",
             "tab-academic": "學研單位",
@@ -1491,6 +1563,18 @@ animal_room: {
             "group-photos": "團隊合照",
             "spec": "專長",
             "phone": "電話",
+               "phone-sec": "秘書 / 總機",
+             "phone-coo": "營運長",
+             "phone-sys": "系統",
+             "phone-vet": "獸醫",
+             "phone-breed": "飼育",
+             "phone-img": "影像",
+             "phone-path": "病理",
+             "phone-necropsy": "剖檢",
+             "phone-meta": "代謝",
+             "phone-immuno": "免疫",
+             "phone-cardio": "心血管",
+             "phone-neuro": "神經行為",
                "visitor-count": "自2008.10.5 累積造訪人次：",
                "public-dashboard": "詳細數據儀表板",
         },
@@ -1532,7 +1616,6 @@ animal_room: {
             "hero-subtitle": "Precision Phenotyping · Professional Drug Testing · National Core Facility",
             "stat-service": "Service Visits",
             "stat-orgs": "Partner Orgs",
-            "stat-projects": "Projects",
             "stat-exp": "Years of Experience",
             "workflow-title": "Service Workflow",
             "step-1": "01 Consultation",
@@ -1582,6 +1665,18 @@ animal_room: {
             "group-photos": "Group Photos",
             "spec": "Expertise",
             "phone": "Ext",
+               "phone-sec": "Secretary / Reception",
+             "phone-coo": "COO",
+             "phone-sys": "System",
+             "phone-vet": "Veterinarian",
+             "phone-breed": "Breeding",
+             "phone-img": "Imaging",
+             "phone-path": "Pathology",
+             "phone-necropsy": "Necropsy",
+             "phone-meta": "Metabolism",
+             "phone-immuno": "Immunology",
+             "phone-cardio": "Cardiovascular",
+             "phone-neuro": "Neurobehavior",
             "tab-academic": "Academic",
             "tab-industry": "Industry/International User",
             "tab-internal": "Animal Room Renters",
@@ -3561,7 +3656,7 @@ const publicationData = [
 
     else if (type === 'acknowledgement') {
         const title = currLang === 'zh' ? '致謝與成果' : 'Acknowledgement';
-        const sub = currLang === 'zh' ? '感謝您在研究成果中提及臺灣小鼠診所' : 'Thank you for citing Taiwan Mouse Clinic';
+        const sub = currLang === 'zh' ? '感謝您在研究成果中提及台灣小鼠診所' : 'Thank you for citing Taiwan Mouse Clinic';
         
         // --- 完整文獻資料庫 (113年 - 98年) ---
         const ackData = [
@@ -6882,7 +6977,7 @@ document.addEventListener('keydown', function(event) {
         btnEn.className = "ml-2 hover:text-tiffany font-bold text-slate-400";
         
         // 中文模式設定
-        mainTitle.innerText = "臺灣小鼠診所";
+        mainTitle.innerText = "台灣小鼠診所";
         subTitle.innerText = "TAIWAN MOUSE CLINIC";
         
         // 恢復中文主標題大小 (text-2xl)
@@ -6894,7 +6989,7 @@ document.addEventListener('keydown', function(event) {
         
         // 英文模式設定 (翻轉內容)
         mainTitle.innerText = "Taiwan Mouse Clinic";
-        subTitle.innerText = "臺灣小鼠診所";
+        subTitle.innerText = "台灣小鼠診所";
         
         // 縮小英文主標題大小 (避免太長擠壓導覽列)
         mainTitle.style.setProperty('font-size', '1.5rem', 'important');
