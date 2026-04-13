@@ -285,7 +285,7 @@ html { scroll-behavior: smooth; }
             <div class="px-4 pt-4 pb-2 space-y-1 max-h-[85vh] overflow-y-auto custom-scrollbar">
                 
                 <div class="relative mb-4">
-                    <input type="text" id="serviceSearchMobile" placeholder="搜尋服務項目..." class="w-full pl-10 pr-4 py-2.5 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-tiffany transition-colors text-sm" onkeyup="if(event.key === 'Enter') handleSearch(true)">
+                    <input type="text" id="serviceSearchMobile" placeholder="搜尋服務項目..." class="w-full pl-10 pr-4 py-2.5 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-tiffany transition-colors text-sm" onkeyup="if(event.key === 'Enter') handleSearch(true)" data-i18n-placeholder="search-placeholder">
                     <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
                 </div>
                 
@@ -326,13 +326,13 @@ html { scroll-behavior: smooth; }
                         <i id="arrow-other" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                     </button>
                     <div id="sub-other" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
-                        <a href="javascript:void(0)" onclick="openOther('sample'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">檢體製備</a>
-                        <a href="javascript:void(0)" onclick="openOther('sop'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">標準實驗程序</a>
-                        <a href="javascript:void(0)" onclick="openOther('database'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">小鼠資料庫</a>
-                        <a href="javascript:void(0)" onclick="openOther('publication'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">文獻發表</a>
-                        <a href="javascript:void(0)" onclick="openOther('ack'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">致謝說明</a>
-                        <a href="javascript:void(0)" onclick="openVideosModal(); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">歷年活動 (影音)</a>
-                        <a href="javascript:void(0)" onclick="openOther('links'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">友站連結</a>
+                        <a href="javascript:void(0)" onclick="openOther('sample'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="other-sample">檢體製備</a>
+                        <a href="javascript:void(0)" onclick="openOther('sop'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="other-sop">標準實驗程序</a>
+                        <a href="javascript:void(0)" onclick="openOther('database'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="other-db">小鼠資料庫</a>
+                        <a href="javascript:void(0)" onclick="openOther('publication'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="other-pub">文獻發表</a>
+                        <a href="javascript:void(0)" onclick="openOther('ack'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="other-ack">致謝說明</a>
+                        <a href="javascript:void(0)" onclick="openOther('events'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-events">歷年活動</a>
+                        <a href="javascript:void(0)" onclick="openOther('links'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="other-links">友站連結</a>
                     </div>
                 </div>
 
