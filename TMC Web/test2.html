@@ -281,57 +281,77 @@ html { scroll-behavior: smooth; }
             </div>
         </div>
         
-        <div id="mobileMenu" class="md:hidden hidden bg-white shadow-inner pb-4">
-            <div class="px-4 pt-4 pb-2 space-y-2 max-h-[80vh] overflow-y-auto custom-scrollbar">
+        <div id="mobileMenu" class="md:hidden hidden bg-white shadow-inner pb-6">
+            <div class="px-4 pt-4 pb-2 space-y-1 max-h-[85vh] overflow-y-auto custom-scrollbar">
                 
                 <div class="relative mb-4">
-                    <input type="text" id="serviceSearchMobile" placeholder="搜尋服務 (例：超音波)" class="w-full pl-10 pr-4 py-2 border-2 border-slate-200 rounded-full focus:outline-none focus:border-tiffany transition-colors text-sm" data-i18n-placeholder="search-placeholder" onkeyup="if(event.key === 'Enter') handleSearch(true)">
+                    <input type="text" id="serviceSearchMobile" placeholder="搜尋服務項目..." class="w-full pl-10 pr-4 py-2.5 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-tiffany transition-colors text-sm" onkeyup="if(event.key === 'Enter') handleSearch(true)">
                     <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
                 </div>
                 
-                <button onclick="openAbout(); toggleMobileMenu()" class="block w-full text-left px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
-                    <i class="fas fa-info-circle w-6 text-tiffany/70"></i> <span data-i18n="nav-about">關於我們</span>
-                </button>
-
-                <button onclick="openModal('org'); toggleMobileMenu()" class="block w-full text-left px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
-                    <i class="fas fa-sitemap w-6 text-tiffany/70"></i> <span data-i18n="nav-org">組織架構</span>
-                </button>
-
-                <div>
-                    <button onclick="document.getElementById('mobile-animal-menu').classList.toggle('hidden'); document.getElementById('animal-arrow').classList.toggle('rotate-180')" class="w-full flex items-center justify-between px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
-                        <div><i class="fas fa-paw w-6 text-tiffany/70"></i> <span data-i18n="nav-animal">動物房</span></div>
-                        <i id="animal-arrow" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                <div class="border-b border-slate-50 pb-1">
+                    <button onclick="toggleMobileSub('sub-about', 'arrow-about')" class="w-full flex items-center justify-between px-4 py-3 text-slate-700 font-black hover:bg-slate-50 rounded-xl transition-all">
+                        <div class="flex items-center"><i class="fas fa-info-circle w-6 text-tiffany"></i> <span data-i18n="nav-about">關於我們</span></div>
+                        <i id="arrow-about" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                     </button>
-                    <div id="mobile-animal-menu" class="hidden bg-slate-50 rounded-xl mx-2 mt-1 py-2 border border-slate-100 shadow-inner">
-                        <a href="#" onclick="openModal('animal_booking'); toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-animal-booking">設施預約</a>
-                        <a href="#" onclick="openModal('animal_room'); toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-animal-services">動物房服務</a>
-                        <a href="#" onclick="openModal('animal_tech'); toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-animal-tech">技術人員服務</a>
+                    <div id="sub-about" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
+                        <a href="javascript:void(0)" onclick="openAbout(); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">TMC 簡介</a>
+                        <a href="javascript:void(0)" onclick="openModal('org'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">組織架構</a>
+                        <a href="javascript:void(0)" onclick="openModal('committee'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">委員會成員</a>
+                        <a href="javascript:void(0)" onclick="openModal('staff'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">診所成員</a>
+                        <a href="#footer" onclick="toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">地理位置</a>
                     </div>
                 </div>
 
-                <div>
-                    <button onclick="document.getElementById('mobile-other-menu').classList.toggle('hidden'); document.getElementById('other-arrow').classList.toggle('rotate-180')" class="w-full flex items-center justify-between px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
-                        <div><i class="fas fa-plus-circle w-6 text-tiffany/70"></i> <span data-i18n="nav-other">其他資訊</span></div>
-                        <i id="other-arrow" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                <div class="border-b border-slate-50 pb-1">
+                    <button onclick="toggleMobileSub('sub-animal', 'arrow-animal')" class="w-full flex items-center justify-between px-4 py-3 text-slate-700 font-black hover:bg-slate-50 rounded-xl transition-all">
+                        <div class="flex items-center"><i class="fas fa-paw w-6 text-tiffany"></i> <span data-i18n="nav-animal">動物房</span></div>
+                        <i id="arrow-animal" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                     </button>
-                    <div id="mobile-other-menu" class="hidden bg-slate-50 rounded-xl mx-2 mt-1 py-2 border border-slate-100 shadow-inner">
-                        <a href="#" onclick="openVideosModal(); toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-videos">影音專區</a>
-                        <a href="https://shorturl.at/5uN4F" target="_blank" onclick="toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-satisfaction">滿意度調查</a>
-                        <a href="https://docs.google.com/forms/d/1vA5W0T3oQ8b80nN5H-p4u57u5m3XwB6uV1e_rO9yT4U/edit" target="_blank" onclick="toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-visit">參訪申請</a>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd7gE-2P_a_5kEwQxL5yYcK4w2Z1r0t9jY8vX6M9W_U_p3TQA/viewform" target="_blank" onclick="toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-consultation">諮詢及教育訓練</a>
+                    <div id="sub-animal" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
+                        <a href="javascript:void(0)" onclick="openModal('animal_intro'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">簡介</a>
+                        <a href="javascript:void(0)" onclick="openModal('animal_env'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">環境與飼養管理</a>
+                        <a href="javascript:void(0)" onclick="openModal('health_monitor'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">健康監測</a>
+                        <a href="javascript:void(0)" onclick="openModal('env_monitor'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">環境監測</a>
+                        <a href="javascript:void(0)" onclick="openModal('checkin'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">動物入住申請</a>
+                        <a href="javascript:void(0)" onclick="openModal('checkout'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">動物退房申請</a>
+                        <a href="javascript:void(0)" onclick="openModal('shipping_spec'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">運送路線&包裝規範</a>
+                        <a href="javascript:void(0)" onclick="openModal('spf_service'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">SPF 小鼠淨化服務</a>
                     </div>
                 </div>
 
-                <a href="#footer" onclick="toggleMobileMenu()" class="block px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
-                    <i class="fas fa-map-marker-alt w-6 text-tiffany/70"></i> <span data-i18n="nav-location">地理位置</span>
-                </a>
-                
-                <div class="flex space-x-2 pt-4 pb-2 border-t border-slate-100">
-                    <button onclick="switchLang('zh')" class="flex-1 py-3 text-sm font-bold bg-slate-100 text-slate-600 rounded-lg hover:bg-tiffany hover:text-white transition-colors shadow-sm">中文</button>
-                    <button onclick="switchLang('en')" class="flex-1 py-3 text-sm font-bold bg-slate-100 text-slate-600 rounded-lg hover:bg-tiffany hover:text-white transition-colors shadow-sm">EN</button>
+                <div class="border-b border-slate-50 pb-1">
+                    <button onclick="toggleMobileSub('sub-other', 'arrow-other')" class="w-full flex items-center justify-between px-4 py-3 text-slate-700 font-black hover:bg-slate-50 rounded-xl transition-all">
+                        <div class="flex items-center"><i class="fas fa-plus-circle w-6 text-tiffany"></i> <span data-i18n="nav-other">其他資訊</span></div>
+                        <i id="arrow-other" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="sub-other" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
+                        <a href="javascript:void(0)" onclick="openModal('sample_prep'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">檢體製備</a>
+                        <a href="javascript:void(0)" onclick="openModal('sop'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">標準實驗程序</a>
+                        <a href="javascript:void(0)" onclick="openModal('database'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">小鼠資料庫</a>
+                        <a href="javascript:void(0)" onclick="openModal('publication'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">文獻發表</a>
+                        <a href="javascript:void(0)" onclick="openModal('ack'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">致謝說明</a>
+                        <a href="javascript:void(0)" onclick="openVideosModal(); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">歷年活動 (影音)</a>
+                        <a href="javascript:void(0)" onclick="openModal('links'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">友站連結</a>
+                    </div>
+                </div>
+
+                <div class="flex space-x-2 pt-6">
+                    <button onclick="switchLang('zh')" class="flex-1 py-3 text-sm font-black bg-slate-100 text-slate-600 rounded-xl hover:bg-tiffany hover:text-white transition-all">中文</button>
+                    <button onclick="switchLang('en')" class="flex-1 py-3 text-sm font-black bg-slate-100 text-slate-600 rounded-xl hover:bg-tiffany hover:text-white transition-all">ENGLISH</button>
                 </div>
             </div>
         </div>
+
+        <script>
+            function toggleMobileSub(id, arrowId) {
+                const sub = document.getElementById(id);
+                const arrow = document.getElementById(arrowId);
+                sub.classList.toggle('hidden');
+                arrow.classList.toggle('rotate-180');
+            }
+        </script>
+
     </nav> <div id="marquee-container">
     </div>
     </div>
