@@ -281,16 +281,58 @@ html { scroll-behavior: smooth; }
             </div>
         </div>
         
-        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 p-4 space-y-4 font-bold text-center">
-            <input type="text" id="serviceSearchMobile" class="w-full p-3 bg-slate-100 rounded-xl" placeholder="搜尋服務..." onkeyup="if(event.key === 'Enter') handleSearch(true)">
-            <div class="grid grid-cols-2 gap-2">
-                <button onclick="openAbout('org')" class="p-2 bg-slate-50 rounded" data-i18n="nav-org">組織架構</button>
-                <button onclick="openAbout('location')" class="p-2 bg-slate-50 rounded" data-i18n="nav-location">地理位置</button>
+        <div id="mobileMenu" class="md:hidden hidden bg-white shadow-inner pb-4">
+            <div class="px-4 pt-4 pb-2 space-y-2 max-h-[80vh] overflow-y-auto custom-scrollbar">
+                
+                <div class="relative mb-4">
+                    <input type="text" id="serviceSearchMobile" placeholder="搜尋服務 (例：超音波)" class="w-full pl-10 pr-4 py-2 border-2 border-slate-200 rounded-full focus:outline-none focus:border-tiffany transition-colors text-sm" data-i18n-placeholder="search-placeholder" onkeyup="if(event.key === 'Enter') handleSearch(true)">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                </div>
+                
+                <button onclick="openAbout(); toggleMobileMenu()" class="block w-full text-left px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
+                    <i class="fas fa-info-circle w-6 text-tiffany/70"></i> <span data-i18n="nav-about">關於我們</span>
+                </button>
+
+                <button onclick="openModal('org'); toggleMobileMenu()" class="block w-full text-left px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
+                    <i class="fas fa-sitemap w-6 text-tiffany/70"></i> <span data-i18n="nav-org">組織架構</span>
+                </button>
+
+                <div>
+                    <button onclick="document.getElementById('mobile-animal-menu').classList.toggle('hidden'); document.getElementById('animal-arrow').classList.toggle('rotate-180')" class="w-full flex items-center justify-between px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
+                        <div><i class="fas fa-paw w-6 text-tiffany/70"></i> <span data-i18n="nav-animal">動物房</span></div>
+                        <i id="animal-arrow" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="mobile-animal-menu" class="hidden bg-slate-50 rounded-xl mx-2 mt-1 py-2 border border-slate-100 shadow-inner">
+                        <a href="#" onclick="openModal('animal_booking'); toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-animal-booking">設施預約</a>
+                        <a href="#" onclick="openModal('animal_room'); toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-animal-services">動物房服務</a>
+                        <a href="#" onclick="openModal('animal_tech'); toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-animal-tech">技術人員服務</a>
+                    </div>
+                </div>
+
+                <div>
+                    <button onclick="document.getElementById('mobile-other-menu').classList.toggle('hidden'); document.getElementById('other-arrow').classList.toggle('rotate-180')" class="w-full flex items-center justify-between px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
+                        <div><i class="fas fa-plus-circle w-6 text-tiffany/70"></i> <span data-i18n="nav-other">其他資訊</span></div>
+                        <i id="other-arrow" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="mobile-other-menu" class="hidden bg-slate-50 rounded-xl mx-2 mt-1 py-2 border border-slate-100 shadow-inner">
+                        <a href="#" onclick="openVideosModal(); toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-videos">影音專區</a>
+                        <a href="https://shorturl.at/5uN4F" target="_blank" onclick="toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-satisfaction">滿意度調查</a>
+                        <a href="https://docs.google.com/forms/d/1vA5W0T3oQ8b80nN5H-p4u57u5m3XwB6uV1e_rO9yT4U/edit" target="_blank" onclick="toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-visit">參訪申請</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd7gE-2P_a_5kEwQxL5yYcK4w2Z1r0t9jY8vX6M9W_U_p3TQA/viewform" target="_blank" onclick="toggleMobileMenu()" class="block px-10 py-3 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-consultation">諮詢及教育訓練</a>
+                    </div>
+                </div>
+
+                <a href="#footer" onclick="toggleMobileMenu()" class="block px-4 py-3 text-slate-600 font-bold hover:bg-slate-50 hover:text-tiffany rounded-xl transition-colors">
+                    <i class="fas fa-map-marker-alt w-6 text-tiffany/70"></i> <span data-i18n="nav-location">地理位置</span>
+                </a>
+                
+                <div class="flex space-x-2 pt-4 pb-2 border-t border-slate-100">
+                    <button onclick="switchLang('zh')" class="flex-1 py-3 text-sm font-bold bg-slate-100 text-slate-600 rounded-lg hover:bg-tiffany hover:text-white transition-colors shadow-sm">中文</button>
+                    <button onclick="switchLang('en')" class="flex-1 py-3 text-sm font-bold bg-slate-100 text-slate-600 rounded-lg hover:bg-tiffany hover:text-white transition-colors shadow-sm">EN</button>
+                </div>
             </div>
         </div>
-    </nav>
-
-    <div id="marquee-container">
+    </nav> <div id="marquee-container">
     </div>
     </div>
 
@@ -2064,13 +2106,13 @@ comm: {
 
             ${renderCategory(isEn ? 'Management' : '營運管理層', [
                 { 
-                    name: isEn ? 'Chao-Kwan Chou, Ph.D., DVM' : '賴超坤 博士 (營運長/獸醫師)', 
+                    name: isEn ? 'Chao-Kwan Chou, Ph.D., DVM' : '賴超坤 博士 <br>(營運長/獸醫師)', 
                     spec: isEn ? 'Drug Screening & Development, Lab Animal Veterinarian' : '藥物篩選及開發、動物房獸醫師', 
                     tel: '02-7750-5514', 
                     img: 'https://tmc.sinica.edu.tw/images/people37.JPG' 
                 },
                 { 
-                    name: isEn ? 'Ying-Ling Shen, Ph.D.' : '沈映伶 博士 (副營運長)', 
+                    name: isEn ? 'Ying-Ling Shen, Ph.D.' : '沈映伶 博士 <br>(副營運長)', 
                     spec: isEn ? 'Neuroscience, Behavioral Tests, Disease Models' : '神經科學、精神疾病動物模式、藥物篩選及動物行為測試', 
                     tel: '02-7750-5511', 
                     img: 'https://tmc.sinica.edu.tw/images/people48.jpg' 
@@ -5147,7 +5189,7 @@ const workflows = {
         { step: "02", title: "敲定日期", titleEn: "Scheduling", sub: "排定時程與資源確認", subEn: "Resource Allocation", icon: "fa-chevron-right" },
         { step: "03", title: "完成報價", titleEn: "Quotation", sub: "確認費用與執行與否", subEn: "Cost Confirmation", icon: "fa-chevron-right" },
         { step: "04", title: "系統註冊", titleEn: "Registration", sub: "帳號與計畫申請", subEn: "LIMS Account & Project", icon: "fa-chevron-right", link: "https://lims.tmc.sinica.edu.tw/tac/home" },
-        { step: "05", title: "購買點數", titleEn: "Credit Purchase", sub: "做多少買多少，避免餘款", subEn: "Buy only what you need to avoid outstanding payments", icon: "fa-chevron-right" },
+        { step: "05", title: "購買點數", titleEn: "Credit Purchase", sub: "做多少買多少，避免餘款", subEn: "Buy only what you need to avoid outstanding payments", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1jw1I-0tDXNJNdPrQVquFgCVMkBlROU1W/view?usp=sharing" },
         { step: "06", title: "申請動物入住", titleEn: "Check-in Application", sub: "檢體實驗者只需申請實驗", subEn: "Specimen Test Subjects Only Need to Apply for General Testing", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1xGTd8uCdYMZXV83LOYKNF_qle5gUGjtl/view?usp=drive_link" },
         { step: "07", title: "動物運送/遞交檢體", titleEn: "Animal Delivery<br>/ Sample Submission", sub: "依規範提供動物/檢體", subEn: "Deliver animals/samples accordingly", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1YoU3ltqYx-C_2tkDzdbGEvVkx9FOQjlM/view?usp=drive_link" },
         { step: "08", title: "執行實驗", titleEn: "Execution", sub: "專業團隊標準化作業", subEn: "Standardized Operation", icon: "fa-chevron-right" },
@@ -5270,16 +5312,18 @@ function switchWorkflow(type) {
     const data = workflows[type.toLowerCase()]; 
     if (!container || !data) return;
 
-    // 1. 更新按鈕樣式
+    // 1. 更新按鈕樣式 (相容毛玻璃與實色切換)
     document.querySelectorAll('.workflow-tab').forEach(btn => {
-        btn.classList.remove('bg-tiffany', 'text-white', 'shadow-md');
-        btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-100');
+        // 先恢復所有按鈕為「毛玻璃灰」樣式
+        btn.classList.remove('bg-tiffany', 'text-white', 'shadow-md', 'shadow-lg', 'border-transparent');
+        btn.classList.add('bg-white/60', 'backdrop-blur-md', 'text-slate-700', 'border-white/80', 'shadow-sm');
     });
     
     const activeBtn = document.getElementById('btn-' + type.toLowerCase());
     if (activeBtn) {
-        activeBtn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-100');
-        activeBtn.classList.add('bg-tiffany', 'text-white', 'shadow-md');
+        // 將被點擊的按鈕改為「蒂芬妮藍」樣式
+        activeBtn.classList.remove('bg-white/60', 'backdrop-blur-md', 'text-slate-700', 'border-white/80', 'shadow-sm');
+        activeBtn.classList.add('bg-tiffany', 'text-white', 'shadow-lg', 'border-transparent');
     }
 
     // 2. 渲染流程內容
