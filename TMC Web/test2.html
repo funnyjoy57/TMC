@@ -295,11 +295,11 @@ html { scroll-behavior: smooth; }
                         <i id="arrow-about" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                     </button>
                     <div id="sub-about" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
-                        <a href="javascript:void(0)" onclick="openAbout(); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">TMC 簡介</a>
-                        <a href="javascript:void(0)" onclick="openModal('org'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">組織架構</a>
-                        <a href="javascript:void(0)" onclick="openModal('committee'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">委員會成員</a>
-                        <a href="javascript:void(0)" onclick="openModal('staff'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">診所成員</a>
-                        <a href="#footer" onclick="toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">地理位置</a>
+                        <a href="javascript:void(0)" onclick="openAbout('intro'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-intro">TMC 簡介</a>
+                        <a href="javascript:void(0)" onclick="openAbout('org'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-org">組織架構</a>
+                        <a href="javascript:void(0)" onclick="openAbout('comm'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-comm">委員會成員</a>
+                        <a href="javascript:void(0)" onclick="openAbout('people'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-members">診所成員</a>
+                        <a href="javascript:void(0)" onclick="openAbout('location'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-location">地理位置</a>
                     </div>
                 </div>
 
@@ -309,14 +309,14 @@ html { scroll-behavior: smooth; }
                         <i id="arrow-animal" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                     </button>
                     <div id="sub-animal" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
-                        <a href="javascript:void(0)" onclick="openModal('animal_intro'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">簡介</a>
-                        <a href="javascript:void(0)" onclick="openModal('animal_env'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">環境與飼養管理</a>
-                        <a href="javascript:void(0)" onclick="openModal('health_monitor'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">健康監測</a>
-                        <a href="javascript:void(0)" onclick="openModal('env_monitor'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">環境監測</a>
-                        <a href="javascript:void(0)" onclick="openModal('checkin'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">動物入住申請</a>
-                        <a href="javascript:void(0)" onclick="openModal('checkout'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">動物退房申請</a>
-                        <a href="javascript:void(0)" onclick="openModal('shipping_spec'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">運送路線&包裝規範</a>
-                        <a href="javascript:void(0)" onclick="openModal('spf_service'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">SPF 小鼠淨化服務</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-intro'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-intro">簡介</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-env'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-env">環境與飼養管理</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-health'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-health">健康監測</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-env-mon'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-env-mon">環境監測</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-checkin'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-checkin">動物入住申請</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-checkout'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-checkout">動物退房申請</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-transport'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-transport">運送路線&包裝規範</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-spf'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-spf">SPF 小鼠淨化服務</a>
                     </div>
                 </div>
 
@@ -326,13 +326,13 @@ html { scroll-behavior: smooth; }
                         <i id="arrow-other" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                     </button>
                     <div id="sub-other" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
-                        <a href="javascript:void(0)" onclick="openModal('sample_prep'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">檢體製備</a>
-                        <a href="javascript:void(0)" onclick="openModal('sop'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">標準實驗程序</a>
-                        <a href="javascript:void(0)" onclick="openModal('database'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">小鼠資料庫</a>
-                        <a href="javascript:void(0)" onclick="openModal('publication'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">文獻發表</a>
-                        <a href="javascript:void(0)" onclick="openModal('ack'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">致謝說明</a>
+                        <a href="javascript:void(0)" onclick="openOther('sample'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">檢體製備</a>
+                        <a href="javascript:void(0)" onclick="openOther('sop'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">標準實驗程序</a>
+                        <a href="javascript:void(0)" onclick="openOther('database'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">小鼠資料庫</a>
+                        <a href="javascript:void(0)" onclick="openOther('publication'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">文獻發表</a>
+                        <a href="javascript:void(0)" onclick="openOther('ack'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">致謝說明</a>
                         <a href="javascript:void(0)" onclick="openVideosModal(); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">歷年活動 (影音)</a>
-                        <a href="javascript:void(0)" onclick="openModal('links'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">友站連結</a>
+                        <a href="javascript:void(0)" onclick="openOther('links'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany">友站連結</a>
                     </div>
                 </div>
 
