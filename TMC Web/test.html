@@ -153,18 +153,18 @@ html { scroll-behavior: smooth; }
     <nav class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-tiffany">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         
-        <div class="flex items-center -ml-4 md:-ml-8 transition-all flex-wrap lg:flex-nowrap">
-            
-            <button onclick="openVideosModal()" class="group focus:outline-none cursor-pointer transition-transform duration-300 hover:scale-105" title="點擊觀看形象影片">
-                <img src="images/TMC_logo.jpg" onerror="this.src='https://via.placeholder.com/150?text=TMC'" alt="TMC Logo" class="h-16 md:h-18 w-auto object-contain mr-4 drop-shadow-sm ml-4 lg:ml-6">
-            </button>
+        <div class="flex flex-col items-center lg:flex-row lg:items-center transition-all">
+    
+    <button onclick="openVideosModal()" class="group focus:outline-none cursor-pointer transition-transform duration-300 hover:scale-105 mb-2 lg:mb-0 shrink-0" title="點擊觀看形象影片">
+        <img src="images/TMC_logo.jpg" onerror="this.src='https://via.placeholder.com/150?text=TMC'" alt="TMC Logo" class="h-14 md:h-18 w-auto object-contain drop-shadow-sm lg:ml-6 lg:mr-4">
+    </button>
 
-            <a href="test2.html" class="flex flex-col justify-center leading-tight group mb-2 lg:mb-0">
-                <span id="nav-main-title" class="text-xl md:text-3xl font-black text-slate-800 tracking-tight group-hover:text-tiffany transition-colors" data-i18n="logo-tw">台灣小鼠診所</span>
-                <span id="nav-sub-title" class="text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mt-0.5" data-i18n="logo-en">TAIWAN MOUSE CLINIC</span>
-            </a>
-            
-        </div>
+    <a href="test2.html" class="flex flex-col items-center lg:items-start justify-center leading-tight group">
+        <span id="nav-main-title" class="text-xl md:text-3xl font-black text-slate-800 tracking-tight group-hover:text-tiffany transition-colors text-center lg:text-left" data-i18n="logo-tw">台灣小鼠診所</span>
+        <span id="nav-sub-title" class="text-[10px] md:text-xs text-slate-500 font-bold uppercase tracking-wider mt-0.5 text-center lg:text-left" data-i18n="logo-en">TAIWAN MOUSE CLINIC</span>
+    </a>
+    
+</div>
             
             <div class="hidden lg:flex items-center space-x-8 font-bold text-lg">
     <div class="relative dropdown">
@@ -271,62 +271,138 @@ html { scroll-behavior: smooth; }
                     <button id="lang-en" onclick="switchLang('en')" class="ml-2 hover:text-tiffany">EN</button>
                 </div>
 
-                <a href="https://lims.tmc.sinica.edu.tw/tac/home" target="_blank" class="px-4 py-2 md:px-6 md:py-3 text-white rounded-full font-bold btn-pulse transition text-sm md:text-lg shadow-md">
-                    <i class="fas fa-sign-in-alt mr-2 text-base md:text-lg"></i><span data-i18n="btn-lims">登入 LIMS</span>
-                </a>
-            
-            <button class="lg:hidden text-3xl text-slate-600 pl-2" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-                </button>
+                <a href="https://lims.tmc.sinica.edu.tw/tac/home" target="_blank" class="px-4 py-1.5 md:px-6 md:py-3 text-white rounded-xl md:rounded-full font-bold btn-pulse transition shadow-md hover:opacity-90">
+    
+    <div class="flex flex-col items-center justify-center md:hidden leading-tight">
+        <div class="flex items-center mb-0.5">
+            <i class="fas fa-arrow-right-to-bracket mr-1 text-sm"></i>
+            <span class="text-sm">登入</span>
+        </div>
+        <span class="text-sm">LIMS</span>
+    </div>
+
+    <div class="hidden md:flex md:items-center">
+        <i class="fas fa-arrow-right-to-bracket mr-2 text-lg"></i>
+        <span data-i18n="btn-lims" class="text-lg">登入 LIMS</span>
+    </div>
+    
+</a>
+
+<button class="lg:hidden text-3xl text-slate-600 pl-2" onclick="toggleMobileMenu()">
+    <i class="fas fa-bars"></i>
+</button>
             </div>
         </div>
         
-        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 p-4 space-y-4 font-bold text-center">
-            <input type="text" id="serviceSearchMobile" class="w-full p-3 bg-slate-100 rounded-xl" placeholder="搜尋服務..." onkeyup="if(event.key === 'Enter') handleSearch(true)">
-            <div class="grid grid-cols-2 gap-2">
-                <button onclick="openAbout('org')" class="p-2 bg-slate-50 rounded" data-i18n="nav-org">組織架構</button>
-                <button onclick="openAbout('location')" class="p-2 bg-slate-50 rounded" data-i18n="nav-location">地理位置</button>
+        <div id="mobileMenu" class="md:hidden hidden bg-white shadow-inner pb-6">
+            <div class="px-4 pt-4 pb-2 space-y-1 max-h-[85vh] overflow-y-auto custom-scrollbar">
+                
+                <div class="relative mb-4">
+                    <input type="text" id="serviceSearchMobile" placeholder="搜尋服務項目..." class="w-full pl-10 pr-4 py-2.5 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-tiffany transition-colors text-sm" onkeyup="if(event.key === 'Enter') handleSearch(true)" data-i18n-placeholder="search-placeholder">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                </div>
+                
+                <div class="border-b border-slate-50 pb-1">
+                    <button onclick="toggleMobileSub('sub-about', 'arrow-about')" class="w-full flex items-center justify-between px-4 py-3 text-slate-700 font-black hover:bg-slate-50 rounded-xl transition-all">
+                        <div class="flex items-center"><i class="fas fa-info-circle w-6 text-tiffany"></i> <span data-i18n="nav-about">關於我們</span></div>
+                        <i id="arrow-about" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="sub-about" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
+                        <a href="javascript:void(0)" onclick="openAbout('intro'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-intro">TMC 簡介</a>
+                        <a href="javascript:void(0)" onclick="openAbout('org'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-org">組織架構</a>
+                        <a href="javascript:void(0)" onclick="openAbout('comm'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-comm">委員會成員</a>
+                        <a href="javascript:void(0)" onclick="openAbout('people'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-members">診所成員</a>
+                        <a href="javascript:void(0)" onclick="openAbout('location'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-location">地理位置</a>
+                    </div>
+                </div>
+
+                <div class="border-b border-slate-50 pb-1">
+                    <button onclick="toggleMobileSub('sub-animal', 'arrow-animal')" class="w-full flex items-center justify-between px-4 py-3 text-slate-700 font-black hover:bg-slate-50 rounded-xl transition-all">
+                        <div class="flex items-center"><i class="fas fa-paw w-6 text-tiffany"></i> <span data-i18n="nav-animal-room">動物房</span></div>
+                        <i id="arrow-animal" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="sub-animal" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
+                        <a href="javascript:void(0)" onclick="openAbout('animal-intro'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-intro">簡介</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-env'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-env">環境與飼養管理</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-health'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-health">健康監測</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-env-mon'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-env-mon">環境監測</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-checkin'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-checkin">動物入住申請</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-checkout'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-checkout">動物退房申請</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-transport'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-transport">運送路線&包裝規範</a>
+                        <a href="javascript:void(0)" onclick="openAbout('animal-spf'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="ar-spf">SPF 小鼠淨化服務</a>
+                    </div>
+                </div>
+
+                <div class="border-b border-slate-50 pb-1">
+                    <button onclick="toggleMobileSub('sub-other', 'arrow-other')" class="w-full flex items-center justify-between px-4 py-3 text-slate-700 font-black hover:bg-slate-50 rounded-xl transition-all">
+                        <div class="flex items-center"><i class="fas fa-plus-circle w-6 text-tiffany"></i> <span data-i18n="nav-info">其他資訊</span></div>
+                        <i id="arrow-other" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="sub-other" class="hidden flex flex-col bg-slate-50/50 rounded-lg py-1 mt-1">
+                        <a href="javascript:void(0)" onclick="openOther('sample'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-sample">檢體製備</a>
+                        <a href="javascript:void(0)" onclick="openOther('sop'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-sop">標準實驗程序</a>
+                        <a href="javascript:void(0)" onclick="openOther('database'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-database">小鼠資料庫</a>
+                        <a href="javascript:void(0)" onclick="openOther('publications'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-publications">文獻發表</a>
+                        <a href="javascript:void(0)" onclick="openOther('acknowledgement'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-ack">致謝說明</a>
+                        <a href="javascript:void(0)" onclick="openOther('events'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-events">歷年活動</a>
+                        <a href="javascript:void(0)" onclick="openOther('links'); toggleMobileMenu()" class="px-10 py-2.5 text-sm text-slate-600 font-bold hover:text-tiffany" data-i18n="nav-links">友站連結</a>
+                    </div>
+                </div>
+
+                <div class="flex space-x-2 pt-6">
+                    <button onclick="switchLang('zh')" class="flex-1 py-3 text-sm font-black bg-slate-100 text-slate-600 rounded-xl hover:bg-tiffany hover:text-white transition-all">中文</button>
+                    <button onclick="switchLang('en')" class="flex-1 py-3 text-sm font-black bg-slate-100 text-slate-600 rounded-xl hover:bg-tiffany hover:text-white transition-all">ENGLISH</button>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <div id="marquee-container">
+        <script>
+            function toggleMobileSub(id, arrowId) {
+                const sub = document.getElementById(id);
+                const arrow = document.getElementById(arrowId);
+                sub.classList.toggle('hidden');
+                arrow.classList.toggle('rotate-180');
+            }
+        </script>
+
+    </nav> <div id="marquee-container">
     </div>
     </div>
 
     <header class="hero-bg text-white py-16 md:py-24 text-center">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl md:text-6xl font-extrabold drop-shadow-md leading-tight" data-i18n="hero-title">國家綜合小鼠表現型暨藥物測試中心</h2>
-            <p class="mt-4 md:mt-8 text-lg md:text-2xl font-medium opacity-95" data-i18n="hero-subtitle">精準表型分析 · 專業藥物測試 · 國家級核心設施</p>
-        </div>
+            <p class="mt-4 md:mt-8 text-[15px] sm:text-lg md:text-2xl font-medium opacity-95 whitespace-nowrap tracking-tighter sm:tracking-normal" data-i18n="hero-subtitle">
+    精準表型分析 · 專業藥物測試 · 國家級核心設施
+</p>
     </header>
 
 <section class="bg-white py-12 border-b border-slate-100 shadow-sm relative z-10">
     <div class="container mx-auto px-4">
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-4">
+        <div class="grid grid-cols-3 gap-2 md:gap-4">
             
-            <div class="text-center group">
-                <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
-                    5,200<span class="text-xl ml-1">+</span>
-                </div>
-                <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-service">服務人次</div>
-            </div>
-
-            <div class="text-center border-l border-slate-100 group">
-                <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
-                    150<span class="text-xl ml-1">+</span>
-                </div>
-                <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-orgs">委託單位</div>
-            </div>
-
-            <div class="text-center border-l border-slate-100 group">
-    <div class="text-4xl md:text-5xl font-black text-tiffany mb-2 transition-transform group-hover:scale-110">
-        <span id="experience-years">18</span><span class="text-xl ml-1">y</span>
-    </div>
-    <div class="text-slate-500 font-bold tracking-widest text-sm uppercase" data-i18n="stat-exp">專業營運經驗</div>
-</div>
-
+    <div class="text-center group">
+        <div class="text-2xl md:text-5xl font-black text-tiffany mb-1 md:mb-2 transition-transform group-hover:scale-110">
+            5,200<span class="text-base ml-0.5">+</span>
         </div>
+        <div class="text-slate-500 font-bold tracking-tighter md:tracking-widest text-[10px] md:text-sm uppercase" data-i18n="stat-service">服務人次</div>
+    </div>
+
+    <div class="text-center border-l border-slate-100 group">
+        <div class="text-2xl md:text-5xl font-black text-tiffany mb-1 md:mb-2 transition-transform group-hover:scale-110">
+            150<span class="text-base ml-0.5">+</span>
+        </div>
+        <div class="text-slate-500 font-bold tracking-tighter md:tracking-widest text-[10px] md:text-sm uppercase" data-i18n="stat-orgs">委託單位</div>
+    </div>
+
+    <div class="text-center border-l border-slate-100 group">
+        <div class="text-2xl md:text-5xl font-black text-tiffany mb-1 md:mb-2 transition-transform group-hover:scale-110">
+            <span id="experience-years">18</span><span class="text-base ml-0.5">y</span>
+        </div>
+        <div class="text-slate-500 font-bold tracking-tighter md:tracking-widest text-[10px] md:text-sm uppercase whitespace-nowrap" data-i18n="stat-exp">專業營運經驗</div>
+    </div>
+
+</div>
     </div>
 </section>
 
@@ -525,40 +601,51 @@ html { scroll-behavior: smooth; }
                 </div>
             </div>
 
-            <div class="md:col-span-6 space-y-5 pt-[72px]"> <div class="flex items-start group">
-                    <i class="fas fa-map-marker-alt w-6 mt-1 text-tiffany/70 group-hover:text-tiffany"></i>
-                    <a href="https://maps.app.goo.gl/xukPkjhpaB8NYTre8" target="_blank" class="block hover:opacity-80 transition-opacity">
-                        <p class="text-slate-200 font-bold leading-relaxed whitespace-nowrap" data-i18n="footer-addr-main">
-                            115 台北市南港區研究院路一段130巷99號 (國家生技園區 A 棟)
-                        </p>
-                        <p class="text-[11px] text-slate-500 italic mt-0.5 font-light tracking-wide"> Building A, No. 99, Ln. 130, Sec. 1, Academia Rd., Taipei 115, Taiwan
-                        </p>
-                    </a>
-                </div>
+            <div class="md:col-span-6 space-y-5 pt-10 md:pt-[72px]">
+    <div class="flex items-start group">
+        <i class="fas fa-map-marker-alt w-6 mt-1 text-tiffany/70 group-hover:text-tiffany"></i>
+        <a href="https://maps.app.goo.gl/..." target="_blank" class="block hover:opacity-80 transition-opacity">
+            <p class="text-slate-200 font-bold leading-relaxed" data-i18n="footer-addr-main">
+                115 台北市南港區研究院路一段130巷99號 
+                <span class="block md:inline text-sm md:text-base">(國家生技園區 A 棟)</span>
+            </p>
+            <p class="text-[11px] text-slate-500 italic mt-0.5 font-light tracking-wide">
+                Building A, No. 99, Ln. 130, Sec. 1, Academia Rd., Taipei 115, Taiwan
+            </p>
+        </a>
+    </div>
 
-                <div class="flex flex-row justify-between gap-3 pt-1"> <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-4 py-2 rounded-lg transition-all text-sm flex items-center justify-center space-x-2">
-                        <b class="text-tiffany font-black text-xs">7F</b>
-                        <span class="text-slate-600 text-xs font-light">|</span> <div class="flex items-baseline space-x-1.5 text-slate-300">
-                            <span class="font-bold text-[12px]" data-i18n="footer-floor-7">行政室</span>
-                            <span class="text-[9px] uppercase tracking-tighter text-slate-500">Administration</span>
-                        </div>
-                    </div>
-                    <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-4 py-2 rounded-lg transition-all text-sm flex items-center justify-center space-x-2">
-                        <b class="text-tiffany font-black text-xs">8F</b>
-                        <span class="text-slate-600 text-xs font-light">|</span> <div class="flex items-baseline space-x-1.5 text-slate-300">
-                            <span class="font-bold text-[12px]" data-i18n="footer-floor-8">檢體送樣</span>
-                            <span class="text-[9px] uppercase tracking-tighter text-slate-500">Submission</span>
-                        </div>
-                    </div>
-                    <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-4 py-2 rounded-lg transition-all text-sm flex items-center justify-center space-x-2">
-                        <b class="text-tiffany font-black text-xs">B1</b>
-                        <span class="text-slate-600 text-xs font-light">|</span> <div class="flex items-baseline space-x-1.5 text-slate-300">
-                            <span class="font-bold text-[12px]" data-i18n="footer-floor-b1">動物接送</span>
-                            <span class="text-[9px] uppercase tracking-tighter text-slate-500">Deliver / Pickup</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="flex flex-row justify-between gap-2 pt-1 w-full overflow-hidden">
+        
+        <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-2 py-3 rounded-lg transition-all flex items-center justify-center space-x-2 min-w-0">
+            <b class="text-tiffany font-black text-xs flex-shrink-0">7F</b>
+            <span class="text-slate-600 text-xs font-light flex-shrink-0">|</span>
+            <div class="flex flex-col items-center text-center overflow-hidden">
+                <span class="font-bold text-[11px] md:text-[12px] text-slate-300 truncate w-full" data-i18n="footer-floor-7">行政室</span>
+                <span class="text-[8px] md:text-[9px] uppercase tracking-tighter text-slate-500 leading-tight">Administration</span>
             </div>
+        </div>
+
+        <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-2 py-3 rounded-lg transition-all flex items-center justify-center space-x-2 min-w-0">
+            <b class="text-tiffany font-black text-xs flex-shrink-0">8F</b>
+            <span class="text-slate-600 text-xs font-light flex-shrink-0">|</span>
+            <div class="flex flex-col items-center text-center overflow-hidden">
+                <span class="font-bold text-[11px] md:text-[12px] text-slate-300 truncate w-full" data-i18n="footer-floor-8">檢體送樣</span>
+                <span class="text-[8px] md:text-[9px] uppercase tracking-tighter text-slate-500 leading-tight">Submission</span>
+            </div>
+        </div>
+
+        <div class="flex-1 bg-white/5 border border-slate-800 hover:border-tiffany/30 px-2 py-3 rounded-lg transition-all flex items-center justify-center space-x-2 min-w-0">
+            <b class="text-tiffany font-black text-xs flex-shrink-0">B1</b>
+            <span class="text-slate-600 text-xs font-light flex-shrink-0">|</span>
+            <div class="flex flex-col items-center text-center overflow-hidden">
+                <span class="font-bold text-[11px] md:text-[12px] text-slate-300 truncate w-full" data-i18n="footer-floor-b1">動物接送</span>
+                <span class="text-[8px] md:text-[9px] uppercase tracking-tighter text-slate-500 leading-tight">Delivery</span>
+            </div>
+        </div>
+
+    </div>
+</div>
 
             <div class="md:col-span-3 flex flex-col items-end space-y-5 pt-[72px]">
                 <a href="https://line.me/ti/p/@724ektvk?ts=03241747" target="_blank" class="flex items-center bg-[#06C755] hover:bg-[#05a346] text-white px-5 py-2 rounded-full transition-all transform hover:scale-105 shadow-lg group border border-white/10">
@@ -582,18 +669,22 @@ html { scroll-behavior: smooth; }
         </div>
 
         <div class="mt-10 pt-5 border-t border-white/5 text-center"> 
-            <p class="text-slate-600 text-[10px] font-mono uppercase tracking-[0.3em] mb-4">
-                © 2026 Taiwan Mouse Clinic. All rights reserved.
-            </p>
-            
-            <div class="flex items-center justify-center space-x-4 text-slate-500 text-xs font-mono mt-4">
-                
-                <div class="flex items-center space-x-2">
-                    <span data-i18n="visitor-count">自2008.10.5 累積造訪人次：</span>
-                    <a href="https://www.hitwebcounter.com/" target="_blank" class="opacity-70 hover:opacity-100 transition-opacity">
-                        <img src="https://hitwebcounter.com/counter/counter.php?page=21487104&style=0036&nbdigits=6&type=page&initCount=126345" title="Free Tools" Alt="Free Tools" border="0" />
-                    </a>
-                </div>
+    <p class="text-slate-600 text-[10px] font-mono uppercase tracking-[0.3em] mb-4">
+        © 2026 Taiwan Mouse Clinic. 
+        <span class="block md:inline">All rights reserved.</span>
+    </p>
+    
+    <div class="flex items-center justify-center space-x-4 text-slate-500 text-xs font-mono mt-4">
+        
+        <div class="flex flex-col md:flex-row items-center md:space-x-2 space-y-2 md:space-y-0">
+            <span data-i18n="visitor-count" class="leading-relaxed">
+                自2008.10.5 
+                <span class="block md:inline">累積造訪人次：</span>
+            </span>
+            <a href="https://www.hitwebcounter.com/" target="_blank" class="opacity-70 hover:opacity-100 transition-opacity">
+                <img src="https://hitwebcounter.com/counter/counter.php?page=21487104&style=0036&nbdigits=6&type=page&initCount=126345" title="Free Tools" Alt="Free Tools" border="0" />
+            </a>
+        </div>
 
                 <div class="w-px h-4 bg-slate-600"></div>
 
@@ -633,6 +724,15 @@ html { scroll-behavior: smooth; }
                 </div>
 
             </div>
+
+            <div class="p-4 bg-slate-800/80 border-t border-white/10 text-center flex justify-center items-center">
+                <a href="https://tac.biotrec.sinica.edu.tw/" target="_blank" class="inline-flex items-center text-sm font-medium text-slate-400 hover:text-tiffany transition-colors duration-300 group">
+                    <i class="fas fa-link mr-2 opacity-70"></i>
+                    <span data-i18n="modal-affiliation">隸屬於台灣動物設施聯盟</span>
+                    <i class="fas fa-external-link-alt ml-2 text-[10px] opacity-0 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"></i>
+                </a>
+            </div>
+
         </div>
     </div>
 
@@ -1474,11 +1574,12 @@ animal_room: {
 
         const translations = {
         zh: {
-               "logo-tw": "台灣小鼠診所",
-             "logo-en": "TAIWAN MOUSE CLINIC",
-             "modal-video-title": "TMC 形象影片",
-             "video-2018": "2018 喬遷開幕",
-             "video-mouse": "快樂小鼠鎮",
+            "logo-tw": "台灣小鼠診所",
+            "logo-en": "TAIWAN MOUSE CLINIC",
+            "modal-video-title": "TMC 形象影片",
+            "video-2018": "2018 喬遷開幕",
+            "video-mouse": "快樂小鼠鎮",
+            "modal-affiliation": "隸屬於台灣動物設施聯盟",
             "nav-about": "關於我們", 
             "nav-intro": "TMC 簡介",
             "nav-org": "組織架構", 
@@ -1563,27 +1664,28 @@ animal_room: {
             "group-photos": "團隊合照",
             "spec": "專長",
             "phone": "電話",
-               "phone-sec": "秘書 / 總機",
-             "phone-coo": "營運長",
-             "phone-sys": "系統",
-             "phone-vet": "獸醫",
-             "phone-breed": "飼育",
-             "phone-img": "影像",
-             "phone-path": "病理",
-             "phone-necropsy": "剖檢",
-             "phone-meta": "代謝",
-             "phone-immuno": "免疫",
-             "phone-cardio": "心血管",
-             "phone-neuro": "神經行為",
-               "visitor-count": "自2008.10.5 累積造訪人次：",
-               "public-dashboard": "詳細數據儀表板",
+            "phone-sec": "秘書 / 總機",
+            "phone-coo": "營運長",
+            "phone-sys": "系統",
+            "phone-vet": "獸醫",
+            "phone-breed": "飼育",
+            "phone-img": "影像",
+            "phone-path": "病理",
+            "phone-necropsy": "剖檢",
+            "phone-meta": "代謝",
+            "phone-immuno": "免疫",
+            "phone-cardio": "心血管",
+            "phone-neuro": "神經行為",
+            "visitor-count": "自2008.10.5 累積造訪人次：",
+            "public-dashboard": "詳細數據儀表板",
         },
         en: {
-               "logo-tw": "TAIWAN MOUSE CLINIC",
-             "logo-en": "台灣小鼠診所",
-             "modal-video-title": "TMC Introduction Videos",
-             "video-2018": "2018 Opening",
-             "video-mouse": "Happy Mouse Town",
+            "logo-tw": "TAIWAN MOUSE CLINIC",
+            "logo-en": "台灣小鼠診所",
+            "modal-video-title": "TMC Introduction Videos",
+            "video-2018": "2018 Opening",
+            "video-mouse": "Happy Mouse Town",
+            "modal-affiliation": "Belong to Taiwan Animal Consortium",
             "nav-about": "About Us", 
             "nav-intro": "TMC Intro",
             "nav-org": "Organization", 
@@ -2064,13 +2166,13 @@ comm: {
 
             ${renderCategory(isEn ? 'Management' : '營運管理層', [
                 { 
-                    name: isEn ? 'Chao-Kwan Chou, Ph.D., DVM' : '賴超坤 博士 (營運長/獸醫師)', 
+                    name: isEn ? 'Chao-Kwan Chou, Ph.D., DVM' : '賴超坤 博士 <br>(營運長/獸醫師)', 
                     spec: isEn ? 'Drug Screening & Development, Lab Animal Veterinarian' : '藥物篩選及開發、動物房獸醫師', 
                     tel: '02-7750-5514', 
                     img: 'https://tmc.sinica.edu.tw/images/people37.JPG' 
                 },
                 { 
-                    name: isEn ? 'Ying-Ling Shen, Ph.D.' : '沈映伶 博士 (副營運長)', 
+                    name: isEn ? 'Ying-Ling Shen, Ph.D.' : '沈映伶 博士 <br>(副營運長)', 
                     spec: isEn ? 'Neuroscience, Behavioral Tests, Disease Models' : '神經科學、精神疾病動物模式、藥物篩選及動物行為測試', 
                     tel: '02-7750-5511', 
                     img: 'https://tmc.sinica.edu.tw/images/people48.jpg' 
@@ -5147,7 +5249,7 @@ const workflows = {
         { step: "02", title: "敲定日期", titleEn: "Scheduling", sub: "排定時程與資源確認", subEn: "Resource Allocation", icon: "fa-chevron-right" },
         { step: "03", title: "完成報價", titleEn: "Quotation", sub: "確認費用與執行與否", subEn: "Cost Confirmation", icon: "fa-chevron-right" },
         { step: "04", title: "系統註冊", titleEn: "Registration", sub: "帳號與計畫申請", subEn: "LIMS Account & Project", icon: "fa-chevron-right", link: "https://lims.tmc.sinica.edu.tw/tac/home" },
-        { step: "05", title: "購買點數", titleEn: "Credit Purchase", sub: "做多少買多少，避免餘款", subEn: "Buy only what you need to avoid outstanding payments", icon: "fa-chevron-right" },
+        { step: "05", title: "購買點數", titleEn: "Credit Purchase", sub: "做多少買多少，避免餘款", subEn: "Buy only what you need to avoid outstanding payments", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1jw1I-0tDXNJNdPrQVquFgCVMkBlROU1W/view?usp=sharing" },
         { step: "06", title: "申請動物入住", titleEn: "Check-in Application", sub: "檢體實驗者只需申請實驗", subEn: "Specimen Test Subjects Only Need to Apply for General Testing", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1xGTd8uCdYMZXV83LOYKNF_qle5gUGjtl/view?usp=drive_link" },
         { step: "07", title: "動物運送/遞交檢體", titleEn: "Animal Delivery<br>/ Sample Submission", sub: "依規範提供動物/檢體", subEn: "Deliver animals/samples accordingly", icon: "fa-chevron-right", link: "https://drive.google.com/file/d/1YoU3ltqYx-C_2tkDzdbGEvVkx9FOQjlM/view?usp=drive_link" },
         { step: "08", title: "執行實驗", titleEn: "Execution", sub: "專業團隊標準化作業", subEn: "Standardized Operation", icon: "fa-chevron-right" },
@@ -5270,16 +5372,18 @@ function switchWorkflow(type) {
     const data = workflows[type.toLowerCase()]; 
     if (!container || !data) return;
 
-    // 1. 更新按鈕樣式
+    // 1. 更新按鈕樣式 (相容毛玻璃與實色切換)
     document.querySelectorAll('.workflow-tab').forEach(btn => {
-        btn.classList.remove('bg-tiffany', 'text-white', 'shadow-md');
-        btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-100');
+        // 先恢復所有按鈕為「毛玻璃灰」樣式
+        btn.classList.remove('bg-tiffany', 'text-white', 'shadow-md', 'shadow-lg', 'border-transparent');
+        btn.classList.add('bg-white/60', 'backdrop-blur-md', 'text-slate-700', 'border-white/80', 'shadow-sm');
     });
     
     const activeBtn = document.getElementById('btn-' + type.toLowerCase());
     if (activeBtn) {
-        activeBtn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-100');
-        activeBtn.classList.add('bg-tiffany', 'text-white', 'shadow-md');
+        // 將被點擊的按鈕改為「蒂芬妮藍」樣式
+        activeBtn.classList.remove('bg-white/60', 'backdrop-blur-md', 'text-slate-700', 'border-white/80', 'shadow-sm');
+        activeBtn.classList.add('bg-tiffany', 'text-white', 'shadow-lg', 'border-transparent');
     }
 
     // 2. 渲染流程內容
