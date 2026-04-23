@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMC動物入室揭露說明表單</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body { font-family: "Microsoft JhengHei", Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .section { margin-bottom: 25px; border-bottom: 1px inset #eee; padding-bottom: 15px; }
+        .section-title { font-weight: bold; color: #2980b9; font-size: 1.2em; margin-bottom: 15px; display: block; border-left: 4px solid #3498db; padding-left: 10px; }
+        .question { margin-bottom: 15px; }
+        .question-text { font-weight: bold; margin-bottom: 8px; display: block; }
+        .options { margin-left: 20px; margin-bottom: 10px; }
+        .conditional-group { margin-left: 25px; padding: 10px; background-color: #f9f9f9; border-left: 3px solid #ccc; display: none; }
+        input[type="text"], input[type="date"], textarea, input[type="file"] { width: 100%; padding: 8px; margin: 5px 0 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        input[type="checkbox"], input[type="radio"] { margin-right: 8px; cursor: pointer; }
+        label { margin-right: 15px; cursor: pointer; }
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn-submit { background-color: #3498db; color: white; padding: 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 1.2em; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .btn-submit:hover { background-color: #2980b9; }
+        .footer-info { text-align: center; color: #e74c3c; font-weight: bold; margin-top: 15px; }
+
+        /* 簽名版專用樣式 */
+        #signaturePad { border: 2px dashed #bdc3c7; border-radius: 4px; background-color: #fff; cursor: crosshair; touch-action: none; width: 100%; max-width: 400px; }
+        .btn-clear { background-color: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9em; margin-top: 5px; }
+        .btn-clear:hover { background-color: #c0392b; }
+
+        /* 預覽與 PDF 專用樣式 */
+        #preview-container { display: none; }
+        #pdf-content { padding: 10px 40px 10px 40px; background: white; color: black; line-height: 1.6; font-size: 14px; }
+        #pdf-content h2 { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; margin-top: 0; }
+        .pdf-section { margin-bottom: 20px; page-break-inside: avoid; }
+        .pdf-section-title { font-weight: bold; font-size: 16px; color: #2c3e50; margin-bottom: 10px; background-color: #ecf0f1; padding: 5px 10px; }
+        .pdf-row { display: flex; border-bottom: 1px dashed #ccc; padding: 6px 0; }
+        .pdf-label { font-weight: bold; width: 40%; color: #34495e; padding-right: 10px;}
+        .pdf-value { width: 60%; color: #2c3e50; }
+        .pdf-signature { margin-top: 40px; display: flex; justify-content: space-between; align-items: flex-end; border-top: 2px solid #333; padding-top: 20px; font-size: 16px; page-break-inside: avoid; }
+        .btn-group { display: flex; gap: 15px; margin-top: 20px; }
+        .btn-action { flex: 1; padding: 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.1em; font-weight: bold; color: white; transition: 0.3s;}
+        .btn-back { background-color: #95a5a6; }
+        .btn-back:hover { background-color: #7f8c8d; }
+        .btn-send { background-color: #27ae60; }
+        .btn-send:hover { background-color: #219653; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div id="form-container">
+        <h1>TMC動物入室揭露說明</h1>
+        
+        <form id="mainForm">
+            <div class="section">
+                <span class="section-title">1. 動物健康狀態</span>
+                
+                <div class="question">
+                    <span class="question-text">(1) 是否為基因轉殖鼠 (Genetically modified mouse)?</span>
+                    <div class="options">
+                        <label><input type="radio" name="Q1_1_GMM" value="否" checked onclick="toggleSection('gmm_details', false)"> 否</label>
+                        <label><input type="radio" name="Q1_1_GMM" value="是" onclick="toggleSection('gmm_details', true)"> 是</label>
+                    </div>
+                    <div id="gmm_details" class="conditional-group">
+                        動物在外觀、生理或行為上是否會與原品系有差異?<br>
+                        <label><input type="radio" name="Q1_1_Diff" value="否" checked> 否</label>
+                        <label><input type="radio" name="Q1_1_Diff" value="是"> 是，請說明 (如毛色異色、表皮屏障缺損、排尿較多、虛弱等):</label>
+                        <input type="text" name="Q1_1_Diff_Desc">
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-text">(2) 動物是否「曾」進行手術?</span>
+                    <div class="options">
+                        <label><input type="radio" name="Q1_2_Surgery_Base" value="否" checked onclick="toggleSection('surgery_details', false)"> 否</label>
+                        <label><input type="radio" name="Q1_2_Surgery_Base" value="是" onclick="toggleSection('surgery_details', true)"> 是</label>
+                    </div>
+                    <div id="surgery_details" class="conditional-group">
+                        請勾選手術類型：<br>
+                        <label><input type="radio" name="Q1_2_Surgery_Type" value="主要存活性手術"> 主要存活性手術 (暴露體腔或大規模組織剝離或切斷)</label><br>
+                        <label><input type="radio" name="Q1_2_Surgery_Type" value="次要存活性手術"> 次要存活性手術 (僅表皮切創，或輕微生理損害)</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-text">(3) 入室前動物標示方式?</span>
+                    <div class="options">
+                        <label><input type="checkbox" name="Q1_3_ID" value="無"> 無</label>
+                        <label><input type="checkbox" name="Q1_3_ID" value="耳號"> 耳號</label>
+                        <label><input type="checkbox" name="Q1_3_ID" value="耳標"> 耳標</label>
+                        <label><input type="checkbox" name="Q1_3_ID" value="趾號"> 趾號</label>
+                        <label><input type="checkbox" name="Q1_3_ID" value="尾號"> 尾號</label>
+                        <label><input type="checkbox" name="Q1_3_ID" value="刺青"> 刺青</label>
+                        <label><input type="checkbox" name="Q1_3_ID" value="其他"> 其他: <input type="text" name="Q1_3_ID_Other" style="width: 200px;"></label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-text">(4) 動物是否「曾」給予 substance (化合物、混合萃取物、生物製劑)?</span>
+                    <div class="options">
+                        <label><input type="radio" name="Q1_4_Substance" value="否" checked onclick="toggleSection('substance_past_details', false)"> 否</label>
+                        <label><input type="radio" name="Q1_4_Substance" value="是" onclick="toggleSection('substance_past_details', true)"> 是</label>
+                    </div>
+                    <div id="substance_past_details" class="conditional-group">
+                        a. 給予 substance 名稱: <input type="text" name="Q1_4_Name"><br>
+                        b. 可能造成的症狀、作用? 
+                        <label><input type="radio" name="Q1_4_Symptom" value="否" checked> 否</label>
+                        <label><input type="radio" name="Q1_4_Symptom" value="是"> 是，請說明: <input type="text" name="Q1_4_Symptom_Desc" style="width: 250px;"></label><br>
+                        c. 是否「曾」進行危險性物質給予? (如: Streptozotocin, MPTP 等)
+                        <label><input type="radio" name="Q1_4_Danger" value="否" checked> 否</label>
+                        <label><input type="radio" name="Q1_4_Danger" value="是"> 是，請說明種類: <input type="text" name="Q1_4_Danger_Desc" style="width: 250px;"></label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-text">(5) 是否「曾」接種病毒載體?</span>
+                    <div class="options">
+                        <label><input type="radio" name="Q1_5_Virus" value="否" checked onclick="toggleSection('virus_past_details', false)"> 否</label>
+                        <label><input type="radio" name="Q1_5_Virus" value="是" onclick="toggleSection('virus_past_details', true)"> 是</label>
+                    </div>
+                    <div id="virus_past_details" class="conditional-group">
+                        a. 請說明種類? 
+                        <label><input type="checkbox" name="Q1_5_Type" value="Adeno-associated virus (AAV)"> Adeno-associated virus (AAV)</label>
+                        <label><input type="checkbox" name="Q1_5_Type" value="Lentivirus vector"> Lentivirus vector</label>
+                        <label><input type="checkbox" name="Q1_5_Type" value="Retroviral vector"> Retroviral vector</label>
+                        <label><input type="checkbox" name="Q1_5_Type" value="其他"> 其他: <input type="text" name="Q1_5_Type_Other" style="width: 150px;"></label><br>
+                        b. 生物安全等級? 
+                        <label><input type="radio" name="Q1_5_RG" value="RG1" checked> RG1</label>
+                        <label><input type="radio" name="Q1_5_RG" value="RG2"> RG2</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <span class="section-title">2. 動物入室後是否給予 substance?</span>
+                <div class="options">
+                    <label><input type="radio" name="Q2_Substance_Future" value="否" checked onclick="toggleSection('substance_future_details', false)"> 否</label>
+                    <label><input type="radio" name="Q2_Substance_Future" value="是" onclick="toggleSection('substance_future_details', true)"> 是</label>
+                </div>
+                <div id="substance_future_details" class="conditional-group">
+                    (1) 給予 substance 名稱 (如需保密可以代號呈現): <input type="text" name="Q2_Name"><br>
+                    (2) 種類:<br>
+                    <div class="options">
+                        <label><input type="checkbox" name="Q2_Type" value="藥物級化合物"> 藥物級化合物 (請檢附仿單)</label><br>
+                        <label><input type="checkbox" name="Q2_Type" value="商品化化合物"> 商品化化合物 (請檢附 SDS 表)</label><br>
+                        <label><input type="checkbox" name="Q2_Type" value="自行合成試驗物質"> 自行合成試驗物質 (請說明製備方式、測試物特性及已知毒性資料)</label><br>
+                        <div style="margin-left: 20px;">
+                            a. 滅菌方式: 
+                            <label><input type="radio" name="Q2_Sterilize" value="無法滅菌" checked> 無法滅菌</label>
+                            <label><input type="radio" name="Q2_Sterilize" value="有滅菌"> 有滅菌: <input type="text" name="Q2_Sterilize_Method" style="width:150px;"></label><br>
+                            b. 毒性資料 (如 LD50 或類似化合物 SDS 表):
+                            <label><input type="radio" name="Q2_Toxicity" value="未知" checked> 未知</label>
+                            <label><input type="radio" name="Q2_Toxicity" value="已知"> 已知: <input type="text" name="Q2_Toxicity_Desc" style="width:200px;"></label>
+                        </div>
+                    </div>
+                    (3) 是否對操作人員造成危害?
+                    <div class="options">
+                        <label><input type="checkbox" name="Q2_Hazard" value="否"> 否</label>
+                        <label><input type="checkbox" name="Q2_Hazard" value="急性毒性"> 急性毒性</label>
+                        <label><input type="checkbox" name="Q2_Hazard" value="致癌性"> 致癌性</label>
+                        <label><input type="checkbox" name="Q2_Hazard" value="致畸胎性"> 致畸胎性</label>
+                        <label><input type="checkbox" name="Q2_Hazard" value="放射性"> 放射性</label>
+                        <label><input type="checkbox" name="Q2_Hazard" value="其他"> 其他: <input type="text" name="Q2_Hazard_Other" style="width:150px;"></label>
+                    </div>
+                    (4) 動物是否預期產生症狀、作用?
+                    <div class="options">
+                        <label><input type="radio" name="Q2_Effect" value="否" checked> 否</label>
+                        <label><input type="radio" name="Q2_Effect" value="是"> 是，請說明: <input type="text" name="Q2_Effect_Desc" style="width: 250px;"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <span class="section-title">3. 動物入室後是否給予細胞?</span>
+                <div class="options">
+                    <label><input type="radio" name="Q3_Cell" value="否" checked onclick="toggleSection('cell_details', false)"> 否</label>
+                    <label><input type="radio" name="Q3_Cell" value="是" onclick="toggleSection('cell_details', true)"> 是</label>
+                </div>
+                <div id="cell_details" class="conditional-group">
+                    (1) 細胞種類: 
+                    <input type="text" name="Q3_CellName" style="width: 250px; display: inline-block; margin: 0 15px 0 5px; border: none; border-bottom: 1px solid #333; border-radius: 0; padding: 2px 5px; background: transparent;" placeholder="請填寫細胞名稱">
+                    <label><input type="checkbox" name="Q3_CellType" value="人類細胞株"> 人類細胞株</label>
+                    <label><input type="checkbox" name="Q3_CellType" value="動物細胞株"> 動物細胞株</label><br>
+                    (2) 細胞取得來源: 
+                    <label><input type="checkbox" name="Q3_CellSource" value="商品化細胞株"> 商品化細胞株</label>
+                    <label><input type="checkbox" name="Q3_CellSource" value="患者檢體"> 患者檢體</label>
+                    <label><input type="checkbox" name="Q3_CellSource" value="其他"> 其他: <input type="text" name="Q3_CellSource_Other" style="width:150px;"></label>
+                </div>
+            </div>
+
+            <div class="section">
+                <span class="section-title">4. 動物入室後是否給予病毒載體?</span>
+                <div class="options">
+                    <label><input type="radio" name="Q4_Virus" value="否" checked onclick="toggleSection('virus_future_details', false)"> 否</label>
+                    <label><input type="radio" name="Q4_Virus" value="是" onclick="toggleSection('virus_future_details', true)"> 是</label>
+                </div>
+                <div id="virus_future_details" class="conditional-group">
+                    (1) 請說明種類? 
+                    <label><input type="checkbox" name="Q4_VirusType" value="AAV"> Adeno-associated virus (AAV)</label>
+                    <label><input type="checkbox" name="Q4_VirusType" value="Lentivirus"> Lentivirus</label>
+                    <label><input type="checkbox" name="Q4_VirusType" value="Retroviral"> Retroviral</label>
+                    <label><input type="checkbox" name="Q4_VirusType" value="其他"> 其他: <input type="text" name="Q4_VirusType_Other" style="width:150px;"></label><br>
+                    (2) 生物安全等級? 
+                    <label><input type="radio" name="Q4_VirusRG" value="RG1" checked> RG1</label>
+                    <label><input type="radio" name="Q4_VirusRG" value="RG2"> RG2</label>
+                </div>
+            </div>
+
+            <div class="section">
+                <span class="section-title">5. 特殊飼養照護 <span style="font-size: 0.8em; font-weight: normal; color: #666;">(額外提供巢料、放置飼料於墊料等)</span></span>
+                <div class="options">
+                    <label><input type="checkbox" name="Q5_Care" value="無"> 無</label>
+                    <label><input type="checkbox" name="Q5_Care" value="獨籠飼養"> 獨籠飼養</label>
+                    <label><input type="checkbox" name="Q5_Care" value="特殊飲水"> 特殊飲水</label>
+                    <label><input type="checkbox" name="Q5_Care" value="特殊飼料"> 特殊飼料</label>
+                    <label><input type="checkbox" name="Q5_Care" value="限制飲食"> 限制飲食</label>
+                    <label><input type="checkbox" name="Q5_Care" value="限制飲水"> 限制飲水</label>
+                    <label><input type="checkbox" name="Q5_Care" value="其他"> 其他，請說明: <input type="text" name="Q5_Care_Other" style="width:200px;"></label>
+                </div>
+            </div>
+
+            <div class="section">
+                <span class="section-title">6. 描述人道終點 / 試驗動物中止試驗標準</span>
+                <div class="options">
+                    <label><input type="checkbox" name="Q6_Endpoint" value="體重下降超過20%"> 體重下降超過 20%</label>
+                    <label><input type="checkbox" name="Q6_Endpoint" value="虛弱無法走動"> 虛弱無法走動</label>
+                    <label><input type="checkbox" name="Q6_Endpoint" value="無法正常攝食/飲水"> 無法正常攝食/飲水</label><br>
+                    <label><input type="checkbox" name="Q6_Endpoint" value="明顯對刺激之反應力下降"> 明顯對刺激之反應力下降</label>
+                    <label><input type="checkbox" name="Q6_Endpoint" value="腫瘤(>2000mm3)"> 腫瘤 (>2000 mm³)</label>
+                    <label><input type="checkbox" name="Q6_Endpoint" value="依獸醫師意見(人道因素)"> 依獸醫師意見 (人道因素)</label><br>
+                    <label><input type="checkbox" name="Q6_Endpoint" value="感染"> 感染</label>
+                    <label><input type="checkbox" name="Q6_Endpoint" value="其他"> 其他: <input type="text" name="Q6_Endpoint_Other" style="width:250px;"></label>
+                </div>
+            </div>
+
+            <div class="section grid-layout" style="background-color: #ecf0f1; padding: 20px; border-radius: 5px;">
+                <div>
+                    <label class="question-text">Service request ID / Purchase agreement No.:</label>
+                    <input type="text" name="Request_ID">
+                </div>
+                <div>
+                    <label class="question-text">申請日期:</label>
+                    <input type="date" name="Date">
+                </div>
+                
+                <div style="grid-column: span 2; border-top: 1px solid #ccc; padding-top: 15px; margin-top: 10px;">
+                    <label class="question-text" style="font-size: 1.1em; color: #2980b9;">計畫主持人簽名方式：</label>
+                    <div class="options" style="margin-bottom: 15px;">
+                        <label><input type="radio" name="SignMode" value="canvas" checked onclick="changeSignMode('canvas')"> 1. 線上手寫簽名</label>
+                        <label><input type="radio" name="SignMode" value="upload" onclick="changeSignMode('upload')"> 2. 上傳簽名圖檔</label>
+                        <label><input type="radio" name="SignMode" value="print" onclick="changeSignMode('print')"> 3. 匯出後列印實體簽名</label>
+                    </div>
+
+                    <div id="mode-canvas">
+                        <canvas id="signaturePad" width="400" height="150"></canvas><br>
+                        <button type="button" class="btn-clear" onclick="clearCanvas()">清除重寫</button>
+                    </div>
+
+                    <div id="mode-upload" style="display: none;">
+                        <p style="font-size: 0.9em; color: #555; margin-bottom: 5px;">* 建議上傳白底黑字或透明背景的圖檔 (JPG, PNG)</p>
+                        <input type="file" id="signUploadFile" accept="image/png, image/jpeg">
+                    </div>
+
+                    <div id="mode-print" style="display: none;">
+                        <p style="color: #e74c3c; font-weight: bold; background: #fff; padding: 10px; border-radius: 4px; border-left: 4px solid #e74c3c;">
+                            * 系統將在 PDF 結尾預留空白簽名處，請於列印後親筆簽名。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="generatePreview()">產生預覽畫面</button>
+        </form>
+    </div>
+
+    <div id="preview-container">
+        <div id="pdf-content">
+            <h2>TMC動物入室揭露說明表單</h2>
+            <div id="preview-data"></div>
+            
+            <div class="pdf-signature">
+                <div>
+                    <strong>計畫主持人 (PI):</strong> 
+                    <div id="preview-signature-area" style="margin-top: 10px;"></div>
+                </div>
+                <div style="margin-bottom: 10px;"><strong>日期:</strong> <span id="sign-date"></span></div>
+            </div>
+            <div style="text-align: right; margin-top: 10px; font-size: 12px; color: #555;">
+                Service request ID / Purchase agreement No.: <span id="sign-id"></span>
+            </div>
+        </div>
+
+        <div class="btn-group" data-html2canvas-ignore="true">
+            <button class="btn-action btn-back" onclick="backToEdit()">返回修改</button>
+            <button class="btn-action btn-send" onclick="downloadPDFAndMail()">確認無誤，下載 PDF 並寄出</button>
+        </div>
+        <p class="footer-info" id="preview-hint">* 系統將為您下載 PDF，隨後自動開啟電子郵件準備寄至 tmcvet5516@gmail.com</p>
+    </div>
+
+</div>
+
+<script>
+    // --- 介面切換 ---
+    function toggleSection(sectionId, show) {
+        document.getElementById(sectionId).style.display = show ? 'block' : 'none';
+    }
+
+    // --- 抓取數值函式 ---
+    function getRadioVal(form, name) {
+        const el = form.querySelector(`input[name="${name}"]:checked`);
+        return el ? el.value : null;
+    }
+
+    function hasCheck(form, name) {
+        return form.querySelectorAll(`input[name="${name}"]:checked`).length > 0;
+    }
+
+    function getCheckVals(form, name) {
+        const els = form.querySelectorAll(`input[name="${name}"]:checked`);
+        const vals = Array.from(els).map(e => e.value);
+        return vals.length > 0 ? vals.join('、') : '';
+    }
+
+    function getTextVal(form, name) {
+        const el = form.querySelector(`input[name="${name}"]`);
+        return el ? el.value.trim() : '';
+    }
+
+    function backToEdit() {
+        document.getElementById('form-container').style.display = 'block';
+        document.getElementById('preview-container').style.display = 'none';
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    // --- 簽名模式切換與處理 ---
+    let isCanvasSigned = false;
+    let uploadedSignBase64 = "";
+
+    function changeSignMode(mode) {
+        document.getElementById('mode-canvas').style.display = mode === 'canvas' ? 'block' : 'none';
+        document.getElementById('mode-upload').style.display = mode === 'upload' ? 'block' : 'none';
+        document.getElementById('mode-print').style.display = mode === 'print' ? 'block' : 'none';
+    }
+
+    const canvas = document.getElementById('signaturePad');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    function getCoordinates(e) {
+        const rect = canvas.getBoundingClientRect();
+        if (e.touches && e.touches.length > 0) return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function startDraw(e) { e.preventDefault(); isDrawing = true; isCanvasSigned = true; const coords = getCoordinates(e); ctx.beginPath(); ctx.moveTo(coords.x, coords.y); }
+    function draw(e) { if (!isDrawing) return; e.preventDefault(); const coords = getCoordinates(e); ctx.lineTo(coords.x, coords.y); ctx.stroke(); }
+    function endDraw(e) { e.preventDefault(); isDrawing = false; ctx.closePath(); }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseout', endDraw);
+    canvas.addEventListener('touchstart', startDraw, {passive: false});
+    canvas.addEventListener('touchmove', draw, {passive: false});
+    canvas.addEventListener('touchend', endDraw);
+
+    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); isCanvasSigned = false; }
+
+    document.getElementById('signUploadFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) { uploadedSignBase64 = event.target.result; };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // --- 產生預覽畫面 (含智慧表單驗證) ---
+    function generatePreview() {
+    const form = document.getElementById('mainForm');
+    let errors = []; // 建立錯誤訊息陣列
+
+    // 檢查基本資料
+    if (!getTextVal(form, 'Request_ID')) errors.push("基本資料：Service request ID");
+    if (!getTextVal(form, 'Date')) errors.push("基本資料：申請日期");
+
+    // 檢查第 1 題
+    if (getRadioVal(form, 'Q1_1_GMM') === '是' && getRadioVal(form, 'Q1_1_Diff') === '是' && !getTextVal(form, 'Q1_1_Diff_Desc')) errors.push("1-(1)：請說明基因轉殖鼠的生理差異");
+    
+    // 【修正點1】手術檢查邏輯改為兩層
+    const surgBase = getRadioVal(form, 'Q1_2_Surgery_Base');
+    if(surgBase === '是' && !getRadioVal(form, 'Q1_2_Surgery_Type')) {
+        errors.push("1-(2)：您勾選了曾進行手術，請選擇手術類型");
+    }
+
+    if (!hasCheck(form, 'Q1_3_ID')) errors.push("1-(3)：請選擇入室前動物標示方式");
+    else if (getCheckVals(form, 'Q1_3_ID').includes('其他') && !getTextVal(form, 'Q1_3_ID_Other')) errors.push("1-(3)：請填寫「其他」動物標示方式");
+
+    if (getRadioVal(form, 'Q1_4_Substance') === '是') {
+        if (!getTextVal(form, 'Q1_4_Name')) errors.push("1-(4)：請填寫給予的 substance 名稱");
+        if (getRadioVal(form, 'Q1_4_Symptom') === '是' && !getTextVal(form, 'Q1_4_Symptom_Desc')) errors.push("1-(4)：請說明可能造成的症狀/作用");
+        if (getRadioVal(form, 'Q1_4_Danger') === '是' && !getTextVal(form, 'Q1_4_Danger_Desc')) errors.push("1-(4)：請說明危險性物質種類");
+    }
+
+    if (getRadioVal(form, 'Q1_5_Virus') === '是') {
+        if (!hasCheck(form, 'Q1_5_Type')) errors.push("1-(5)：請選擇接種的病毒載體種類");
+        else if (getCheckVals(form, 'Q1_5_Type').includes('其他') && !getTextVal(form, 'Q1_5_Type_Other')) errors.push("1-(5)：請填寫「其他」病毒載體種類");
+    }
+
+    // 檢查第 2 題
+    if (getRadioVal(form, 'Q2_Substance_Future') === '是') {
+        if (!getTextVal(form, 'Q2_Name')) errors.push("2-(1)：請填寫給予的 substance 名稱");
+        if (!hasCheck(form, 'Q2_Type')) errors.push("2-(2)：請選擇種類 (藥物級/商品化/自行合成)");
+        if (getRadioVal(form, 'Q2_Sterilize') === '有滅菌' && !getTextVal(form, 'Q2_Sterilize_Method')) errors.push("2-(2)：請說明滅菌方式");
+        if (getRadioVal(form, 'Q2_Toxicity') === '已知' && !getTextVal(form, 'Q2_Toxicity_Desc')) errors.push("2-(2)：請填寫已知的毒性資料");
+        if (!hasCheck(form, 'Q2_Hazard')) errors.push("2-(3)：請選擇是否對操作人員造成危害");
+        else if (getCheckVals(form, 'Q2_Hazard').includes('其他') && !getTextVal(form, 'Q2_Hazard_Other')) errors.push("2-(3)：請填寫「其他」危害");
+        if (getRadioVal(form, 'Q2_Effect') === '是' && !getTextVal(form, 'Q2_Effect_Desc')) errors.push("2-(4)：請說明預期產生症狀/作用");
+    }
+
+    // 檢查第 3 題
+    if (getRadioVal(form, 'Q3_Cell') === '是') {
+        // 【修正點2】加入細胞名稱檢查
+        if (!getTextVal(form, 'Q3_CellName')) errors.push("3-(1)：請填寫細胞名稱");
+        if (!hasCheck(form, 'Q3_CellType')) errors.push("3-(1)：請選擇細胞種類");
+        if (!hasCheck(form, 'Q3_CellSource')) errors.push("3-(2)：請選擇細胞取得來源");
+        else if (getCheckVals(form, 'Q3_CellSource').includes('其他') && !getTextVal(form, 'Q3_CellSource_Other')) errors.push("3-(2)：請填寫「其他」細胞來源");
+    }
+
+    // 檢查第 4 題
+    if (getRadioVal(form, 'Q4_Virus') === '是') {
+        if (!hasCheck(form, 'Q4_VirusType')) errors.push("4-(1)：請選擇病毒載體種類");
+        else if (getCheckVals(form, 'Q4_VirusType').includes('其他') && !getTextVal(form, 'Q4_VirusType_Other')) errors.push("4-(1)：請填寫「其他」病毒種類");
+    }
+
+    // 檢查第 5 題
+    if (!hasCheck(form, 'Q5_Care')) errors.push("5：請選擇特殊飼養照護 (至少勾選一項，如無需求請勾選「無」)");
+    else if (getCheckVals(form, 'Q5_Care').includes('其他') && !getTextVal(form, 'Q5_Care_Other')) errors.push("5：請填寫「其他」特殊飼養照護說明");
+
+    // 檢查第 6 題
+    if (!hasCheck(form, 'Q6_Endpoint')) errors.push("6：請選擇人道終點 / 試驗動物中止標準");
+    else if (getCheckVals(form, 'Q6_Endpoint').includes('其他') && !getTextVal(form, 'Q6_Endpoint_Other')) errors.push("6：請填寫「其他」人道終點說明");
+
+    // 檢查簽名狀態
+    const signMode = getRadioVal(form, 'SignMode');
+    if (signMode === 'canvas' && !isCanvasSigned) errors.push("簽名區：請在畫布上手寫簽名");
+    if (signMode === 'upload' && !uploadedSignBase64) errors.push("簽名區：請上傳您的簽名圖檔");
+
+    // 如果發現有錯誤，彈出警告並中斷程式
+    if (errors.length > 0) {
+        alert("⚠️ 發現尚未填寫完成的項目，請確認以下內容：\n\n" + errors.map(e => "• " + e).join("\n"));
+        return; 
+    }
+
+    // ============================================
+    // 若通過驗證，開始產生預覽畫面
+    // ============================================
+    let finalSignatureHTML = '';
+    if (signMode === 'canvas') finalSignatureHTML = `<img src="${canvas.toDataURL()}" style="max-height: 80px; max-width: 250px;">`;
+    else if (signMode === 'upload') finalSignatureHTML = `<img src="${uploadedSignBase64}" style="max-height: 80px; max-width: 250px;">`;
+    else finalSignatureHTML = `<div style="width: 200px; height: 40px; border-bottom: 1px solid #000;"></div>`;
+
+    const previewData = document.getElementById('preview-data');
+    let html = '';
+
+    html += `<div class="pdf-section"><div class="pdf-section-title">1. 動物健康狀態</div>`;
+    let gmm = getRadioVal(form, 'Q1_1_GMM');
+    if(gmm === '是') gmm += ` (差異: ${getRadioVal(form, 'Q1_1_Diff')} - ${getTextVal(form, 'Q1_1_Diff_Desc') || '未填寫'})`;
+    html += `<div class="pdf-row"><div class="pdf-label">(1) 基因轉殖鼠</div><div class="pdf-value">${gmm}</div></div>`;
+    
+    // 【修正點3】手術顯示邏輯改為兩層
+    let surgDisplay = surgBase;
+    if(surgBase === '是') surgDisplay += ` (${getRadioVal(form, 'Q1_2_Surgery_Type')})`;
+    html += `<div class="pdf-row"><div class="pdf-label">(2) 曾進行手術</div><div class="pdf-value">${surgDisplay}</div></div>`;
+    
+    let marks = getCheckVals(form, 'Q1_3_ID');
+    if(marks.includes('其他')) marks += ` (${getTextVal(form, 'Q1_3_ID_Other')})`;
+    html += `<div class="pdf-row"><div class="pdf-label">(3) 標示方式</div><div class="pdf-value">${marks}</div></div>`;
+    
+    let sub = getRadioVal(form, 'Q1_4_Substance');
+    if(sub === '是') {
+        sub += `<br>名稱: ${getTextVal(form, 'Q1_4_Name')} 
+                <br>症狀: ${getRadioVal(form, 'Q1_4_Symptom')} ${getTextVal(form, 'Q1_4_Symptom_Desc') ? '('+getTextVal(form, 'Q1_4_Symptom_Desc')+')' : ''}
+                <br>危險物質: ${getRadioVal(form, 'Q1_4_Danger')} ${getTextVal(form, 'Q1_4_Danger_Desc') ? '('+getTextVal(form, 'Q1_4_Danger_Desc')+')' : ''}`;
+    }
+    html += `<div class="pdf-row"><div class="pdf-label">(4) 曾給予 substance</div><div class="pdf-value">${sub}</div></div>`;
+
+    let virus = getRadioVal(form, 'Q1_5_Virus');
+    if(virus === '是') {
+        let vTypes = getCheckVals(form, 'Q1_5_Type');
+        if(vTypes.includes('其他')) vTypes += ` (${getTextVal(form, 'Q1_5_Type_Other')})`;
+        virus += `<br>種類: ${vTypes} <br>安全等級: ${getRadioVal(form, 'Q1_5_RG')}`;
+    }
+    html += `<div class="pdf-row"><div class="pdf-label">(5) 曾接種病毒載體</div><div class="pdf-value">${virus}</div></div></div>`;
+
+    html += `<div class="pdf-section"><div class="pdf-section-title">2. 動物入室後是否給予 substance?</div>`;
+    let fSub = getRadioVal(form, 'Q2_Substance_Future');
+    if(fSub === '是') {
+        fSub += `<br>名稱: ${getTextVal(form, 'Q2_Name')}
+                 <br>種類: ${getCheckVals(form, 'Q2_Type')}
+                 <br>滅菌: ${getRadioVal(form, 'Q2_Sterilize')} ${getTextVal(form, 'Q2_Sterilize_Method') ? '('+getTextVal(form, 'Q2_Sterilize_Method')+')': ''}
+                 <br>毒性: ${getRadioVal(form, 'Q2_Toxicity')} ${getTextVal(form, 'Q2_Toxicity_Desc') ? '('+getTextVal(form, 'Q2_Toxicity_Desc')+')': ''}
+                 <br>危害: ${getCheckVals(form, 'Q2_Hazard')} ${getTextVal(form, 'Q2_Hazard_Other') ? '('+getTextVal(form, 'Q2_Hazard_Other')+')': ''}
+                 <br>預期症狀: ${getRadioVal(form, 'Q2_Effect')} ${getTextVal(form, 'Q2_Effect_Desc') ? '('+getTextVal(form, 'Q2_Effect_Desc')+')': ''}`;
+    }
+    html += `<div class="pdf-row"><div class="pdf-label">給予 substance</div><div class="pdf-value">${fSub}</div></div></div>`;
+
+    html += `<div class="pdf-section"><div class="pdf-section-title">3. 動物入室後是否給予細胞?</div>`;
+    let cell = getRadioVal(form, 'Q3_Cell');
+    if(cell === '是') {
+        let cSrc = getCheckVals(form, 'Q3_CellSource');
+        if(cSrc.includes('其他')) cSrc += ` (${getTextVal(form, 'Q3_CellSource_Other')})`;
+        // 【修正點4】加入細胞名稱
+        let cellName = getTextVal(form, 'Q3_CellName');
+        cell += `<br>種類: ${cellName} (${getCheckVals(form, 'Q3_CellType')}) <br>來源: ${cSrc}`;
+    }
+    html += `<div class="pdf-row"><div class="pdf-label">給予細胞</div><div class="pdf-value">${cell}</div></div></div>`;
+
+    html += `<div class="pdf-section"><div class="pdf-section-title">4. 動物入室後是否給予病毒載體?</div>`;
+    let fVirus = getRadioVal(form, 'Q4_Virus');
+    if(fVirus === '是') {
+        let fvTypes = getCheckVals(form, 'Q4_VirusType');
+        if(fvTypes.includes('其他')) fvTypes += ` (${getTextVal(form, 'Q4_VirusType_Other')})`;
+        fVirus += `<br>種類: ${fvTypes} <br>安全等級: ${getRadioVal(form, 'Q4_VirusRG')}`;
+    }
+    html += `<div class="pdf-row"><div class="pdf-label">給予病毒載體</div><div class="pdf-value">${fVirus}</div></div></div>`;
+
+    html += `<div class="pdf-section"><div class="pdf-section-title">5. 特殊飼養照護</div>`;
+    let care = getCheckVals(form, 'Q5_Care');
+    if(care.includes('其他')) care += ` (${getTextVal(form, 'Q5_Care_Other')})`;
+    html += `<div class="pdf-row"><div class="pdf-label">照護需求</div><div class="pdf-value">${care}</div></div></div>`;
+
+    html += `<div class="pdf-section"><div class="pdf-section-title">6. 描述人道終點 / 中止標準</div>`;
+    let endpoint = getCheckVals(form, 'Q6_Endpoint');
+    if(endpoint.includes('其他')) endpoint += ` (${getTextVal(form, 'Q6_Endpoint_Other')})`;
+    html += `<div class="pdf-row"><div class="pdf-label">中止標準</div><div class="pdf-value">${endpoint}</div></div></div>`;
+
+    previewData.innerHTML = html;
+
+    document.getElementById('preview-signature-area').innerHTML = finalSignatureHTML;
+    document.getElementById('sign-date').innerText = getTextVal(form, 'Date');
+    document.getElementById('sign-id').innerText = getTextVal(form, 'Request_ID');
+
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('preview-container').style.display = 'block';
+    window.scrollTo(0, 0);
+}
+
+    // --- 匯出 PDF 並呼叫 Email ---
+    function downloadPDFAndMail() {
+        document.getElementById('preview-hint').style.display = 'none';
+        
+        const element = document.getElementById('pdf-content');
+        const opt = {
+            margin:       [5, 10, 5, 10], 
+            filename:     'TMC動物入室揭露說明表單.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, scrollY: 0 }, 
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['css', 'legacy'] } 
+        };
+
+        alert("系統即將下載 PDF。\n下載完成後，請將 PDF 附件拖曳至彈出的 Email 中寄出！");
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            document.getElementById('preview-hint').style.display = 'block';
+            setTimeout(() => {
+                const subject = encodeURIComponent("【TMC動物入室揭露說明】申請表單");
+                const body = encodeURIComponent("您好，\n\n附件為填寫完畢之「TMC動物入室揭露說明」表單 PDF 檔案，請查收。\n\n謝謝。");
+                window.location.href = `mailto:tmcvet5516@gmail.com?subject=${subject}&body=${body}`;
+            }, 1500);
+        });
+    }
+</script>
+
+</body>
+</html>
