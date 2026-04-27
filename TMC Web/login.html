@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMC 會員中心 - 登入與註冊</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-container { background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h2 { color: #008B8B; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
+        input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; color: white; background-color: #008B8B; margin-top: 10px; transition: background 0.3s; }
+        .btn:hover { background-color: #005f5f; }
+        .toggle-text { margin-top: 20px; font-size: 14px; color: #666; }
+        .toggle-text a { color: #008B8B; text-decoration: none; font-weight: bold; cursor: pointer; }
+        .toggle-text a:hover { text-decoration: underline; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+    <div id="login-section">
+        <h2>TMC 會員登入</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>電子郵件 (帳號)</label>
+                <input type="email" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+                <label>密碼</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn">登入</button>
+        </form>
+        <div class="toggle-text">
+            還沒有帳號嗎？ <a onclick="toggleAuth('register')">立即註冊</a>
+        </div>
+    </div>
+
+    <div id="register-section" class="hidden">
+        <h2>建立新帳號</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <label>姓名 / 申請人</label>
+                <input type="text" id="regName" required>
+            </div>
+            <div class="form-group">
+                <label>所屬單位</label>
+                <input type="text" id="regUnit" required>
+            </div>
+            <div class="form-group">
+                <label>電子郵件 (做為登入帳號)</label>
+                <input type="email" id="regEmail" required>
+            </div>
+            <div class="form-group">
+                <label>設定密碼</label>
+                <input type="password" id="regPassword" required minlength="8" placeholder="至少 8 個字元">
+            </div>
+            <div class="form-group">
+                <label>確認密碼</label>
+                <input type="password" id="regConfirmPassword" required minlength="8">
+            </div>
+            <button type="submit" class="btn">註冊帳號</button>
+        </form>
+        <div class="toggle-text">
+            已經有帳號了？ <a onclick="toggleAuth('login')">返回登入</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 切換登入與註冊介面
+    function toggleAuth(type) {
+        const loginSec = document.getElementById('login-section');
+        const regSec = document.getElementById('register-section');
+        if (type === 'register') {
+            loginSec.classList.add('hidden');
+            regSec.classList.remove('hidden');
+        } else {
+            regSec.classList.add('hidden');
+            loginSec.classList.remove('hidden');
+        }
+    }
+
+    // 處理註冊表單送出
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const pwd = document.getElementById('regPassword').value;
+        const confirmPwd = document.getElementById('regConfirmPassword').value;
+        
+        if (pwd !== confirmPwd) {
+            alert('兩次輸入的密碼不一致，請重新確認！');
+            return;
+        }
+        alert('註冊資料格式正確！(此處由 IT 人員接手將資料送到後端資料庫)');
+    });
+
+    // 處理登入表單送出
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // 1. 假裝後端驗證成功，發給瀏覽器一個假的 Token
+        localStorage.setItem('tmc_auth_token', 'fake-test-token-12345');
+        
+        alert('【測試模式】登入成功！準備跳轉至申請表...');
+        
+        // 2. 自動跳轉到申請表頁面 (請確保檔名是 check-in_form.html)
+        window.location.href = 'check-in_form.html'; 
+    });
+</script>
+
+</body>
+</html>
