@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣小鼠診所 (TMC) 動物入室申請表</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #008B8B; border-bottom: 2px solid #008B8B; padding-bottom: 10px; }
+        .alert { background-color: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-weight: bold; }
+        h3 { color: #005f5f; margin-top: 30px; border-left: 4px solid #008B8B; padding-left: 10px; }
+        .form-group { margin-bottom: 15px; background: #fdfdfd; padding: 10px; border: 1px solid #eee; border-radius: 4px; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .form-col { flex: 1; min-width: 200px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .inline-label { display: inline-block; margin-right: 15px; font-weight: normal; cursor: pointer; }
+        input[type="text"], input[type="number"], input[type="date"], input[type="email"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .hidden { display: none !important; }
+        #signature-pad { border: 2px dashed #ccc; background-color: #fafafa; cursor: crosshair; touch-action: none; width: 100%; height: 200px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        .btn-clear { background-color: #f44336; color: white; margin-top: 10px; }
+        .btn-save { background-color: #FF9800; color: white; margin-top: 30px; width: 48%; }
+        .btn-submit { background-color: #008B8B; color: white; width: 48%; font-size: 18px; margin-top: 30px; }
+        .btn-group { display: flex; justify-content: space-between; }
+        .btn:hover { opacity: 0.9; }
+        /* 預覽視窗 (Modal) 樣式 */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #fff; padding: 20px 30px; border-radius: 8px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .modal-content h2 { color: #008B8B; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; text-align: center; }
+        .preview-item { margin-bottom: 10px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; font-size: 15px; }
+        .preview-label { font-weight: bold; color: #555; display: inline-block; width: 140px; }
+        .modal-actions { margin-top: 20px; display: flex; justify-content: space-between; gap: 15px; }
+        .btn-cancel { background-color: #9e9e9e; color: white; width: 50%; }
+        .btn-confirm { background-color: #008B8B; color: white; width: 50%; font-size: 18px;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>台灣小鼠診所 (TMC) 動物入室申請表</h1>
+    
+    <div class="alert">
+        ⚠️ 注意：請於至少二個工作天前傳送此表至小鼠診所。違反者，將以急件兩倍計價收費！
+    </div>
+
+    <form id="tmcForm">
+        <h3>一、使用單位基本資料</h3>
+        
+        <div class="form-group">
+            <label>身分別 (將決定申請表寄送至哪個信箱)</label>
+            <label class="inline-label"><input type="radio" name="identity" value="一般產業界" data-email="mousehotel@tmc.sinica.edu.tw" required> 一般產業界</label>
+            <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐學界" data-email="optunithotel@tmc.sinica.edu.tw"> NBRP進駐學界</label>
+            <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐廠商" data-email="firmunithotel@tmc.sinica.edu.tw"> NBRP進駐廠商</label>
+        </div>
+
+        <div class="form-row">
+            <div class="form-col"><label>申請日期</label><input type="date" id="applyDate" name="applyDate" required></div>
+            <div class="form-col"><label>計畫主持人</label><input type="text" id="piName" name="piName" required></div>
+        </div>
+        <div class="form-row">
+            <div class="form-col"><label>使用單位</label><input type="text" id="unit" name="unit" required></div>
+            <div class="form-col"><label>計畫名稱</label><input type="text" id="projectName" name="projectName" required></div>
+        </div>
+        <div class="form-row">
+            <div class="form-col"><label>申請人</label><input type="text" id="applicant" name="applicant" required></div>
+            <div class="form-col"><label>聯絡電話</label><input type="text" id="phone" name="phone" required></div>
+        </div>
+        <div class="form-row">
+            <div class="form-col"><label>分機及手機</label><input type="text" id="mobile" name="mobile"></div>
+            <div class="form-col"><label>E-mail</label><input type="email" id="email" name="email" required></div>
+        </div>
+
+        <h3>二、動物基本資料</h3>
+        <div class="form-group">
+            <label>動物種類</label>
+            <label class="inline-label"><input type="radio" name="species" value="Mice" required> Mice</label>
+            <label class="inline-label"><input type="radio" name="species" value="Rat"> Rat</label>
+        </div>
+        <div class="form-row">
+            <div class="form-col"><label>年齡</label><input type="text" id="age" name="age" required></div>
+            <div class="form-col"><label>品系</label><input type="text" id="strain" name="strain" required></div>
+        </div>
+        <div class="form-row">
+            <div class="form-col"><label>雄性 (♂) 數量</label><input type="number" id="maleCount" name="maleCount" min="0" value="0"></div>
+            <div class="form-col"><label>雌性 (♀) 數量</label><input type="number" id="femaleCount" name="femaleCount" min="0" value="0"></div>
+            <div class="form-col"><label>懷孕 ♀ 鼠數量</label><input type="number" id="pregnantCount" name="pregnantCount" min="0" value="0"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-col"><label>小鼠目前所在地</label><input type="text" id="location" name="location" required></div>
+            <div class="form-col"><label>入室籠數</label><input type="number" id="cageCount" name="cageCount" min="1" required></div>
+        </div>
+        <div class="form-group">
+            <label>品質</label>
+            <label class="inline-label"><input type="radio" name="quality" value="SPF" required onchange="toggleRadioInput('qualityDetail', false)"> SPF</label>
+            <label class="inline-label"><input type="radio" name="quality" value="Non-SPF" onchange="toggleRadioInput('qualityDetail', true)"> Non-SPF</label>
+            <input type="text" id="qualityDetail" name="qualityDetail" class="hidden" placeholder="請說明 Non-SPF 情況" style="margin-top:5px;">
+        </div>
+
+        <h3>三、入室資料</h3>
+        <div class="form-row">
+            <div class="form-col"><label>入室日期</label><input type="date" id="inDate" name="inDate" required></div>
+            <div class="form-col"><label>使用籠數</label><input type="number" id="useCageCount" name="useCageCount" min="1" required></div>
+            <div class="form-col"><label>IACUC 或 Protocol No.</label><input type="text" id="iacuc" name="iacuc" required></div>
+        </div>
+        
+        <div class="form-group">
+            <label>飼料 (可複選)</label>
+            <label class="inline-label"><input type="checkbox" name="feed" value="一般飼料"> 一般飼料</label>
+            <label class="inline-label"><input type="checkbox" name="feed" value="特殊飼料"> 特殊飼料</label>
+            <label class="inline-label"><input type="checkbox" name="feed" value="其他" id="feedOther" onchange="toggleCheckboxInput('feedDetail', this.checked)"> 其他</label>
+            <input type="text" id="feedDetail" name="feedDetail" class="hidden" placeholder="請說明其他飼料" style="margin-top:5px;">
+        </div>
+        <div class="form-group">
+            <label>飲水 (可複選)</label>
+            <label class="inline-label"><input type="checkbox" name="water" value="一般飲水"> 一般飲水</label>
+            <label class="inline-label"><input type="checkbox" name="water" value="特殊飲水"> 特殊飲水</label>
+            <label class="inline-label"><input type="checkbox" name="water" value="其他" id="waterOther" onchange="toggleCheckboxInput('waterDetail', this.checked)"> 其他</label>
+            <input type="text" id="waterDetail" name="waterDetail" class="hidden" placeholder="請說明其他飲水" style="margin-top:5px;">
+        </div>
+
+        <h3>四、計畫主持人簽名</h3>
+        <div class="form-group">
+            <label>請選擇簽名方式：</label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="draw" checked onchange="changeSignMethod()"> 線上手寫簽名</label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="upload" onchange="changeSignMethod()"> 上傳簽名圖檔</label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="print" onchange="changeSignMethod()"> 匯出後列印實體簽名</label>
+        </div>
+
+        <div id="drawSection">
+            <p style="color: #666; font-size: 14px;">請在下方框內使用滑鼠或手指簽名：</p>
+            <canvas id="signature-pad"></canvas>
+            <button type="button" class="btn btn-clear" onclick="clearCanvas()">清除重簽</button>
+        </div>
+
+        <div id="uploadSection" class="hidden">
+            <input type="file" id="signUpload" accept="image/png, image/jpeg">
+        </div>
+
+        <div id="printSection" class="hidden">
+            <p style="color: #c62828;">您選擇了「列印實體簽名」。送出表單後，請列印系統產生的 PDF，簽名後再交回診所。</p>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-save" onclick="saveDraft()">💾 暫存草稿</button>
+            <button type="submit" class="btn btn-submit">🚀 送出申請</button>
+        </div>
+    </form>
+</div>
+
+<div id="previewModal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h2>📋 請確認您的申請資料</h2>
+        <div id="previewData">
+            </div>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-cancel" onclick="closePreview()">✏️ 返回修改</button>
+            <button type="button" class="btn btn-confirm" onclick="confirmSubmit()">🚀 確認送出</button>
+        </div>
+    </div>
+</div>	
+
+<script>
+// 1. 頁面載入時，檢查是否登入
+window.addEventListener('load', async () => {
+    const token = localStorage.getItem('tmc_auth_token'); // 假設令牌存在這裡
+    
+    if (!token) {
+        alert('請先登入系統！');
+        window.location.href = 'login.html'; // 未登入就跳轉回登入頁
+        return;
+    }
+
+    // 2. 向後端 API 取得該會員的個人資料
+    try {
+        /* // 這是未來給 IT 用的真實程式碼，目前先註解起來
+        const response = await fetch('/api/user/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const userData = await response.json();
+        */
+
+        // 這是為了測試而捏造的假會員資料
+        const userData = {
+            pi_name: '王大明 博士',
+            unit: '中央研究院 基因體研究中心',
+            name: '李小華 (助理)',
+            email: 'test@gate.sinica.edu.tw',
+            phone: '02-2789-9999'
+        };
+
+        // 3. 自動預填表單欄位 (加入防呆：如果欄位是空的，才把會員資料填進去，避免覆蓋客戶剛才讀取的草稿)
+        if (userData) {
+            if (!document.getElementById('piName').value) {
+                document.getElementById('piName').value = userData.pi_name || '';
+            }
+            if (!document.getElementById('unit').value) {
+                document.getElementById('unit').value = userData.unit || '';
+            }
+            if (!document.getElementById('applicant').value) {
+                document.getElementById('applicant').value = userData.name || '';
+            }
+            if (!document.getElementById('email').value) {
+                document.getElementById('email').value = userData.email || '';
+            }
+            if (!document.getElementById('phone').value) {
+                document.getElementById('phone').value = userData.phone || '';
+            }
+          }
+        } catch (error) {
+        console.error('取得會員資料失敗', error);
+    }
+});
+
+    // 預設填入今日日期 (如果沒有草稿)
+    if(!localStorage.getItem('tmcDraft')) {
+        document.getElementById('applyDate').valueAsDate = new Date();
+    }
+
+    // 單選框顯示/隱藏說明
+    function toggleRadioInput(inputId, show) {
+        const input = document.getElementById(inputId);
+        if (show) {
+            input.classList.remove('hidden'); input.required = true;
+        } else {
+            input.classList.add('hidden'); input.required = false; input.value = '';
+        }
+    }
+
+    // 複選框顯示/隱藏說明
+    function toggleCheckboxInput(inputId, isChecked) {
+        const input = document.getElementById(inputId);
+        if (isChecked) {
+            input.classList.remove('hidden'); input.required = true;
+        } else {
+            input.classList.add('hidden'); input.required = false; input.value = '';
+        }
+    }
+
+    function changeSignMethod() {
+        const method = document.querySelector('input[name="signMethod"]:checked').value;
+        document.getElementById('drawSection').classList.add('hidden');
+        document.getElementById('uploadSection').classList.add('hidden');
+        document.getElementById('printSection').classList.add('hidden');
+        
+        if(method === 'draw') document.getElementById('drawSection').classList.remove('hidden');
+        if(method === 'upload') document.getElementById('uploadSection').classList.remove('hidden');
+        if(method === 'print') document.getElementById('printSection').classList.remove('hidden');
+    }
+
+    // 畫布簽名功能
+    const canvas = document.getElementById('signature-pad');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        ctx.scale(ratio, ratio);
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#000";
+    }
+    window.addEventListener("resize", resizeCanvas);
+    // 延遲一點點執行以確保 DOM 渲染完畢
+    setTimeout(resizeCanvas, 100);
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+    canvas.addEventListener('touchstart', handleTouch);
+    canvas.addEventListener('touchmove', handleTouch);
+    canvas.addEventListener('touchend', stopDrawing);
+
+    function getCoordinates(e) {
+        if (e.touches && e.touches.length > 0) {
+            const rect = canvas.getBoundingClientRect();
+            return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+        }
+        return { x: e.offsetX, y: e.offsetY };
+    }
+
+    function startDrawing(e) {
+        isDrawing = true;
+        const coords = getCoordinates(e);
+        ctx.beginPath();
+        ctx.moveTo(coords.x, coords.y);
+    }
+
+    function draw(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const coords = getCoordinates(e);
+        ctx.lineTo(coords.x, coords.y);
+        ctx.stroke();
+    }
+
+    function handleTouch(e) {
+        e.preventDefault();
+        if(e.type === 'touchstart') startDrawing(e);
+        if(e.type === 'touchmove') draw(e);
+    }
+
+    function stopDrawing() { isDrawing = false; ctx.closePath(); }
+    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+    // --- 本地暫存功能 (Local Storage) ---
+    function saveDraft() {
+        const inputs = document.querySelectorAll('#tmcForm input:not([type="file"])');
+        const draftData = {};
+        inputs.forEach(input => {
+            if (input.type === 'radio' || input.type === 'checkbox') {
+                draftData[input.name + '_' + input.value] = input.checked;
+            } else {
+                draftData[input.id || input.name] = input.value;
+            }
+        });
+        localStorage.setItem('tmcDraft', JSON.stringify(draftData));
+        alert('草稿已儲存！下次打開同一瀏覽器時將自動載入。');
+    }
+
+    function loadDraft() {
+        const saved = localStorage.getItem('tmcDraft');
+        if (saved) {
+            const draftData = JSON.parse(saved);
+            const inputs = document.querySelectorAll('#tmcForm input:not([type="file"])');
+            inputs.forEach(input => {
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    if (draftData[input.name + '_' + input.value] !== undefined) {
+                        input.checked = draftData[input.name + '_' + input.value];
+                        // 觸發事件以展開隱藏欄位
+                        if(input.checked && input.onchange) {
+                            input.onchange();
+                        }
+                    }
+                } else {
+                    const key = input.id || input.name;
+                    if (draftData[key]) {
+                        input.value = draftData[key];
+                    }
+                }
+            });
+            // 特別處理其他 checkbox 的展開
+            if(document.getElementById('feedOther').checked) toggleCheckboxInput('feedDetail', true);
+            if(document.getElementById('waterOther').checked) toggleCheckboxInput('waterDetail', true);
+        }
+    }
+    window.addEventListener('load', loadDraft);
+
+    // 定義表單欄位對應的中文名稱 (供預覽顯示使用)
+    const fieldNames = {
+        identity: '身分別', applyDate: '申請日期', piName: '計畫主持人', unit: '使用單位', projectName: '計畫名稱', 
+        applicant: '申請人', phone: '聯絡電話', mobile: '分機及手機', email: 'E-mail', species: '動物種類', 
+        age: '年齡', strain: '品系', maleCount: '雄性 (♂) 數量', femaleCount: '雌性 (♀) 數量', pregnantCount: '懷孕雌鼠數量', 
+        location: '小鼠目前所在地', cageCount: '入室籠數', quality: '品質', qualityDetail: '品質說明', 
+        inDate: '入室日期', useCageCount: '使用籠數', iacuc: 'IACUC 或 Protocol No.', feed: '飼料', 
+        feedDetail: '飼料說明', water: '飲水', waterDetail: '飲水說明', signMethod: '簽名方式'
+    };
+
+    // 1. 攔截表單送出，改為顯示預覽視窗
+    document.getElementById('tmcForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // 阻止表單直接送出
+
+        const formData = new FormData(e.target);
+        const dataObj = {};
+
+        // 整理表單資料 (特別處理複選框的飼料與飲水)
+        formData.forEach((value, key) => {
+            if (!value) return; // 略過空白欄位
+            if (!dataObj[key]) {
+                dataObj[key] = value;
+            } else {
+                dataObj[key] += `、${value}`; // 遇到複選時用頓號隔開
+            }
+        });
+
+        // 產生預覽畫面的 HTML
+        let previewHTML = '';
+        for (const [key, value] of Object.entries(dataObj)) {
+            // 轉換特殊顯示名稱
+            let displayValue = value;
+            if (key === 'signMethod') {
+                if(value === 'draw') displayValue = '線上手寫簽名';
+                if(value === 'upload') displayValue = '上傳簽名圖檔';
+                if(value === 'print') displayValue = '匯出後列印實體簽名';
+            }
+            
+            const label = fieldNames[key] || key;
+            previewHTML += `<div class="preview-item"><span class="preview-label">${label}：</span><span>${displayValue}</span></div>`;
+        }
+
+        // 將資料塞入預覽視窗並顯示
+        document.getElementById('previewData').innerHTML = previewHTML;
+        document.getElementById('previewModal').classList.remove('hidden');
+    });
+
+    // 2. 返回修改 (關閉預覽視窗)
+    function closePreview() {
+        document.getElementById('previewModal').classList.add('hidden');
+    }
+
+    // 3. 預覽無誤，確認送出
+    async function confirmSubmit() {
+        // 先關閉預覽視窗
+        document.getElementById('previewModal').classList.add('hidden');
+        
+        // 取得選擇的身分別信箱
+        const identityRadio = document.querySelector('input[name="identity"]:checked');
+        const targetEmail = identityRadio ? identityRadio.getAttribute('data-email') : '未選擇';
+
+        // (測試用) 模擬後端成功產生並回傳的流水號
+        const mockSerialNumber = "TMC-20260407-001";
+
+        // 彈出成功訊息與流水號
+        alert(`✅ 申請成功！\n\n您的申請單號為：【 ${mockSerialNumber} 】\n\n系統已將含有此單號的 PDF 寄送至對應信箱：\n${targetEmail}\n\n請妥善保存此單號以便日後查詢。`);
+        
+        // 清除暫存草稿，重新載入網頁
+        localStorage.removeItem('tmcDraft');
+        window.location.reload(); 
+    }
+</script>
+
+</body>
+</html>
