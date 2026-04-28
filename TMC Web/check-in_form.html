@@ -3,60 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣小鼠診所 (TMC) 動物入室申請表</title>
+    <title>台灣小鼠診所 (TMC) 動物入室申請表 (滿版舒適A4版)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #008B8B; border-bottom: 2px solid #008B8B; padding-bottom: 10px; }
-        .alert { background-color: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-weight: bold; }
-        h3 { color: #005f5f; margin-top: 30px; border-left: 4px solid #008B8B; padding-left: 10px; }
+        /* ================= 網頁填寫介面樣式 ================= */
+        body { font-family: 'Segoe UI', "Microsoft JhengHei", sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.5; padding: 20px; margin: 0; }
+        .container { max-width: 850px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #008B8B; border-bottom: 2px solid #008B8B; padding-bottom: 8px; margin-bottom: 15px; font-size: 24px; }
+        .alert { background-color: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-weight: bold; font-size: 14px; }
+        h3 { color: #005f5f; margin-top: 25px; border-left: 4px solid #008B8B; padding-left: 10px; background: #f0fafa; padding-top: 5px; padding-bottom: 5px; font-size: 18px; }
         .form-group { margin-bottom: 15px; background: #fdfdfd; padding: 10px; border: 1px solid #eee; border-radius: 4px; }
-        .form-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
-        .form-col { flex: 1; min-width: 200px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .inline-label { display: inline-block; margin-right: 15px; font-weight: normal; cursor: pointer; }
-        input[type="text"], input[type="number"], input[type="date"], input[type="email"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 12px; flex-wrap: wrap; }
+        .form-col { flex: 1; min-width: 180px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 15px; }
+        .inline-label { display: inline-block; margin-right: 15px; font-weight: normal; cursor: pointer; font-size: 15px; }
+        input[type="text"], input[type="number"], input[type="date"], input[type="email"], input[type="file"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 15px; }
         .hidden { display: none !important; }
-        #signature-pad { border: 2px dashed #ccc; background-color: #fafafa; cursor: crosshair; touch-action: none; width: 100%; height: 200px; }
-        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
-        .btn-clear { background-color: #f44336; color: white; margin-top: 10px; }
-        .btn-save { background-color: #FF9800; color: white; margin-top: 30px; width: 48%; }
-        .btn-submit { background-color: #008B8B; color: white; width: 48%; font-size: 18px; margin-top: 30px; }
-        .btn-group { display: flex; justify-content: space-between; }
-        .btn:hover { opacity: 0.9; }
-        /* 預覽視窗 (Modal) 樣式 */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: #fff; padding: 20px 30px; border-radius: 8px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .modal-content h2 { color: #008B8B; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; text-align: center; }
-        .preview-item { margin-bottom: 10px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; font-size: 15px; }
-        .preview-label { font-weight: bold; color: #555; display: inline-block; width: 140px; }
-        .modal-actions { margin-top: 20px; display: flex; justify-content: space-between; gap: 15px; }
-        .btn-cancel { background-color: #9e9e9e; color: white; width: 50%; }
-        .btn-confirm { background-color: #008B8B; color: white; width: 50%; font-size: 18px;}
+        
+        .sign-options { margin-bottom: 15px; }
+        #drawSection { border: 2px dashed #ccc; background-color: #fafafa; position: relative; }
+        #signature-pad { width: 100%; height: 250px; touch-action: none; cursor: crosshair; }
+        #uploadSection, #printSection { border: 1px solid #ccc; background-color: #fafafa; padding: 20px; text-align: center; border-radius: 4px; }
+        #printSection { color: #555; border: 1px dashed #999; }
+        
+        .btn { padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
+        .btn-clear { background-color: #f44336; color: white; position: absolute; bottom: 8px; right: 8px; font-size: 13px; padding: 5px 10px; }
+        .btn-save { background-color: #FF9800; color: white; width: 48%; }
+        .btn-submit { background-color: #008B8B; color: white; width: 48%; font-size: 18px; }
+        .btn-group { display: flex; justify-content: space-between; margin-top: 25px; }
+
+        /* ================= PDF 預覽與匯出專用樣式 (模擬A4紙張 滿版加大) ================= */
+        
+        .pdf-viewer-bg { background-color: #525659; padding: 20px 0; overflow-x: auto; display: flex; justify-content: center; border-radius: 8px; margin-bottom: 20px; }
+        
+        #pdf-area { width: 760px; min-width: 760px; box-sizing: border-box; padding: 10px 20px; background: white; color: #000; font-size: 13.5px; line-height: 1.45; text-align: left; margin: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } 
+        
+        .pdf-title { text-align: center; color: #000; font-size: 22px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 8px; font-weight: bold; }
+        .pdf-section-title { font-size: 15px; font-weight: bold; background: #e0f2f1; padding: 5px 10px; margin: 15px 0 8px 0; border-left: 4px solid #008B8B; }
+        
+        .preview-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; table-layout: fixed; font-size: 13.5px; } 
+        .preview-table th, .preview-table td { border: 1px solid #000; padding: 7px 8px; text-align: left; word-wrap: break-word; }
+        .preview-table th { background-color: #f2f2f2; width: 115px; font-weight: bold; }
+        
+        .pdf-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; margin-bottom: 15px; }
+        .email-reminder { border: 1.5px dashed #008B8B; background: #f0fafa; padding: 10px 14px; border-radius: 4px; display: inline-block; margin-top: 8px; font-size: 12.5px; line-height: 1.5; }
+        .signature-img { max-width: 180px; max-height: 60px; object-fit: contain; }
+        .signature-box { border-bottom: 1px solid #000; min-width: 200px; min-height: 65px; display: inline-block; vertical-align: bottom; }
+        
+        .official-box { border: 2px solid #333; padding: 15px 20px; margin-top: 10px; font-size: 14.5px; background-color: #fcfcfc; line-height: 2; }
+        .official-box .row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        
+        @media print { .no-print { display: none; } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>台灣小鼠診所 (TMC) 動物入室申請表</h1>
+<div class="container" id="edit-section">
+    <div style="text-align: center; margin-bottom: 10px;">
     
-    <div class="alert">
-        ⚠️ 注意：請於至少二個工作天前傳送此表至小鼠診所。違反者，將以急件兩倍計價收費！
-    </div>
+</div>
+<h1 style="margin-top: 0; border-bottom: 2px solid #008B8B; display: flex; align-items: center; justify-content: center; gap: 15px; padding-bottom: 10px;">
+                台灣小鼠診所 (TMC) 動物入室申請表
+    </h1>
+    <div class="alert">⚠️ 注意：請於至少二個工作天前傳送此表至小鼠診所。違反者，將以急件兩倍計價收費！</div>
 
     <form id="tmcForm">
         <h3>一、使用單位基本資料</h3>
-        
         <div class="form-group">
-            <label>身分別 (將決定申請表寄送至哪個信箱)</label>
-            <label class="inline-label"><input type="radio" name="identity" value="一般產業界" data-email="mousehotel@tmc.sinica.edu.tw" required> 一般產業界</label>
-            <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐學界" data-email="optunithotel@tmc.sinica.edu.tw"> NBRP進駐學界</label>
-            <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐廠商" data-email="firmunithotel@tmc.sinica.edu.tw"> NBRP進駐廠商</label>
-        </div>
-
+    <label>身分別 <span style="color:red">*</span></label>
+    <label class="inline-label"><input type="radio" name="identity" value="一般產業界" data-email="mousehotel@tmc.sinica.edu.tw" required onchange="toggleQuotation()"> 一般產業界</label>
+    <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐學界" data-email="optunithotel@tmc.sinica.edu.tw" onchange="toggleQuotation()"> NBRP進駐學界</label>
+    <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐廠商" data-email="firmunithotel@tmc.sinica.edu.tw" onchange="toggleQuotation()"> NBRP進駐廠商</label>
+</div>
         <div class="form-row">
-            <div class="form-col"><label>申請日期</label><input type="date" id="applyDate" name="applyDate" required></div>
-            <div class="form-col"><label>計畫主持人</label><input type="text" id="piName" name="piName" required></div>
+            <div class="form-col" id="quotationCol" style="display: none;">
+        <label>報價單編號 <span style="color:red">*</span></label>
+        <input type="text" id="quotationNumber" name="quotationNumber">
+    </div>
+            <div class="form-col"><label>計畫主持人 (PI)</label><input type="text" id="piName" name="piName" required></div>
         </div>
         <div class="form-row">
             <div class="form-col"><label>使用單位</label><input type="text" id="unit" name="unit" required></div>
@@ -72,353 +96,402 @@
         </div>
 
         <h3>二、動物基本資料</h3>
-        <div class="form-group">
-            <label>動物種類</label>
-            <label class="inline-label"><input type="radio" name="species" value="Mice" required> Mice</label>
-            <label class="inline-label"><input type="radio" name="species" value="Rat"> Rat</label>
-        </div>
         <div class="form-row">
+            <div class="form-col"><label>動物種類</label>
+                <label class="inline-label"><input type="radio" name="species" value="Mice" required> Mice</label>
+                <label class="inline-label"><input type="radio" name="species" value="Rat"> Rat</label>
+            </div>
             <div class="form-col"><label>年齡</label><input type="text" id="age" name="age" required></div>
             <div class="form-col"><label>品系</label><input type="text" id="strain" name="strain" required></div>
         </div>
         <div class="form-row">
-            <div class="form-col"><label>雄性 (♂) 數量</label><input type="number" id="maleCount" name="maleCount" min="0" value="0"></div>
-            <div class="form-col"><label>雌性 (♀) 數量</label><input type="number" id="femaleCount" name="femaleCount" min="0" value="0"></div>
-            <div class="form-col"><label>懷孕 ♀ 鼠數量</label><input type="number" id="pregnantCount" name="pregnantCount" min="0" value="0"></div>
+            <div class="form-col"><label>數量 (♂ / ♀ / 懷孕)</label>
+                <div style="display:flex; gap:5px;">
+                    <input type="number" id="maleCount" name="maleCount" placeholder="♂ 數量" min="0" style="width:33%">
+                    <input type="number" id="femaleCount" name="femaleCount" placeholder="♀ 數量" min="0" style="width:33%">
+                    <input type="number" id="pregnantCount" name="pregnantCount" placeholder="懷孕 ♀" min="0" style="width:33%">
+                </div>
+            </div>
+            <div class="form-col"><label>入室籠數</label><input type="number" id="cageCount" name="cageCount" min="1" required></div>
         </div>
         <div class="form-row">
             <div class="form-col"><label>小鼠目前所在地</label><input type="text" id="location" name="location" required></div>
-            <div class="form-col"><label>入室籠數</label><input type="number" id="cageCount" name="cageCount" min="1" required></div>
-        </div>
-        <div class="form-group">
-            <label>品質</label>
-            <label class="inline-label"><input type="radio" name="quality" value="SPF" required onchange="toggleRadioInput('qualityDetail', false)"> SPF</label>
-            <label class="inline-label"><input type="radio" name="quality" value="Non-SPF" onchange="toggleRadioInput('qualityDetail', true)"> Non-SPF</label>
-            <input type="text" id="qualityDetail" name="qualityDetail" class="hidden" placeholder="請說明 Non-SPF 情況" style="margin-top:5px;">
+            <div class="form-col"><label>品質</label>
+                <label class="inline-label"><input type="radio" name="quality" value="SPF" required onchange="toggleInput('qualityDetail', false)"> SPF</label>
+                <label class="inline-label"><input type="radio" name="quality" value="Non-SPF" onchange="toggleInput('qualityDetail', true)"> Non-SPF</label>
+                <input type="text" id="qualityDetail" name="qualityDetail" class="hidden" placeholder="請說明 Non-SPF 情況" style="margin-top:5px;">
+            </div>
         </div>
 
         <h3>三、入室資料</h3>
-        <div class="form-row">
-            <div class="form-col"><label>入室日期</label><input type="date" id="inDate" name="inDate" required></div>
-            <div class="form-col"><label>使用籠數</label><input type="number" id="useCageCount" name="useCageCount" min="1" required></div>
-            <div class="form-col"><label>IACUC 或 Protocol No.</label><input type="text" id="iacuc" name="iacuc" required></div>
-        </div>
+<div class="form-row">
+    <div class="form-col"><label>預計入室日期</label><input type="date" id="inDate" name="inDate" required></div>
+    <div class="form-col"><label>使用籠數</label><input type="number" id="useCageCount" name="useCageCount" min="1" required></div>
+    <div class="form-col"><label>IACUC 或 Protocol No.</label><input type="text" id="iacuc" name="iacuc" required></div>
+</div>
         
-        <div class="form-group">
-            <label>飼料 (可複選)</label>
-            <label class="inline-label"><input type="checkbox" name="feed" value="一般飼料"> 一般飼料</label>
-            <label class="inline-label"><input type="checkbox" name="feed" value="特殊飼料"> 特殊飼料</label>
-            <label class="inline-label"><input type="checkbox" name="feed" value="其他" id="feedOther" onchange="toggleCheckboxInput('feedDetail', this.checked)"> 其他</label>
-            <input type="text" id="feedDetail" name="feedDetail" class="hidden" placeholder="請說明其他飼料" style="margin-top:5px;">
-        </div>
-        <div class="form-group">
-            <label>飲水 (可複選)</label>
-            <label class="inline-label"><input type="checkbox" name="water" value="一般飲水"> 一般飲水</label>
-            <label class="inline-label"><input type="checkbox" name="water" value="特殊飲水"> 特殊飲水</label>
-            <label class="inline-label"><input type="checkbox" name="water" value="其他" id="waterOther" onchange="toggleCheckboxInput('waterDetail', this.checked)"> 其他</label>
-            <input type="text" id="waterDetail" name="waterDetail" class="hidden" placeholder="請說明其他飲水" style="margin-top:5px;">
+        <div class="form-row" style="margin-bottom: 0;">
+            <div class="form-col form-group">
+                <label>飼料 (可複選)</label>
+                <label class="inline-label"><input type="checkbox" name="feed" value="一般飼料"> 一般飼料</label>
+                <label class="inline-label"><input type="checkbox" name="feed" value="特殊飼料"> 特殊飼料</label>
+                <label class="inline-label"><input type="checkbox" name="feed" value="其他" onchange="toggleInput('feedDetail', this.checked)"> 其他</label>
+                <input type="text" id="feedDetail" name="feedDetail" class="hidden" placeholder="請說明其他飼料" style="margin-top:5px;">
+            </div>
+            <div class="form-col form-group">
+                <label>飲水 (可複選)</label>
+                <label class="inline-label"><input type="checkbox" name="water" value="一般飲水"> 一般飲水</label>
+                <label class="inline-label"><input type="checkbox" name="water" value="特殊飲水"> 特殊飲水</label>
+                <label class="inline-label"><input type="checkbox" name="water" value="其他" onchange="toggleInput('waterDetail', this.checked)"> 其他</label>
+                <input type="text" id="waterDetail" name="waterDetail" class="hidden" placeholder="請說明其他飲水" style="margin-top:5px;">
+            </div>
         </div>
 
-        <h3>四、計畫主持人簽名</h3>
-        <div class="form-group">
-            <label>請選擇簽名方式：</label>
-            <label class="inline-label"><input type="radio" name="signMethod" value="draw" checked onchange="changeSignMethod()"> 線上手寫簽名</label>
-            <label class="inline-label"><input type="radio" name="signMethod" value="upload" onchange="changeSignMethod()"> 上傳簽名圖檔</label>
-            <label class="inline-label"><input type="radio" name="signMethod" value="print" onchange="changeSignMethod()"> 匯出後列印實體簽名</label>
+        <h3>四、簽名確認</h3>
+        <div class="form-group sign-options">
+            <label>請選擇計畫主持人簽名方式 <span style="color:red">*</span></label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="draw" checked onchange="toggleSignMode()"> 1. 線上手寫簽名</label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="upload" onchange="toggleSignMode()"> 2. 上傳簽名圖檔</label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="print" onchange="toggleSignMode()"> 3. 匯出列印後實體簽名</label>
         </div>
 
         <div id="drawSection">
-            <p style="color: #666; font-size: 14px;">請在下方框內使用滑鼠或手指簽名：</p>
             <canvas id="signature-pad"></canvas>
-            <button type="button" class="btn btn-clear" onclick="clearCanvas()">清除重簽</button>
+            <button type="button" class="btn btn-clear" onclick="clearCanvas()">清除</button>
         </div>
 
         <div id="uploadSection" class="hidden">
-            <input type="file" id="signUpload" accept="image/png, image/jpeg">
+            <input type="file" id="signatureFile" accept="image/png, image/jpeg">
+            <div style="font-size: 13px; color: #666; margin-top: 5px;">* 支援 PNG, JPG。建議使用透明背景之簽名圖檔。</div>
         </div>
 
         <div id="printSection" class="hidden">
-            <p style="color: #c62828;">您選擇了「列印實體簽名」。送出表單後，請列印系統產生的 PDF，簽名後再交回診所。</p>
+            📄 系統將於 PDF 中保留空白的簽名欄位。請您在下載並列印後，親筆簽名再行繳交或掃描回傳。
         </div>
 
-        <div class="btn-group">
-            <button type="button" class="btn btn-save" onclick="saveDraft()">💾 暫存草稿</button>
-            <button type="submit" class="btn btn-submit">🚀 送出申請</button>
+        <div class="btn-group no-print">
+            <button type="button" class="btn btn-save" onclick="saveDraft()">💾 儲存草稿</button>
+            <button type="submit" class="btn btn-submit">👁️ 預覽並生成</button>
         </div>
     </form>
 </div>
 
-<div id="previewModal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <h2>📋 請確認您的申請資料</h2>
-        <div id="previewData">
-            </div>
-        <div class="modal-actions">
-            <button type="button" class="btn btn-cancel" onclick="closePreview()">✏️ 返回修改</button>
-            <button type="button" class="btn btn-confirm" onclick="confirmSubmit()">🚀 確認送出</button>
-        </div>
+<div id="preview-section" style="display: none;">
+    <div class="pdf-viewer-bg">
+        <div id="pdf-content-wrapper"></div>
     </div>
-</div>	
+    
+    <div class="btn-group no-print" style="max-width: 760px; margin: 0 auto 20px;">
+        <button type="button" class="btn btn-save" style="background-color: #9e9e9e;" onclick="backToEdit()">✏️ 返回修改</button>
+        <button type="button" class="btn btn-submit" onclick="generateAndMail()">🚀 下載 PDF 並寄出信件</button>
+    </div>
+</div>
 
 <script>
-// 1. 頁面載入時，檢查是否登入
-window.addEventListener('load', async () => {
-    const token = localStorage.getItem('tmc_auth_token'); // 假設令牌存在這裡
+    const canvas = document.getElementById('signature-pad');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false, hasSigned = false;
+
+    window.addEventListener('load', () => {
+        const today = new Date();
+        
+        // 如果有申請日期欄位，預設為今天
+        if(document.getElementById('applyDate')) {
+            document.getElementById('applyDate').valueAsDate = today;
+        }
+        
+        // 設定「預計入室日期」只能選擇今天以後 (包含今天)
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const minDate = `${yyyy}-${mm}-${dd}`;
+        document.getElementById('inDate').setAttribute('min', minDate);
+
+        resizeCanvas();
+        loadDraft();
+    });
+
+    function toggleQuotation() {
+    const identity = document.querySelector('input[name="identity"]:checked');
+    const quotationCol = document.getElementById('quotationCol');
+    const quotationNumber = document.getElementById('quotationNumber');
     
-    if (!token) {
-        alert('請先登入系統！');
-        window.location.href = 'login.html'; // 未登入就跳轉回登入頁
-        return;
+    // 當選中「一般產業界」時顯示並設為必填
+    if (identity && identity.value === '一般產業界') {
+        quotationCol.style.display = 'block';
+        quotationNumber.required = true;
+    } else {
+        // 選其他時隱藏並取消必填，同時清空已填寫的內容
+        quotationCol.style.display = 'none';
+        quotationNumber.required = false;
+        quotationNumber.value = ''; 
+    }
+}
+
+    function resizeCanvas() {
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        // 移除 ctx.scale，改用精準的座標轉換，並將畫筆粗細按比例放大
+        ctx.lineWidth = 2.5 * ratio; 
+        ctx.lineCap = "round"; 
+        ctx.strokeStyle = "#000";
     }
 
-    // 2. 向後端 API 取得該會員的個人資料
-    try {
-        /* // 這是未來給 IT 用的真實程式碼，目前先註解起來
-        const response = await fetch('/api/user/profile', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const userData = await response.json();
-        */
-
-        // 這是為了測試而捏造的假會員資料
-        const userData = {
-            pi_name: '王大明 博士',
-            unit: '中央研究院 基因體研究中心',
-            name: '李小華 (助理)',
-            email: 'test@gate.sinica.edu.tw',
-            phone: '02-2789-9999'
+    const getPos = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        
+        // 依照畫布實際像素與畫面顯示大小的比例，精準計算出滑鼠/手指位置
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        return { 
+            x: (clientX - rect.left) * scaleX, 
+            y: (clientY - rect.top) * scaleY 
         };
+    };
+    canvas.addEventListener('mousedown', (e) => { isDrawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('mousemove', (e) => { if(!isDrawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); hasSigned = true; });
+    window.addEventListener('mouseup', () => { isDrawing = false; ctx.closePath(); });
+    canvas.addEventListener('touchstart', (e) => { isDrawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, {passive: false});
+    canvas.addEventListener('touchmove', (e) => { if(!isDrawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); hasSigned = true; }, {passive: false});
 
-        // 3. 自動預填表單欄位 (加入防呆：如果欄位是空的，才把會員資料填進去，避免覆蓋客戶剛才讀取的草稿)
-        if (userData) {
-            if (!document.getElementById('piName').value) {
-                document.getElementById('piName').value = userData.pi_name || '';
-            }
-            if (!document.getElementById('unit').value) {
-                document.getElementById('unit').value = userData.unit || '';
-            }
-            if (!document.getElementById('applicant').value) {
-                document.getElementById('applicant').value = userData.name || '';
-            }
-            if (!document.getElementById('email').value) {
-                document.getElementById('email').value = userData.email || '';
-            }
-            if (!document.getElementById('phone').value) {
-                document.getElementById('phone').value = userData.phone || '';
-            }
-          }
-        } catch (error) {
-        console.error('取得會員資料失敗', error);
-    }
-});
+    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); hasSigned = false; }
 
-    // 預設填入今日日期 (如果沒有草稿)
-    if(!localStorage.getItem('tmcDraft')) {
-        document.getElementById('applyDate').valueAsDate = new Date();
-    }
-
-    // 單選框顯示/隱藏說明
-    function toggleRadioInput(inputId, show) {
+    function toggleInput(inputId, show) {
         const input = document.getElementById(inputId);
-        if (show) {
-            input.classList.remove('hidden'); input.required = true;
-        } else {
-            input.classList.add('hidden'); input.required = false; input.value = '';
-        }
+        input.classList.toggle('hidden', !show);
+        if(show) input.required = true;
+        else { input.required = false; input.value = ''; }
     }
 
-    // 複選框顯示/隱藏說明
-    function toggleCheckboxInput(inputId, isChecked) {
-        const input = document.getElementById(inputId);
-        if (isChecked) {
-            input.classList.remove('hidden'); input.required = true;
-        } else {
-            input.classList.add('hidden'); input.required = false; input.value = '';
-        }
-    }
-
-    function changeSignMethod() {
-        const method = document.querySelector('input[name="signMethod"]:checked').value;
+    function toggleSignMode() {
+        const mode = document.querySelector('input[name="signMethod"]:checked').value;
         document.getElementById('drawSection').classList.add('hidden');
         document.getElementById('uploadSection').classList.add('hidden');
         document.getElementById('printSection').classList.add('hidden');
         
-        if(method === 'draw') document.getElementById('drawSection').classList.remove('hidden');
-        if(method === 'upload') document.getElementById('uploadSection').classList.remove('hidden');
-        if(method === 'print') document.getElementById('printSection').classList.remove('hidden');
-    }
-
-    // 畫布簽名功能
-    const canvas = document.getElementById('signature-pad');
-    const ctx = canvas.getContext('2d');
-    let isDrawing = false;
-
-    function resizeCanvas() {
-        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-        canvas.width = canvas.offsetWidth * ratio;
-        canvas.height = canvas.offsetHeight * ratio;
-        ctx.scale(ratio, ratio);
-        ctx.lineWidth = 2;
-        ctx.lineCap = "round";
-        ctx.strokeStyle = "#000";
-    }
-    window.addEventListener("resize", resizeCanvas);
-    // 延遲一點點執行以確保 DOM 渲染完畢
-    setTimeout(resizeCanvas, 100);
-
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('mouseout', stopDrawing);
-    canvas.addEventListener('touchstart', handleTouch);
-    canvas.addEventListener('touchmove', handleTouch);
-    canvas.addEventListener('touchend', stopDrawing);
-
-    function getCoordinates(e) {
-        if (e.touches && e.touches.length > 0) {
-            const rect = canvas.getBoundingClientRect();
-            return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+        if (mode === 'draw') {
+            document.getElementById('drawSection').classList.remove('hidden');
+            resizeCanvas(); 
+        } else if (mode === 'upload') {
+            document.getElementById('uploadSection').classList.remove('hidden');
+        } else if (mode === 'print') {
+            document.getElementById('printSection').classList.remove('hidden');
         }
-        return { x: e.offsetX, y: e.offsetY };
     }
 
-    function startDrawing(e) {
-        isDrawing = true;
-        const coords = getCoordinates(e);
-        ctx.beginPath();
-        ctx.moveTo(coords.x, coords.y);
-    }
-
-    function draw(e) {
-        if (!isDrawing) return;
+    document.getElementById('tmcForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const coords = getCoordinates(e);
-        ctx.lineTo(coords.x, coords.y);
-        ctx.stroke();
-    }
+        
+        // ==========================================
+        // 【新增】：表單送出前的必填與勾選驗證
+        // 1. 驗證「數量」至少填寫一項且大於 0
+        const male = parseInt(document.getElementById('maleCount').value) || 0;
+        const female = parseInt(document.getElementById('femaleCount').value) || 0;
+        const pregnant = parseInt(document.getElementById('pregnantCount').value) || 0;
+        if (male <= 0 && female <= 0 && pregnant <= 0) {
+            alert('請注意：「數量 (♂ / ♀ / 懷孕)」這三個欄位，請至少填寫一個大於 0 的數值！');
+            return; // 終止執行
+        }
 
-    function handleTouch(e) {
-        e.preventDefault();
-        if(e.type === 'touchstart') startDrawing(e);
-        if(e.type === 'touchmove') draw(e);
-    }
+        // 2. 驗證「飼料」與「飲水」至少勾選一項
+        if (document.querySelectorAll('input[name="feed"]:checked').length === 0) {
+            alert('請至少勾選一項「飼料」！');
+            return; // 終止執行
+        }
+        if (document.querySelectorAll('input[name="water"]:checked').length === 0) {
+            alert('請至少勾選一項「飲水」！');
+            return; // 終止執行
+        }
+        // ==========================================
 
-    function stopDrawing() { isDrawing = false; ctx.closePath(); }
-    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        const mode = document.querySelector('input[name="signMethod"]:checked').value;
+        const formData = new FormData(this);
 
-    // --- 本地暫存功能 (Local Storage) ---
-    function saveDraft() {
-        const inputs = document.querySelectorAll('#tmcForm input:not([type="file"])');
-        const draftData = {};
-        inputs.forEach(input => {
-            if (input.type === 'radio' || input.type === 'checkbox') {
-                draftData[input.name + '_' + input.value] = input.checked;
-            } else {
-                draftData[input.id || input.name] = input.value;
-            }
+        if (mode === 'draw' && !hasSigned) { alert('請完成「線上手寫簽名」！'); return; }
+        if (mode === 'upload' && document.getElementById('signatureFile').files.length === 0) { alert('請選擇要上傳的簽名圖檔！'); return; }
+        
+        if (mode === 'upload') {
+            const reader = new FileReader();
+            reader.onload = function(evt) { buildFourSectionsPDF(formData, evt.target.result, mode); };
+            reader.readAsDataURL(document.getElementById('signatureFile').files[0]);
+        } else {
+            buildFourSectionsPDF(formData, mode === 'draw' ? canvas.toDataURL() : '', mode);
+        }
+    });
+
+    function buildFourSectionsPDF(formData, signatureSrc, mode) {
+        const d = {};
+        formData.forEach((value, key) => {
+            if (!value) return;
+            if (d[key]) d[key] += '、' + value;
+            else d[key] = value;
         });
-        localStorage.setItem('tmcDraft', JSON.stringify(draftData));
-        alert('草稿已儲存！下次打開同一瀏覽器時將自動載入。');
+
+        const targetEmail = document.querySelector('input[name="identity"]:checked').getAttribute('data-email');
+        const animalCombo = `♂: ${d.maleCount||'0'} / ♀: ${d.femaleCount||'0'} / 孕: ${d.pregnantCount||'0'}`;
+
+        const noteText = mode === 'print' ? '* 本表單為紙本簽署件，列印後請親筆簽名。' : '* 本表單經電子簽署具正式效力。';
+        const dateText = mode === 'print' ? '簽署日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日' : '簽署日期：' + new Date().toLocaleDateString();
+        const sigImgHTML = mode === 'print' ? '' : `<img id="preview-signature" class="signature-img" src="${signatureSrc}" alt="簽名">`;
+
+        // ==========================================
+        // 【新增】：判斷是否有填寫報價單編號，動態決定表格的該列要長什麼樣子
+        let identityRowHtml = "";
+        if (d.quotationNumber && d.quotationNumber.trim() !== "") {
+            // 有報價單：顯示「身分別」與「報價單編號」
+            identityRowHtml = `<tr><th>身分別</th><td>${d.identity || ''}</td><th>報價單編號</th><td>${d.quotationNumber}</td></tr>`;
+        } else {
+            // 無報價單：隱藏報價單欄位，讓「身分別」直接合併儲存格佔滿整列 (colspan="3")
+            identityRowHtml = `<tr><th>身分別</th><td colspan="3">${d.identity || ''}</td></tr>`;
+        }
+        // ==========================================
+
+        const html = `
+        <div id="pdf-area">
+            <div class="pdf-title" style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                <img id="pdf-logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/4QMSRXhpZgAATU0AKgAAAAgABAEOAAIAAAAgAAABSodpAAQAAAABAAABapybAAEAAAAoAAAC4uocAAcAAAEMAAAAPgAAAAAc6gAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5bCP6byg6Ki65omALeaomeiqjC0yMDE5MDcyMy1vbAAABZADAAIAAAAUAAACuJAEAAIAAAAUAAACzJKRAAIAAAADMDAAAJKSAAIAAAADMDAAAOocAAcAAAEMAAABrAAAAAAc6gAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAxOTowNzoyMyAxMTowNjoxOAAyMDE5OjA3OjIzIDExOjA2OjE4AAAAD1wgnzqKQGItABlqjIotADIAMAAxADkAMAA3ADIAMwAtAG8AbAAAAP/hBRZodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvADw/eHBhY2tldCBiZWdpbj0n77u/JyBpZD0nVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkJz8+DQo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIj48cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPjxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSJ1dWlkOmZhZjViZGQ1LWJhM2QtMTFkYS1hZDMxLWQzM2Q3NTE4MmYxYiIgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPjxleGlmOkRhdGVUaW1lT3JpZ2luYWw+MjAxOS0wNy0yM1QxMTowNjoxODwvZXhpZjpEYXRlVGltZU9yaWdpbmFsPjwvcmRmOkRlc2NyaXB0aW9uPjxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSJ1dWlkOmZhZjViZGQ1LWJhM2QtMTFkYS1hZDMxLWQzM2Q3NTE4MmYxYiIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIj48ZGM6dGl0bGU+PHJkZjpBbHQgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj48cmRmOmxpIHhtbDpsYW5nPSJ4LWRlZmF1bHQiPuWwj+m8oOiouuaJgC3mqJnoqowtMjAxOTA3MjMtb2w8L3JkZjpsaT48L3JkZjpBbHQ+DQoJCQk8L2RjOnRpdGxlPjwvcmRmOkRlc2NyaXB0aW9uPjxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSJ1dWlkOmZhZjViZGQ1LWJhM2QtMTFkYS1hZDMxLWQzM2Q3NTE4MmYxYiIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIj48ZGM6ZGVzY3JpcHRpb24+PHJkZjpBbHQgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj48cmRmOmxpIHhtbDpsYW5nPSJ4LWRlZmF1bHQiPuWwj+m8oOiouuaJgC3mqJnoqowtMjAxOTA3MjMtb2w8L3JkZjpsaT48L3JkZjpBbHQ+DQoJCQk8L2RjOmRlc2NyaXB0aW9uPjwvcmRmOkRlc2NyaXB0aW9uPjwvcmRmOlJERj48L3g6eG1wbWV0YT4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8P3hwYWNrZXQgZW5kPSd3Jz8+/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgBTwJ0AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A/VOiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigApNw9aMiuS+JPxK0T4W+HJdY1u48qIHZDAmDLcP1CIO5/QdTVwhKclGKu2YVq1PD05Va0lGMdW3sjrdw9ahnvbe1KiaeOEt0EjBc/TNfn58S/2sPGnjq4mg067fw1pJ4W3sHKysM8F5uGz2wu0H0rxm6vJ76d57maS4nc/NLK5Zm+pPJr6OjkdSSvVny/iflOO8RMLRm4YSi6iXVvlXyVm/vt6H61wXcN0haGVJlzjdGwYZ/CpNwr8l9M1i/0S6Fzp19cafcqeJraVo3H0KkGvfPhT+2N4k8LXMNl4rLeI9I4UzNgXcI9Q3HmfR+T/eqK+SVYR5qUub8DXL/ELB4ioqeMpOlfrfmXz0TX3M+7aKyPC3irSvGWhWmr6Nex39hcLuSWM/mGHVWHQg8g9a16+dacXZ7n6rCcasVODunqmtmFFFFIsKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKTcKCwHesHxj410XwDosura9qEWnWKHHmSZJZj0VVHLHg8AE8GqjFyajFXbM6lSFGDqVJJRW7eiS8zeyKMivGfC37WXw88VaxHpsd/c6dNK2yKXUIPKikOeBvBIX/gWK7j4l/EvRvhX4Ym1nWZ8IvyQW6EeZcSdkQdz79AOTW0sPWhNU5Rab2R51PNcDWoTxNKtFwju09F6/wBah8TPiXo3wr8NTazrM21BlILdCPMuJOyIPX36AZJr86vin8Uta+LPiWXV9Xlwi5S1s0JMdtH/AHV+vGW6n8hR8U/ilrXxZ8Sy6vq8uEXKWtmhJjto/wC6v14y3U/kKy/BfgvV/H/iO10XRbU3V9OeB0WNR1dz/Co7n+tfa4HAwwUPaVH73V9j+feI+I6/EFdYXCJ+yvZJbyfRtfkunrsz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" alt="TMC Logo" style="height: 36px; width: auto; object-fit: contain; display: none;">
+            台灣小鼠診所 (TMC) 動物入室申請表</div>
+            
+            <div class="pdf-section-title">一、使用單位基本資料</div>
+            <table class="preview-table">
+                ${identityRowHtml}
+                <tr><th>計畫主持人</th><td>${d.piName || ''}</td><th>使用單位</th><td>${d.unit || ''}</td></tr>
+                <tr><th>計畫名稱</th><td>${d.projectName || ''}</td><th>申請人</th><td>${d.applicant || ''}</td></tr>
+                <tr><th>聯絡電話</th><td>${d.phone || ''}</td><th>分機及手機</th><td>${d.mobile || ''}</td></tr>
+                <tr><th>E-mail</th><td colspan="3">${d.email || ''}</td></tr>
+            </table>
+
+            <div class="pdf-section-title">二、動物基本資料</div>
+            <table class="preview-table">
+                <tr><th>動物種類</th><td>${d.species || ''}</td><th>年齡</th><td>${d.age || ''}</td></tr>
+                <tr><th>品系</th><td>${d.strain || ''}</td><th>所在地</th><td>${d.location || ''}</td></tr>
+                <tr><th>數量(♂/♀/孕)</th><td>${animalCombo}</td><th>入室籠數</th><td>${d.cageCount || ''}</td></tr>
+                <tr><th>品質</th><td>${d.quality || ''}</td><th>Non-SPF說明</th><td>${d.qualityDetail || '無'}</td></tr>
+            </table>
+
+            <div class="pdf-section-title">三、入室資料</div>
+            <table class="preview-table">
+                <tr><th>預計入室日期</th><td>${d.inDate || ''}</td><th>使用籠數</th><td>${d.useCageCount || ''}</td></tr>
+                <tr><th>IACUC No.</th><td colspan="3">${d.iacuc || ''}</td></tr>
+                <tr><th>飼料</th><td>${d.feed || '無'}</td><th>其他飼料說明</th><td>${d.feedDetail || '無'}</td></tr>
+                <tr><th>飲水</th><td>${d.water || '無'}</td><th>其他飲水說明</th><td>${d.waterDetail || '無'}</td></tr>
+            </table>
+
+            <div class="pdf-section-title">四、簽名確認</div>
+            <div class="pdf-footer">
+                <div style="flex: 1; padding-right: 15px;">
+                    <p style="font-size: 13.5px; color: #333; margin-bottom: 5px;">${noteText}</p>
+                    <div class="email-reminder">
+                        <strong>📩 寄件提醒：</strong><br>
+                        1. 本表單請寄送至：<span style="color: #0000EE; text-decoration: underline;">${targetEmail}</span><br>
+                        2. <span style="color: #d32f2f; font-weight: bold;">副本欄位請務必填上 PI E-mail</span>
+                    </div>
+                </div>
+                <div style="text-align: right; width: 250px;">
+                    <p style="margin-bottom: 5px; font-size: 15px;">計畫主持人簽章：</p>
+                    <div class="signature-box">${sigImgHTML}</div>
+                    <p style="margin-top: 5px; font-weight: bold; font-size: 15px;">${dateText}</p>
+                </div>
+            </div>
+
+            <div class="pdf-section-title" style="background:#e0e0e0; border-left: 5px solid #666; margin-top: 15px;">TMC 紀錄 (此欄位由工作人員填寫)</div>
+            <div class="official-box">
+                <div class="row">
+                    <span>收件日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</span>
+                    <span>入室日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</span>
+                </div>
+                <div class="row" style="justify-content: flex-start; gap: 60px;">
+                    <span>□ 本批動物依規定不須檢疫</span>
+                    <span>□ 本批動物須經檢疫</span>
+                </div>
+                <div class="row" style="margin-bottom: 0;">
+                    <span>入室房號：_____________________________</span>
+                    <span style="width: 280px;">承辦人：_____________________________</span>
+                </div>
+            </div>
+        </div>
+        `;
+
+        document.getElementById('pdf-content-wrapper').innerHTML = html;
+        
+        document.getElementById('edit-section').style.display = 'none';
+        document.getElementById('preview-section').style.display = 'block';
+        window.scrollTo(0, 0); 
     }
 
+    function backToEdit() {
+        document.getElementById('edit-section').style.display = 'block';
+        document.getElementById('preview-section').style.display = 'none';
+    }
+
+    function generateAndMail() {
+        const element = document.getElementById('pdf-area');
+        const piName = document.getElementById('piName').value;
+        const targetEmail = document.querySelector('input[name="identity"]:checked').getAttribute('data-email');
+        const modeObj = document.querySelector('input[name="signMethod"]:checked');
+        const mode = modeObj ? modeObj.value : 'print';
+
+        // ==========================================
+        // 【新增 1】：在產生 PDF 前，把 Logo 顯示出來
+        const logo = document.getElementById('pdf-logo');
+        if (logo) logo.style.display = 'block';
+        // ==========================================
+
+        const opt = {
+            margin: [10, 10, 10, 10], 
+            filename: `TMC_動物入室單_${piName}.pdf`,
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, 
+                letterRendering: true,
+                windowWidth: 760, 
+                width: 760,
+                scrollX: 0,
+                scrollY: 0,
+                x: 0,
+                y: 0
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        alert(mode === 'print' ? 
+            "PDF 生成中...\n下載完成後，請記得「列印並親筆簽名」，再將檔案寄送至表單左下方的信箱！" : 
+            "PDF 產出中...\n下載後，系統將嘗試自動為您開啟 Email 視窗。");
+
+        // 執行生成並下載 PDF
+        html2pdf().set(opt).from(element).save().then(() => {
+            
+            // ==========================================
+            // 【新增 2】：PDF 下載完成後，立刻把 Logo 隱藏回去
+            if (logo) logo.style.display = 'none';
+            // ==========================================
+
+            if (mode !== 'print') {
+                const subject = encodeURIComponent(`【TMC動物入室申請】${piName} - 申請表寄送`);
+                const body = encodeURIComponent(`您好，附件為我的動物入室申請表，請查收。\n\n申請人：${document.getElementById('applicant').value}`);
+                window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+            }
+            localStorage.removeItem('tmcDraft');
+        });
+    }
+
+    function saveDraft() {
+        const data = {};
+        document.querySelectorAll('#tmcForm input:not([type="radio"]):not([type="file"]):not([type="checkbox"])').forEach(i => data[i.id] = i.value);
+        localStorage.setItem('tmcDraft', JSON.stringify(data));
+        alert('文字草稿已儲存在您的瀏覽器中。');
+    }
     function loadDraft() {
         const saved = localStorage.getItem('tmcDraft');
         if (saved) {
-            const draftData = JSON.parse(saved);
-            const inputs = document.querySelectorAll('#tmcForm input:not([type="file"])');
-            inputs.forEach(input => {
-                if (input.type === 'radio' || input.type === 'checkbox') {
-                    if (draftData[input.name + '_' + input.value] !== undefined) {
-                        input.checked = draftData[input.name + '_' + input.value];
-                        // 觸發事件以展開隱藏欄位
-                        if(input.checked && input.onchange) {
-                            input.onchange();
-                        }
-                    }
-                } else {
-                    const key = input.id || input.name;
-                    if (draftData[key]) {
-                        input.value = draftData[key];
-                    }
-                }
-            });
-            // 特別處理其他 checkbox 的展開
-            if(document.getElementById('feedOther').checked) toggleCheckboxInput('feedDetail', true);
-            if(document.getElementById('waterOther').checked) toggleCheckboxInput('waterDetail', true);
+            const data = JSON.parse(saved);
+            Object.keys(data).forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = data[id]; });
         }
-    }
-    window.addEventListener('load', loadDraft);
-
-    // 定義表單欄位對應的中文名稱 (供預覽顯示使用)
-    const fieldNames = {
-        identity: '身分別', applyDate: '申請日期', piName: '計畫主持人', unit: '使用單位', projectName: '計畫名稱', 
-        applicant: '申請人', phone: '聯絡電話', mobile: '分機及手機', email: 'E-mail', species: '動物種類', 
-        age: '年齡', strain: '品系', maleCount: '雄性 (♂) 數量', femaleCount: '雌性 (♀) 數量', pregnantCount: '懷孕雌鼠數量', 
-        location: '小鼠目前所在地', cageCount: '入室籠數', quality: '品質', qualityDetail: '品質說明', 
-        inDate: '入室日期', useCageCount: '使用籠數', iacuc: 'IACUC 或 Protocol No.', feed: '飼料', 
-        feedDetail: '飼料說明', water: '飲水', waterDetail: '飲水說明', signMethod: '簽名方式'
-    };
-
-    // 1. 攔截表單送出，改為顯示預覽視窗
-    document.getElementById('tmcForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // 阻止表單直接送出
-
-        const formData = new FormData(e.target);
-        const dataObj = {};
-
-        // 整理表單資料 (特別處理複選框的飼料與飲水)
-        formData.forEach((value, key) => {
-            if (!value) return; // 略過空白欄位
-            if (!dataObj[key]) {
-                dataObj[key] = value;
-            } else {
-                dataObj[key] += `、${value}`; // 遇到複選時用頓號隔開
-            }
-        });
-
-        // 產生預覽畫面的 HTML
-        let previewHTML = '';
-        for (const [key, value] of Object.entries(dataObj)) {
-            // 轉換特殊顯示名稱
-            let displayValue = value;
-            if (key === 'signMethod') {
-                if(value === 'draw') displayValue = '線上手寫簽名';
-                if(value === 'upload') displayValue = '上傳簽名圖檔';
-                if(value === 'print') displayValue = '匯出後列印實體簽名';
-            }
-            
-            const label = fieldNames[key] || key;
-            previewHTML += `<div class="preview-item"><span class="preview-label">${label}：</span><span>${displayValue}</span></div>`;
-        }
-
-        // 將資料塞入預覽視窗並顯示
-        document.getElementById('previewData').innerHTML = previewHTML;
-        document.getElementById('previewModal').classList.remove('hidden');
-    });
-
-    // 2. 返回修改 (關閉預覽視窗)
-    function closePreview() {
-        document.getElementById('previewModal').classList.add('hidden');
-    }
-
-    // 3. 預覽無誤，確認送出
-    async function confirmSubmit() {
-        // 先關閉預覽視窗
-        document.getElementById('previewModal').classList.add('hidden');
-        
-        // 取得選擇的身分別信箱
-        const identityRadio = document.querySelector('input[name="identity"]:checked');
-        const targetEmail = identityRadio ? identityRadio.getAttribute('data-email') : '未選擇';
-
-        // (測試用) 模擬後端成功產生並回傳的流水號
-        const mockSerialNumber = "TMC-20260407-001";
-
-        // 彈出成功訊息與流水號
-        alert(`✅ 申請成功！\n\n您的申請單號為：【 ${mockSerialNumber} 】\n\n系統已將含有此單號的 PDF 寄送至對應信箱：\n${targetEmail}\n\n請妥善保存此單號以便日後查詢。`);
-        
-        // 清除暫存草稿，重新載入網頁
-        localStorage.removeItem('tmcDraft');
-        window.location.reload(); 
     }
 </script>
 
