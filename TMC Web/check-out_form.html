@@ -51,9 +51,17 @@
 <body class="bg-gray-100 p-6">
 
   <div id="formContainer" class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold text-center text-blue-800 mb-6 border-b pb-4">TMC 動物移出暨委託犧牲申請表<br><span class="text-xl font-bold text-center text-blue-800 mb-6 border-b pb-4">Mouse Hotel Check Out & Animal Sacrifice</h1>
+    <h1 class="text-2xl font-bold text-center text-[#008B8B] mb-6 border-b pb-4">
+  TMC 動物移出暨委託犧牲申請表<br>
+  <span class="text-xl text-[#008B8B]">Mouse Hotel Check Out & Animal Sacrifice</span>
+</h1>
 
-    <form id="tmcForm" class="space-y-6">
+<!-- 新增的警告標語：紅字紅底、字體稍小(text-sm) -->
+<div class="bg-red-100 text-red-700 text-sm border p-3 rounded-md mb-6 font-bold">
+  ⚠️ 注意：最晚請於移出或犧牲的前一個工作天的16:30前完成申請，逾時將酌收急件費用"100元/籠"！
+</div>
+
+<form id="tmcForm" class="space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div><label class="block font-bold">計畫主持人 PI Name</label><input type="text" id="piName" class="w-full border p-2 rounded"></div>
         <div><label class="block font-bold">服務單位 Affiliation</label><input type="text" id="affiliation" class="w-full border p-2 rounded"></div>
@@ -248,7 +256,7 @@
           </div>
         </div>
 
-        <p style="font-size: 13px; color: red; font-weight: bold; margin-top: 15px;">※請於移出或犧牲前一工作日的16:30前提出申請，逾時將酌收急件費用100/籠。</p>
+        <p style="font-size: 13px; color: red; font-weight: bold; margin-top: 15px;">※最晚請於移出或犧牲的前一個工作日的16:30前完成申請，逾時將酌收急件費用100/籠。</p>
 
         <div style="margin-top: 15px; padding: 10px; background-color: #f0f8ff; border: 1px solid #b0d4ff; border-radius: 5px; font-size: 13px;">
           <p style="margin: 0; font-weight: bold; color: #0056b3;">📩 寄件提醒：</p>
