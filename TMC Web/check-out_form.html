@@ -157,31 +157,39 @@
       <div>
         <label id="dateLabel" class="block font-bold mb-1">移出日期及時間 Date & Time</label>
         <div class="flex flex-wrap items-center gap-2">
-          <input type="date" id="actionDate" class="w-full border p-2 rounded max-w-xs">
-          <!-- 在這裡將 value="10" 加上 selected -->
-          <select id="actionHour" class="border p-2 rounded bg-white">
-            <option value="00">00</option><option value="01">01</option>
-            <option value="02">02</option><option value="03">03</option>
-            <option value="04">04</option><option value="05">05</option>
-            <option value="06">06</option><option value="07">07</option>
-            <option value="08">08</option><option value="09">09</option>
-            <option value="10" selected>10</option><option value="11">11</option>
-            <option value="12">12</option><option value="13">13</option>
-            <option value="14">14</option><option value="15">15</option>
-            <option value="16">16</option><option value="17">17</option>
-            <option value="18">18</option><option value="19">19</option>
-            <option value="20">20</option><option value="21">21</option>
-            <option value="22">22</option><option value="23">23</option>
-          </select>
-          <span class="font-bold">:</span>
-          <!-- 在這裡將 value="00" 加上 selected -->
-          <select id="actionMinute" class="border p-2 rounded bg-white">
-            <option value="00" selected>00</option>
-            <option value="15">15</option>
-            <option value="30">30</option>
-            <option value="45">45</option>
+          <!-- 加上 onchange 事件來檢查是否為六日 -->
+          <input type="date" id="actionDate" onchange="checkWeekday(this)" class="w-full border p-2 rounded max-w-xs">
+          
+          <!-- 合併後的時間下拉選單 -->
+          <select id="actionTime" class="border p-2 rounded bg-white">
+            <option value="10:00" selected>10:00</option>
+            <option value="10:15">10:15</option>
+            <option value="10:30">10:30</option>
+            <option value="10:45">10:45</option>
+            <option value="11:00">11:00</option>
+            <option value="11:15">11:15</option>
+            <option value="11:30">11:30</option>
+            <option value="11:45">11:45</option>
+            <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="13:15">13:15</option>
+            <option value="13:30">13:30</option>
+            <option value="13:45">13:45</option>
+            <option value="14:00">14:00</option>
+            <option value="14:15">14:15</option>
+            <option value="14:30">14:30</option>
+            <option value="14:45">14:45</option>
+            <option value="15:00">15:00</option>
+            <option value="15:15">15:15</option>
+            <option value="15:30">15:30</option>
+            <option value="15:45">15:45</option>
+            <option value="16:00">16:00</option>
+            <option value="16:15">16:15</option>
+            <option value="16:30">16:30</option>
           </select>
         </div>
+        <!-- 選擇到假日時顯示的錯誤提示 (預設隱藏) -->
+        <p id="dateError" class="text-red-500 text-sm hidden mt-1">❌ 週末（星期六、日）不開放申請，請選擇平日。</p>
       </div>
 
       <div class="text-center pt-6">
@@ -328,6 +336,21 @@
 
     function clearPad() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
+    // 檢查日期是否為週末
+    function checkWeekday(input) {
+      if (!input.value) return;
+      const date = new Date(input.value);
+      const day = date.getDay(); // 0 是星期日，6 是星期六
+      const errorMsg = document.getElementById('dateError');
+      
+      if (day === 0 || day === 6) {
+        errorMsg.classList.remove('hidden');
+        input.value = ''; // 清空錯誤的日期
+      } else {
+        errorMsg.classList.add('hidden'); // 隱藏錯誤訊息
+      }
+    }
+
     function toggleSections() {
       const type = document.querySelector('input[name="actionType"]:checked').value;
       const sacSec = document.getElementById('sacrificeSection');
@@ -337,7 +360,7 @@
       if (type === '委託犧牲') {
         sacSec.classList.remove('hidden');
         aifSec.classList.add('hidden'); 
-        dateLabel.innerText = '※委託犧牲 (出室)日期及時間 Date & Time of Mice Sacrifice';
+        dateLabel.innerText = '※委託犧牲日期及時間 Date & Time of Animal Sacrifice';
       } else {
         sacSec.classList.add('hidden');
         aifSec.classList.remove('hidden'); 
@@ -396,9 +419,8 @@
       document.getElementById('p-totalCages').innerText = document.getElementById('totalCages').value || '';
       
       const aDate = document.getElementById('actionDate').value;
-      const aHour = document.getElementById('actionHour').value;
-      const aMin = document.getElementById('actionMinute').value;
-      document.getElementById('p-date').innerText = `${aDate} ${aHour}:${aMin}`;
+      const aTime = document.getElementById('actionTime').value;
+      document.getElementById('p-date').innerText = `${aDate} ${aTime}`;
       
       document.getElementById('p-actionType').innerText = actionType;
 
