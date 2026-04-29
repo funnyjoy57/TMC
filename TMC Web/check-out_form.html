@@ -298,6 +298,8 @@
     }
 
     function startPosition(e) {
+      // 👇 加入這一行防呆機制，防止手機端觸碰時畫面滑動
+      if(e.type === 'touchstart') e.preventDefault();
       drawing = true;
       const pos = getMousePos(e);
       ctx.beginPath();
@@ -505,9 +507,12 @@
         const targetEmail = "mousehotel@tmc.sinica.edu.tw";
         const subject = encodeURIComponent(`[TMC動物房] ${type}申請表 - ${applicant}`);
         const body = encodeURIComponent(`您好，\n\n附件為我的【${type}】申請表，請協助查收辦理。\n\n申請人：${applicant}\n連絡電話：${document.getElementById('phone').value}`);
-        
+        // 👇 加入 setTimeout 延遲 0.5 秒開啟信箱，避免被 iOS Safari 阻擋
+    setTimeout(() => {
         window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
         closePreview();
+      }, 500);
+
       }).catch(err => {
         alert("❌ PDF 生成發生錯誤，請檢查是否有外部圖片連結阻擋：\n" + err);
         console.error("PDF Generation Error: ", err);
