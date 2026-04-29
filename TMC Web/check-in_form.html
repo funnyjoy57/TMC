@@ -65,7 +65,7 @@
 <h1 style="margin-top: 0; border-bottom: 2px solid #008B8B; display: flex; align-items: center; justify-content: center; gap: 15px; padding-bottom: 10px;">
                 台灣小鼠診所 (TMC) 動物入室申請表
     </h1>
-    <div class="alert">⚠️ 注意：請於至少二個工作天前傳送此表至小鼠診所。違反者，將以急件兩倍計價收費！</div>
+    <div class="alert">⚠️ 注意：請於入室前至少二個工作日的16:30前，傳送此表至小鼠診所。逾時將酌收急件費用"100元/籠"！</div>
 
     <form id="tmcForm">
         <h3>一、使用單位基本資料</h3>
@@ -125,7 +125,19 @@
 
         <h3>三、入室資料</h3>
 <div class="form-row">
-    <div class="form-col"><label>預計入室日期</label><input type="date" id="inDate" name="inDate" required></div>
+    <div class="form-col" style="display: flex; gap: 10px;">
+        <div style="flex: 1;">
+            <label>預計入室日期</label>
+            <input type="date" id="inDate" name="inDate" required>
+        </div>
+        <div style="flex: 1;">
+            <label>時間</label>
+            <select id="inTime" name="inTime" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px;">
+                <option value="" disabled selected>請選擇時段</option>
+                <!-- 選項會透過 JavaScript 自動生成 -->
+            </select>
+        </div>
+    </div>
     <div class="form-col"><label>使用籠數</label><input type="number" id="useCageCount" name="useCageCount" min="1" required></div>
     <div class="form-col"><label>IACUC 或 Protocol No.</label><input type="text" id="iacuc" name="iacuc" required></div>
 </div>
@@ -205,8 +217,42 @@
         const mm = String(today.getMonth() + 1).padStart(2, '0');
         const dd = String(today.getDate()).padStart(2, '0');
         const minDate = `${yyyy}-${mm}-${dd}`;
-        document.getElementById('inDate').setAttribute('min', minDate);
+        const inDateInput = document.getElementById('inDate');
+        inDateInput.setAttribute('min', minDate);
 
+        // ==========================================
+        // 【新增】：檢查是否選到星期六(6)或星期日(0)
+        inDateInput.addEventListener('change', function() {
+            if (this.value) {
+                const selectedDate = new Date(this.value);
+                const day = selectedDate.getDay(); // 0 是星期日，6 是星期六
+                
+                if (day === 0 || day === 6) {
+                    alert("❌ 週末（星期六、日）不開放申請，請選擇平日。");
+                    this.value = ''; // 清空錯誤的選擇
+                }
+            }
+        });
+        // ==========================================
+        // 【新增】：產生允許的入室時間選單 (15分鐘間隔，限制特定時段)
+        const timeSelect = document.getElementById('inTime');
+        const allowedTimes = [
+            "09:30", "09:45",
+            "10:00", "10:15", "10:30", "10:45",
+            "11:00", "11:15", "11:30", "11:45",
+            "12:00",
+            "13:00", "13:15", "13:30", "13:45",
+            "14:00", "14:15", "14:30", "14:45",
+            "15:00", "15:15", "15:30", "15:45",
+            "16:00", "16:15", "16:30"
+        ];
+        allowedTimes.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = t;
+            timeSelect.appendChild(opt);
+        });
+        // ==========================================
         resizeCanvas();
         loadDraft();
     });
@@ -375,7 +421,7 @@
 
             <div class="pdf-section-title">三、入室資料</div>
             <table class="preview-table">
-                <tr><th>預計入室日期</th><td>${d.inDate || ''}</td><th>使用籠數</th><td>${d.useCageCount || ''}</td></tr>
+                <tr><th>預計入室日期</th><td>${d.inDate || ''} ${d.inTime || ''}</td><th>使用籠數</th><td>${d.useCageCount || ''}</td></tr>
                 <tr><th>IACUC No.</th><td colspan="3">${d.iacuc || ''}</td></tr>
                 <tr><th>飼料</th><td>${d.feed || '無'}</td><th>其他飼料說明</th><td>${d.feedDetail || '無'}</td></tr>
                 <tr><th>飲水</th><td>${d.water || '無'}</td><th>其他飲水說明</th><td>${d.waterDetail || '無'}</td></tr>
