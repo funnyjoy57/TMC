@@ -54,6 +54,15 @@
         .official-box .row { display: flex; justify-content: space-between; margin-bottom: 10px; }
         
         @media print { .no-print { display: none; } }
+
+        /* ================= 新增：網頁版中英對照標籤樣式 ================= */
+        .en-label {
+            display: inline-block;
+            color: #666;
+            font-size: 0.85em;
+            margin-left: 4px;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
@@ -68,122 +77,131 @@
     <div class="alert">⚠️ 注意：請於入室前至少二個工作日的16:30前，傳送此表至小鼠診所。逾時將酌收急件費用"100元/籠"！</div>
 
     <form id="tmcForm">
-        <h3>一、使用單位基本資料</h3>
+        <h3>一、使用單位基本資料 <span class="en-label">I. Basic Information</span></h3>
         <div class="form-group">
-    <label>身分別 <span style="color:red">*</span></label>
-    <label class="inline-label"><input type="radio" name="identity" value="一般產業界" data-email="mousehotel@tmc.sinica.edu.tw" required onchange="toggleQuotation()"> 一般產業界</label>
-    <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐學界" data-email="optunithotel@tmc.sinica.edu.tw" onchange="toggleQuotation()"> NBRP進駐學界</label>
-    <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐廠商" data-email="firmunithotel@tmc.sinica.edu.tw" onchange="toggleQuotation()"> NBRP進駐廠商</label>
-</div>
+            <label>身分別 <span style="color:red">*</span> <span class="en-label">Identity</span></label>
+            <label class="inline-label"><input type="radio" name="identity" value="一般產業界" data-email="mousehotel@tmc.sinica.edu.tw" required onchange="toggleQuotation()"> 一般產業界 <span class="en-label">Industry</span></label>
+            <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐學界" data-email="optunithotel@tmc.sinica.edu.tw" onchange="toggleQuotation()"> NBRP進駐學界 <span class="en-label">NBRP Academic</span></label>
+            <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐廠商" data-email="firmunithotel@tmc.sinica.edu.tw" onchange="toggleQuotation()"> NBRP進駐廠商 <span class="en-label">NBRP Corporate</span></label>
+        </div>
         <div class="form-row">
             <div class="form-col" id="quotationCol" style="display: none;">
-        <label>報價單編號 <span style="color:red">*</span></label>
-        <input type="text" id="quotationNumber" name="quotationNumber">
-    </div>
-            <div class="form-col"><label>計畫主持人 (PI)</label><input type="text" id="piName" name="piName" required></div>
+                <label>報價單編號 <span style="color:red">*</span> <span class="en-label">Quotation No.</span></label>
+                <input type="text" id="quotationNumber" name="quotationNumber">
+            </div>
+            <div class="form-col"><label>計畫主持人 (PI) <span class="en-label">Principal Investigator</span></label><input type="text" id="piName" name="piName" required></div>
         </div>
         <div class="form-row">
-            <div class="form-col"><label>使用單位</label><input type="text" id="unit" name="unit" required></div>
-            <div class="form-col"><label>計畫名稱</label><input type="text" id="projectName" name="projectName" required></div>
+            <div class="form-col"><label>使用單位 <span class="en-label">Unit</span></label><input type="text" id="unit" name="unit" required></div>
+            <div class="form-col"><label>計畫名稱 <span class="en-label">Project Name</span></label><input type="text" id="projectName" name="projectName" required></div>
         </div>
         <div class="form-row">
-            <div class="form-col"><label>申請人</label><input type="text" id="applicant" name="applicant" required></div>
-            <div class="form-col"><label>聯絡電話</label><input type="text" id="phone" name="phone" required></div>
+            <div class="form-col"><label>申請人 <span class="en-label">Applicant</span></label><input type="text" id="applicant" name="applicant" required></div>
+            <div class="form-col"><label>聯絡電話 <span class="en-label">Phone</span></label><input type="text" id="phone" name="phone" required></div>
         </div>
         <div class="form-row">
-            <div class="form-col"><label>分機及手機</label><input type="text" id="mobile" name="mobile"></div>
-            <div class="form-col"><label>E-mail</label><input type="email" id="email" name="email" required></div>
+            <div class="form-col"><label>分機及手機 <span class="en-label">Ext. & Mobile (optional)</span></label><input type="text" id="mobile" name="mobile"></div>
+            <div class="form-col"><label>E-mail <span class="en-label">E-mail</span></label><input type="email" id="email" name="email" required></div>
         </div>
 
-        <h3>二、動物基本資料</h3>
+        <h3>二、動物基本資料 <span class="en-label">II. Animal Information</span></h3>
         <div class="form-row">
-            <div class="form-col"><label>動物種類</label>
+            <div class="form-col"><label>動物種類 <span class="en-label">Species</span></label>
                 <label class="inline-label"><input type="radio" name="species" value="Mice" required> Mice</label>
                 <label class="inline-label"><input type="radio" name="species" value="Rat"> Rat</label>
             </div>
-            <div class="form-col"><label>年齡</label><input type="text" id="age" name="age" required></div>
-            <div class="form-col"><label>品系</label><input type="text" id="strain" name="strain" required></div>
+            <div class="form-col"><label>年齡 <span class="en-label">Age</span></label><input type="text" id="age" name="age" required></div>
+            <div class="form-col"><label>品系 <span class="en-label">Strain</span></label><input type="text" id="strain" name="strain" required></div>
         </div>
         <div class="form-row">
-            <div class="form-col"><label>數量 (♂ / ♀ / 懷孕)</label>
+            <div class="form-col"><label>數量 (♂ / ♀ / 懷孕) <span class="en-label">Quantity: ♂/♀/Pregnant</span></label>
                 <div style="display:flex; gap:5px;">
-                    <input type="number" id="maleCount" name="maleCount" placeholder="♂ 數量" min="0" style="width:33%">
-                    <input type="number" id="femaleCount" name="femaleCount" placeholder="♀ 數量" min="0" style="width:33%">
-                    <input type="number" id="pregnantCount" name="pregnantCount" placeholder="懷孕 ♀" min="0" style="width:33%">
+                    <input type="number" id="maleCount" name="maleCount" placeholder="♂ 數量 Male" min="0" style="width:33%">
+                    <input type="number" id="femaleCount" name="femaleCount" placeholder="♀ 數量 Female" min="0" style="width:33%">
+                    <input type="number" id="pregnantCount" name="pregnantCount" placeholder="懷孕 ♀ Preg." min="0" style="width:33%">
                 </div>
             </div>
-            <div class="form-col"><label>入室籠數</label><input type="number" id="cageCount" name="cageCount" min="1" required></div>
+            <div class="form-col"><label>入室籠數 <span class="en-label">Move-in Cages</span></label><input type="number" id="cageCount" name="cageCount" min="1" required></div>
         </div>
         <div class="form-row">
-            <div class="form-col"><label>小鼠目前所在地</label><input type="text" id="location" name="location" required></div>
-            <div class="form-col"><label>品質</label>
+            <div class="form-col"><label>小鼠目前所在地 <span class="en-label">Current Location</span></label><input type="text" id="location" name="location" required></div>
+            <div class="form-col"><label>品質 <span class="en-label">Quality</span></label>
                 <label class="inline-label"><input type="radio" name="quality" value="SPF" required onchange="toggleInput('qualityDetail', false)"> SPF</label>
                 <label class="inline-label"><input type="radio" name="quality" value="Non-SPF" onchange="toggleInput('qualityDetail', true)"> Non-SPF</label>
-                <input type="text" id="qualityDetail" name="qualityDetail" class="hidden" placeholder="請說明 Non-SPF 情況" style="margin-top:5px;">
+                <input type="text" id="qualityDetail" name="qualityDetail" class="hidden" placeholder="請說明 Non-SPF 情況 Specify Non-SPF detail" style="margin-top:5px;">
             </div>
         </div>
 
-        <h3>三、入室資料</h3>
-<div class="form-row">
-    <div class="form-col" style="display: flex; gap: 10px;">
-        <div style="flex: 1;">
-            <label>預計入室日期</label>
-            <input type="date" id="inDate" name="inDate" required>
+        <h3>三、入室資料 <span class="en-label">III. Move-in Information</span></h3>
+        <div class="form-row">
+            <!-- 將日期與時間的外部容器比例調大 (flex: 1.6) -->
+            <div class="form-col" style="flex: 1.6; display: flex; gap: 10px;">
+                <!-- 將日期的內部比例調大 (flex: 1.3)，讓它比時間欄位長 -->
+                <div style="flex: 1.3;">
+                    <label>入住日期 <span class="en-label">Check-in Date</span></label>
+                    <input type="date" id="inDate" name="inDate" required style="cursor: pointer; height: 38px; box-sizing: border-box;" onclick="if(this.showPicker) this.showPicker();">
+                </div>
+                <div style="flex: 1;">
+                    <label>時間 <span class="en-label">Time</span></label>
+                    <select id="inTime" name="inTime" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; height: 38px; box-sizing: border-box;">
+                        <option value="" disabled selected>請選擇時段</option>
+                    </select>
+                </div>
+            </div>
+            <!-- 將使用籠數的比例調小 (flex: 0.6) -->
+            <div class="form-col" style="flex: 0.6;">
+                <label>使用籠數 <span class="en-label">Used Cages</span></label>
+                <input type="number" id="useCageCount" name="useCageCount" min="1" required style="height: 38px; box-sizing: border-box;">
+            </div>
+            <!-- IACUC 欄位維持適當比例 (flex: 1.1) -->
+            <div class="form-col" style="flex: 1.1;">
+                <label>IACUC 或 Protocol No. <span class="en-label">Protocol No.</span></label>
+                <input type="text" id="iacuc" name="iacuc" required style="height: 38px; box-sizing: border-box;">
+            </div>
         </div>
-        <div style="flex: 1;">
-            <label>時間</label>
-            <select id="inTime" name="inTime" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px;">
-                <option value="" disabled selected>請選擇時段</option>
-                <!-- 選項會透過 JavaScript 自動生成 -->
-            </select>
-        </div>
-    </div>
-    <div class="form-col"><label>使用籠數</label><input type="number" id="useCageCount" name="useCageCount" min="1" required></div>
-    <div class="form-col"><label>IACUC 或 Protocol No.</label><input type="text" id="iacuc" name="iacuc" required></div>
-</div>
         
         <div class="form-row" style="margin-bottom: 0;">
             <div class="form-col form-group">
-                <label>飼料 (可複選)</label>
-                <label class="inline-label"><input type="checkbox" name="feed" value="一般飼料"> 一般飼料</label>
-                <label class="inline-label"><input type="checkbox" name="feed" value="特殊飼料"> 特殊飼料</label>
-                <label class="inline-label"><input type="checkbox" name="feed" value="其他" onchange="toggleInput('feedDetail', this.checked)"> 其他</label>
-                <input type="text" id="feedDetail" name="feedDetail" class="hidden" placeholder="請說明其他飼料" style="margin-top:5px;">
+                <label>飼料 (可複選) <span class="en-label">Feed - Multiple</span></label>
+                <label class="inline-label"><input type="checkbox" name="feed" value="一般飼料"> 一般飼料 <span class="en-label">Normal</span></label>
+                <label class="inline-label"><input type="checkbox" name="feed" value="特殊飼料"> 特殊飼料 <span class="en-label">Special</span></label>
+                <label class="inline-label"><input type="checkbox" name="feed" value="其他" onchange="toggleInput('feedDetail', this.checked)"> 其他 <span class="en-label">Other</span></label>
+                <input type="text" id="feedDetail" name="feedDetail" class="hidden" placeholder="請說明其他飼料 Specify other feed" style="margin-top:5px;">
             </div>
             <div class="form-col form-group">
-                <label>飲水 (可複選)</label>
-                <label class="inline-label"><input type="checkbox" name="water" value="一般飲水"> 一般飲水</label>
-                <label class="inline-label"><input type="checkbox" name="water" value="特殊飲水"> 特殊飲水</label>
-                <label class="inline-label"><input type="checkbox" name="water" value="其他" onchange="toggleInput('waterDetail', this.checked)"> 其他</label>
-                <input type="text" id="waterDetail" name="waterDetail" class="hidden" placeholder="請說明其他飲水" style="margin-top:5px;">
+                <label>飲水 (可複選) <span class="en-label">Water - Multiple</span></label>
+                <label class="inline-label"><input type="checkbox" name="water" value="一般飲水"> 一般飲水 <span class="en-label">Normal</span></label>
+                <label class="inline-label"><input type="checkbox" name="water" value="特殊飲水"> 特殊飲水 <span class="en-label">Special</span></label>
+                <label class="inline-label"><input type="checkbox" name="water" value="其他" onchange="toggleInput('waterDetail', this.checked)"> 其他 <span class="en-label">Other</span></label>
+                <input type="text" id="waterDetail" name="waterDetail" class="hidden" placeholder="請說明其他飲水 Specify other water" style="margin-top:5px;">
             </div>
         </div>
 
-        <h3>四、簽名確認</h3>
+        <h3>四、簽名確認 <span class="en-label">IV. Signature</span></h3>
         <div class="form-group sign-options">
-            <label>請選擇計畫主持人簽名方式 <span style="color:red">*</span></label>
-            <label class="inline-label"><input type="radio" name="signMethod" value="draw" checked onchange="toggleSignMode()"> 1. 線上手寫簽名</label>
-            <label class="inline-label"><input type="radio" name="signMethod" value="upload" onchange="toggleSignMode()"> 2. 上傳簽名圖檔</label>
-            <label class="inline-label"><input type="radio" name="signMethod" value="print" onchange="toggleSignMode()"> 3. 匯出列印後實體簽名</label>
+            <label>請選擇計畫主持人簽名方式 <span style="color:red">*</span> <span class="en-label">Select Signature Method</span></label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="draw" checked onchange="toggleSignMode()"> 1. 線上手寫簽名 <span class="en-label">Online Draw</span></label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="upload" onchange="toggleSignMode()"> 2. 上傳簽名圖檔 <span class="en-label">Upload Image</span></label>
+            <label class="inline-label"><input type="radio" name="signMethod" value="print" onchange="toggleSignMode()"> 3. 匯出列印後實體簽名 <span class="en-label">Print & Sign</span></label>
         </div>
 
         <div id="drawSection">
             <canvas id="signature-pad"></canvas>
-            <button type="button" class="btn btn-clear" onclick="clearCanvas()">清除</button>
+            <button type="button" class="btn btn-clear" onclick="clearCanvas()">清除 Clear</button>
         </div>
 
         <div id="uploadSection" class="hidden">
             <input type="file" id="signatureFile" accept="image/png, image/jpeg">
-            <div style="font-size: 13px; color: #666; margin-top: 5px;">* 支援 PNG, JPG。建議使用透明背景之簽名圖檔。</div>
+            <div style="font-size: 13px; color: #666; margin-top: 5px;">* 支援 PNG, JPG。建議使用透明背景之簽名圖檔。 <span class="en-label">PNG, JPG supported. Transparent background recommended.</span></div>
         </div>
 
         <div id="printSection" class="hidden">
-            📄 系統將於 PDF 中保留空白的簽名欄位。請您在下載並列印後，親筆簽名再行繳交或掃描回傳。
+            📄 系統將於 PDF 中保留空白的簽名欄位。請您在下載並列印後，親筆簽名再行繳交或掃描回傳。 <span class="en-label">Blank signature field will be kept in PDF for manual signing.</span>
         </div>
 
         <div class="btn-group no-print">
-            <button type="button" class="btn btn-save" onclick="saveDraft()">💾 儲存草稿</button>
-            <button type="submit" class="btn btn-submit">👁️ 預覽並生成</button>
+            <button type="button" class="btn btn-save" onclick="saveDraft()">💾 儲存草稿 <span class="en-label">Save Draft</span></button>
+            <button type="submit" class="btn btn-submit">👁️ 預覽並生成 <span class="en-label">Preview & Generate</span></button>
         </div>
     </form>
 </div>
@@ -421,7 +439,7 @@
 
             <div class="pdf-section-title">三、入室資料</div>
             <table class="preview-table">
-                <tr><th>預計入室日期</th><td>${d.inDate || ''} ${d.inTime || ''}</td><th>使用籠數</th><td>${d.useCageCount || ''}</td></tr>
+                <tr><th>入住日期</th><td>${d.inDate || ''} ${d.inTime || ''}</td><th>使用籠數</th><td>${d.useCageCount || ''}</td></tr>
                 <tr><th>IACUC No.</th><td colspan="3">${d.iacuc || ''}</td></tr>
                 <tr><th>飼料</th><td>${d.feed || '無'}</td><th>其他飼料說明</th><td>${d.feedDetail || '無'}</td></tr>
                 <tr><th>飲水</th><td>${d.water || '無'}</td><th>其他飲水說明</th><td>${d.waterDetail || '無'}</td></tr>
