@@ -493,13 +493,18 @@
         if (window.innerWidth < 800) {
             const scale = (window.innerWidth - 40) / 760; // 扣除左右空白計算縮放比例
             pdfArea.style.transform = `scale(${scale})`;
-            pdfArea.style.transformOrigin = 'top center';
-            wrapper.style.height = `${pdfArea.offsetHeight * scale}px`; // 修正外框高度
+            pdfArea.style.transformOrigin = 'top left'; // 修改 1：改成對齊「左上角」縮放
+            wrapper.style.height = `${pdfArea.offsetHeight * scale}px`;
+            wrapper.style.width = `${760 * scale}px`;   // 修改 2：外層的寬度也跟著縮小，這樣才能在手機上完美置中
             wrapper.style.overflow = 'hidden';
+            wrapper.style.margin = '0 auto';
         } else {
             pdfArea.style.transform = 'none';
+            pdfArea.style.transformOrigin = 'top center';
             wrapper.style.height = 'auto';
+            wrapper.style.width = 'auto';
             wrapper.style.overflow = 'visible';
+            wrapper.style.margin = '0';
         }
         // ==========================================
 
@@ -531,7 +536,7 @@
         // ==========================================
 
         const opt = {
-            margin: [5, 10, 5, 10], // 【修改】：將上下的 Margin 從 10 縮減為 5，確保不管用什麼裝置產出都不會超出第一頁
+            margin: [5, 4, 5, 4], // 修改：將左右邊距從 10 縮小為 4，強制讓表單往左邊靠
             filename: `TMC_動物入室單_${piName}.pdf`,
             image: { type: 'jpeg', quality: 1 },
             html2canvas: { 
