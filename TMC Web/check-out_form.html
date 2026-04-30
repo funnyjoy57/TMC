@@ -157,9 +157,9 @@
       <div>
         <label id="dateLabel" class="block font-bold mb-1">移出日期及時間 Date & Time</label>
         <div class="flex flex-wrap items-center gap-2">
-          <input type="date" id="actionDate" onchange="checkWeekday(this)" class="w-full border p-2 rounded max-w-xs">
+          <input type="date" id="actionDate" onchange="checkWeekday(this)" onclick="if(this.showPicker) this.showPicker();" class="w-full border p-2 rounded max-w-xs cursor-pointer">
           
-          <select id="actionTime" class="border p-2 rounded bg-white">
+          <select id="actionTime" class="border p-2 rounded bg-white cursor-pointer">
             <option value="10:00" selected>10:00</option>
             <option value="10:15">10:15</option>
             <option value="10:30">10:30</option>
@@ -208,8 +208,9 @@
     </div>
 
     <!-- PDF 預覽滑動區塊：獨立卷軸，讓A4紙可以在手機內自由滑動 -->
-    <div class="flex-1 overflow-auto p-4 flex justify-center items-start">
-      
+    <div class="flex-1 overflow-auto p-4">
+      <!-- ⭐️ 2. 新增這層：用來動態縮小佔位空間，維持畫面置中且不產生水平卷軸 -->
+      <div id="scaleWrapper" class="mx-auto" style="width: 210mm;">
       <!-- 1. 移除 flex 相關 class，確保使用標準區塊 (block) 排版 -->
       <div id="pdfContent" class="a4-page relative shrink-0 shadow-2xl block">
         
@@ -460,11 +461,42 @@
       }
 
       document.getElementById('previewModal').classList.add('active');
+      adjustPreviewScale();
     }
 
     function closePreview() {
       document.getElementById('previewModal').classList.remove('active');
     }
+
+    function adjustPreviewScale() {
+      const pdfContent = document.getElementById('pdfContent');
+      const scaleWrapper = document.getElementById('scaleWrapper');
+      
+      // ⭐️ 防呆：如果網頁中還沒抓到這兩個元素，就先中止執行，避免報錯
+      if (!pdfContent || !scaleWrapper) return;
+      
+      const screenWidth = window.innerWidth - 32; 
+      const a4Width = 794; 
+      
+      if (screenWidth < a4Width) {
+        const scale = screenWidth / a4Width; 
+        pdfContent.style.transform = `scale(${scale})`;
+        pdfContent.style.transformOrigin = "top left";
+        scaleWrapper.style.width = `${a4Width * scale}px`;
+        scaleWrapper.style.height = `${1115 * scale}px`; 
+      } else {
+        pdfContent.style.transform = 'none';
+        scaleWrapper.style.width = '210mm';
+        scaleWrapper.style.height = 'auto';
+      }
+    }
+
+    // 當手機旋轉螢幕或改變視窗大小時，自動重新計算
+    window.addEventListener('resize', () => {
+      if (document.getElementById('previewModal').classList.contains('active')) {
+        adjustPreviewScale();
+      }
+    });
 
     const toBase64 = file => new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -474,9 +506,12 @@
     });
 
     function generatePDF() {
-      const btn = event.target;
-      btn.disabled = true;
-      btn.innerText = "PDF 產生中，請稍候...";
+      // 增加防呆，確保 event 抓取正確
+      const btn = event ? event.target : document.activeElement;
+      if(btn) {
+          btn.disabled = true;
+          btn.innerText = "PDF 產生中，請稍候...";
+      }
 
       const element = document.getElementById('pdfContent');
       const applicant = document.getElementById('applicant').value;
@@ -491,29 +526,43 @@
             scale: 2, 
             useCORS: true, 
             letterRendering: true,
-            scrollY: 0, // ⭐️ 關鍵修復：強制將截圖起始 Y 軸設為 0
-            windowY: 0  // ⭐️ 關鍵修復：抵銷外層頁面捲動造成的白邊
+            scrollY: 0, 
+            windowY: 0,
+            // ⭐️ 關鍵修復：使用 onclone 在「背景虛擬環境」中解除縮放，不干擾真實網頁！
+            onclone: function(clonedDoc) {
+                const clonedContent = clonedDoc.getElementById('pdfContent');
+                const clonedWrapper = clonedDoc.getElementById('scaleWrapper');
+                if (clonedContent) {
+                    clonedContent.style.transform = 'none'; // 讓背景轉檔用的是 100% 原始尺寸
+                }
+                if (clonedWrapper) {
+                    clonedWrapper.style.width = '210mm';
+                    clonedWrapper.style.height = 'auto';
+                }
+            }
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
-
-      // ... 下面的 html2pdf().set(opt).from(element)... 維持不變
 
       html2pdf().set(opt).from(element).save().then(() => {
         alert("✅ PDF 檔案已下載！\n\n系統將為您開啟 Email 軟體。\n⚠️ 請務必記得「手動將剛下載的 PDF 拖曳加到信件附件」中再寄出！");
         
         const targetEmail = "mousehotel@tmc.sinica.edu.tw";
         const subject = encodeURIComponent(`[TMC動物房] ${type}申請表 - ${applicant}`);
-        const body = encodeURIComponent(`您好，\n\n附件為我的【${type}】申請表，請協助查收辦理。\n\n申請人：${applicant}\n連絡電話：${document.getElementById('phone').value}`);
+        const phone = document.getElementById('phone').value;
+        const body = encodeURIComponent(`您好，\n\n附件為我的【${type}】申請表，請協助查收辦理。\n\n申請人：${applicant}\n連絡電話：${phone}`);
         
         window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+        
         closePreview();
       }).catch(err => {
-        alert("❌ PDF 生成發生錯誤，請檢查是否有外部圖片連結阻擋：\n" + err);
+        alert("❌ PDF 生成發生錯誤：\n" + err);
         console.error("PDF Generation Error: ", err);
       }).finally(() => {
-        btn.disabled = false;
-        btn.innerText = "下載 PDF 並開啟信件";
+        if(btn) {
+            btn.disabled = false;
+            btn.innerText = "下載 PDF 並開啟信件";
+        }
       });
     }
   </script>
