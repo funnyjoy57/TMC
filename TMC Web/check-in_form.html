@@ -39,18 +39,18 @@
         #pdf-area { width: 760px; min-width: 760px; box-sizing: border-box; padding: 10px 20px; background: white; color: #000; font-size: 13.5px; line-height: 1.45; text-align: left; margin: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.3); } 
         
         .pdf-title { text-align: center; color: #000; font-size: 22px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 8px; font-weight: bold; }
-        .pdf-section-title { font-size: 15px; font-weight: bold; background: #e0f2f1; padding: 5px 10px; margin: 15px 0 8px 0; border-left: 4px solid #008B8B; }
+        .pdf-section-title { font-size: 15px; font-weight: bold; background: #e0f2f1; padding: 4px 10px; margin: 12px 0 6px 0; border-left: 4px solid #008B8B; }
         
         .preview-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; table-layout: fixed; font-size: 13.5px; } 
-        .preview-table th, .preview-table td { border: 1px solid #000; padding: 7px 8px; text-align: left; word-wrap: break-word; }
+        .preview-table th, .preview-table td { border: 1px solid #000; padding: 6px 8px; text-align: left; word-wrap: break-word; }
         .preview-table th { background-color: #f2f2f2; width: 115px; font-weight: bold; }
         
-        .pdf-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; margin-bottom: 15px; }
+        .pdf-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; margin-bottom: 10px; }
         .email-reminder { border: 1.5px dashed #008B8B; background: #f0fafa; padding: 10px 14px; border-radius: 4px; display: inline-block; margin-top: 8px; font-size: 12.5px; line-height: 1.5; }
         .signature-img { max-width: 180px; max-height: 60px; object-fit: contain; }
         .signature-box { border-bottom: 1px solid #000; min-width: 200px; min-height: 65px; display: inline-block; vertical-align: bottom; }
         
-        .official-box { border: 2px solid #333; padding: 15px 20px; margin-top: 10px; font-size: 14.5px; background-color: #fcfcfc; line-height: 2; }
+        .official-box { border: 2px solid #333; padding: 12px 20px; margin-top: 8px; font-size: 14.5px; background-color: #fcfcfc; line-height: 2; }
         .official-box .row { display: flex; justify-content: space-between; margin-bottom: 10px; }
         
         @media print { .no-print { display: none; } }
@@ -484,6 +484,25 @@
         
         document.getElementById('edit-section').style.display = 'none';
         document.getElementById('preview-section').style.display = 'block';
+
+        // ==========================================
+        // 【新增】：判斷螢幕寬度，如果小於 800px (手機/平板)，就動態縮放預覽畫面
+        const pdfArea = document.getElementById('pdf-area');
+        const wrapper = document.getElementById('pdf-content-wrapper');
+        
+        if (window.innerWidth < 800) {
+            const scale = (window.innerWidth - 40) / 760; // 扣除左右空白計算縮放比例
+            pdfArea.style.transform = `scale(${scale})`;
+            pdfArea.style.transformOrigin = 'top center';
+            wrapper.style.height = `${pdfArea.offsetHeight * scale}px`; // 修正外框高度
+            wrapper.style.overflow = 'hidden';
+        } else {
+            pdfArea.style.transform = 'none';
+            wrapper.style.height = 'auto';
+            wrapper.style.overflow = 'visible';
+        }
+        // ==========================================
+
         window.scrollTo(0, 0); 
     }
 
@@ -505,8 +524,14 @@
         if (logo) logo.style.display = 'block';
         // ==========================================
 
+        // ==========================================
+        // 【新增】：在產生 PDF 前暫時解除螢幕縮放，讓系統能抓取最原始的高畫質 760px 比例
+        const originalTransform = element.style.transform;
+        element.style.transform = 'none';
+        // ==========================================
+
         const opt = {
-            margin: [10, 10, 10, 10], 
+            margin: [5, 10, 5, 10], // 【修改】：將上下的 Margin 從 10 縮減為 5，確保不管用什麼裝置產出都不會超出第一頁
             filename: `TMC_動物入室單_${piName}.pdf`,
             image: { type: 'jpeg', quality: 1 },
             html2canvas: { 
@@ -530,9 +555,11 @@
         // 執行生成並下載 PDF
         html2pdf().set(opt).from(element).save().then(() => {
             
-            // ==========================================
-            // 【新增 2】：PDF 下載完成後，立刻把 Logo 隱藏回去
             if (logo) logo.style.display = 'none';
+
+            // ==========================================
+            // 【新增】：PDF 產生完畢後，恢復手機版的預覽縮放比例
+            element.style.transform = originalTransform;
             // ==========================================
 
             if (mode !== 'print') {
