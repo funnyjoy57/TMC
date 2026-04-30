@@ -52,7 +52,8 @@
 </head>
 <body class="bg-gray-100 p-6">
 
-  <div id="formContainer" class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
+  <!-- ⭐️ 加上 data-html2canvas-ignore="true"，讓套件在轉檔時直接無視這個區塊 -->
+  <div id="formContainer" data-html2canvas-ignore="true" class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
     <h1 class="text-2xl font-bold text-center text-[#008B8B] mb-6 border-b pb-4">
       TMC 動物移出暨委託犧牲申請表<br>
       <span class="text-xl text-[#008B8B]">Mouse Hotel Check Out & Animal Sacrifice</span>
@@ -506,18 +507,32 @@
     });
 
     function generatePDF() {
-      // 增加防呆，確保 event 抓取正確
       const btn = event ? event.target : document.activeElement;
       if(btn) {
           btn.disabled = true;
           btn.innerText = "PDF 產生中，請稍候...";
       }
 
-      const element = document.getElementById('pdfContent');
+      const pdfContent = document.getElementById('pdfContent');
+      const scaleWrapper = document.getElementById('scaleWrapper');
       const applicant = document.getElementById('applicant').value;
+      const phone = document.getElementById('phone').value;
       const type = document.querySelector('input[name="actionType"]:checked').value;
       const filename = `TMC_${type}申請表_${applicant}.pdf`;
 
+      // ⭐️ 終極解法：放棄背景魔法，直接在「真實網頁」瞬間解除縮放！
+      // 1. 先將目前的縮放狀態存起來
+      const origTransform = pdfContent.style.transform;
+      const origTransformOrigin = pdfContent.style.transformOrigin;
+      const origWidth = scaleWrapper.style.width;
+      const origHeight = scaleWrapper.style.height;
+
+      // 2. 瞬間強制把真實網頁的畫面恢復成 100% 原始 A4 尺寸
+      pdfContent.style.transform = 'none';
+      scaleWrapper.style.width = '210mm';
+      scaleWrapper.style.height = 'auto';
+
+      // 3. 參數回歸最乾淨、最標準的設定（拿掉所有 windowWidth, onclone 駭客語法）
       const opt = {
         margin: 0, 
         filename: filename,
@@ -526,44 +541,40 @@
             scale: 2, 
             useCORS: true, 
             letterRendering: true,
-            scrollY: 0, 
-            windowY: 0,
-            // ⭐️ 關鍵修復：使用 onclone 在「背景虛擬環境」中解除縮放，不干擾真實網頁！
-            onclone: function(clonedDoc) {
-                const clonedContent = clonedDoc.getElementById('pdfContent');
-                const clonedWrapper = clonedDoc.getElementById('scaleWrapper');
-                if (clonedContent) {
-                    clonedContent.style.transform = 'none'; // 讓背景轉檔用的是 100% 原始尺寸
-                }
-                if (clonedWrapper) {
-                    clonedWrapper.style.width = '210mm';
-                    clonedWrapper.style.height = 'auto';
-                }
-            }
+            scrollY: 0 
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
-      html2pdf().set(opt).from(element).save().then(() => {
-        alert("✅ PDF 檔案已下載！\n\n系統將為您開啟 Email 軟體。\n⚠️ 請務必記得「手動將剛下載的 PDF 拖曳加到信件附件」中再寄出！");
-        
-        const targetEmail = "mousehotel@tmc.sinica.edu.tw";
-        const subject = encodeURIComponent(`[TMC動物房] ${type}申請表 - ${applicant}`);
-        const phone = document.getElementById('phone').value;
-        const body = encodeURIComponent(`您好，\n\n附件為我的【${type}】申請表，請協助查收辦理。\n\n申請人：${applicant}\n連絡電話：${phone}`);
-        
-        window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
-        
-        closePreview();
-      }).catch(err => {
-        alert("❌ PDF 生成發生錯誤：\n" + err);
-        console.error("PDF Generation Error: ", err);
-      }).finally(() => {
-        if(btn) {
-            btn.disabled = false;
-            btn.innerText = "下載 PDF 並開啟信件";
-        }
-      });
+      // ⭐️ 4. 設定 100 毫秒的微小延遲，讓瀏覽器有時間確實把畫面「放大」回 100%
+      // 這樣套件抓取座標時，就絕對會是完美的滿版狀態，不會再有 0x0 錯誤！
+      setTimeout(() => {
+          html2pdf().set(opt).from(pdfContent).save().then(() => {
+            alert("✅ PDF 檔案已下載！\n\n系統將為您開啟 Email 軟體。\n⚠️ 請務必記得「手動將剛下載的 PDF 拖曳加到信件附件」中再寄出！");
+            
+            const targetEmail = "mousehotel@tmc.sinica.edu.tw";
+            const subject = encodeURIComponent(`[TMC動物房] ${type}申請表 - ${applicant}`);
+            const body = encodeURIComponent(`您好，\n\n附件為我的【${type}】申請表，請協助查收辦理。\n\n申請人：${applicant}\n連絡電話：${phone}`);
+            
+            window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+            
+            closePreview();
+          }).catch(err => {
+            alert("❌ PDF 生成發生錯誤：\n" + err);
+            console.error("PDF Generation Error: ", err);
+          }).finally(() => {
+            // ⭐️ 5. 轉檔結束後，瞬間把手機版的縮放狀態無縫復原！
+            pdfContent.style.transform = origTransform;
+            pdfContent.style.transformOrigin = origTransformOrigin;
+            scaleWrapper.style.width = origWidth;
+            scaleWrapper.style.height = origHeight;
+
+            if(btn) {
+                btn.disabled = false;
+                btn.innerText = "下載 PDF 並開啟信件";
+            }
+          });
+      }, 100);
     }
   </script>
 </body>
