@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TMC動物入室揭露說明表單</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body { font-family: "Microsoft JhengHei", Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
         .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -36,19 +37,35 @@
         .btn-clear:hover { background-color: #c0392b; }
 
         /* 預覽與 PDF 專用樣式 */
-        #preview-container { display: none; overflow-x: auto; width: 100%; }
-        #pdf-content { width: 800px; min-width: 800px; box-sizing: border-box; padding: 10px 40px 10px 40px; background: white; color: black; line-height: 1.6; font-size: 14px; margin: 0 auto; }
-        .pdf-header { display: flex; align-items: center; justify-content: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        .pdf-logo { max-height: 50px; margin-right: 15px; }
-        #pdf-content h2 { margin: 0; font-size: 22px; text-align: center; }
-        .pdf-section { margin-bottom: 20px; page-break-inside: avoid; }
-        .pdf-section-title { font-weight: bold; font-size: 16px; color: #2c3e50; margin-bottom: 10px; background-color: #ecf0f1; padding: 5px 10px; }
-        .pdf-row { display: flex; border-bottom: 1px dashed #ccc; padding: 6px 0; }
-        .pdf-label { font-weight: bold; width: 40%; color: #34495e; padding-right: 10px;}
-        .pdf-value { width: 60%; color: #2c3e50; }
-        .pdf-signature { margin-top: 20px; display: flex; justify-content: space-between; align-items: flex-end; border-top: 2px solid #333; padding-top: 15px; font-size: 14px; page-break-inside: avoid; }
+        /* 開啟左右滑動，讓原生 800px 可以在手機上順暢預覽 */
+        #preview-container { display: none; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 20px; }
         
-        .btn-group { display: flex; gap: 15px; margin-top: 20px; min-width: 300px; }
+        #pdf-content { 
+            width: 800px; 
+            min-width: 800px; 
+            box-sizing: border-box; 
+            padding: 15px 30px; 
+            background: white; 
+            color: black; 
+            line-height: 1.5;   /* 行距微調加寬，讓大字更好讀 */
+            font-size: 16px;    /* 基礎字體：14px -> 16px */
+            margin: 20px auto; 
+        }
+        
+        .pdf-header { display: flex; align-items: center; justify-content: center; border-bottom: 2px solid #333; padding-bottom: 8px; margin-bottom: 15px; }
+        .pdf-logo { max-height: 45px; margin-right: 15px; }
+        #pdf-content h2 { margin: 0; font-size: 22px; text-align: center; } /* 標題：19px -> 22px */
+        .pdf-section { margin-bottom: 12px; page-break-inside: avoid; }
+        .pdf-section-title { font-weight: bold; font-size: 17px; color: #2c3e50; margin-bottom: 8px; background-color: #ecf0f1; padding: 4px 8px; } /* 區塊標題：15px -> 17px */
+        .pdf-row { display: flex; border-bottom: 1px dashed #ccc; padding: 6px 0; }
+        
+        .pdf-label { font-weight: bold; width: 35%; flex: none; color: #34495e; padding-right: 10px; }
+        .pdf-value { width: 65%; flex: none; color: #2c3e50; }
+        
+        .pdf-signature { margin-top: 15px; display: flex; justify-content: space-between; align-items: flex-end; border-top: 2px solid #333; padding-top: 10px; font-size: 15px; page-break-inside: avoid; } /* 簽名區基礎字：13px -> 15px */
+        
+        /* 按鈕區 */
+        .btn-group { display: flex; gap: 15px; margin-top: 20px; width: 100%; box-sizing: border-box; padding: 0 5px;}
         .btn-action { flex: 1; padding: 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.1em; font-weight: bold; color: white; transition: 0.3s;}
         .btn-back { background-color: #95a5a6; }
         .btn-back:hover { background-color: #7f8c8d; }
@@ -305,25 +322,26 @@
             
             <div class="pdf-signature">
                 <div style="flex: 1.2;">
-                    <strong style="font-size: 15px;">計畫主持人 (PI):</strong> 
+                    <!-- 原本 15px -> 放大為 17px -->
+                    <strong style="font-size: 17px;">計畫主持人 (PI):</strong> 
                     <div id="preview-signature-area" style="margin-top: 10px;"></div>
                 </div>
                 
                 <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding-left: 20px;">
-                    <div style="font-size: 14px; color: #000; line-height: 1.5; margin-bottom: 15px;">
+                    <!-- 以下原本 14px -> 全部放大為 16px -->
+                    <div style="font-size: 16px; color: #000; line-height: 1.5; margin-bottom: 15px;">
                         <strong>📩 寄件提醒：</strong><br>
                         本表單請寄送至：tmcvet5516@gmail.com<br>
                         副本欄位請務必填上 PI E-mail
                     </div>
-                    <div style="font-size: 14px; color: #000; margin-bottom: 8px;">
+                    <div style="font-size: 16px; color: #000; margin-bottom: 8px;">
                         <strong>日期:</strong> <span id="sign-date"></span>
                     </div>
-                    <div style="font-size: 14px; color: #000; font-weight: bold; margin-bottom: 5px;">
+                    <div style="font-size: 16px; color: #000; font-weight: bold; margin-bottom: 5px;">
                         Service Request ID: <span id="sign-id"></span>
                     </div>
                 </div>
             </div>
-        </div>
 
         <div class="btn-group" data-html2canvas-ignore="true">
             <button class="btn-action btn-back" onclick="backToEdit()">返回修改 <span style="font-weight: normal; font-size: 0.8em;">Back to Edit</span></button>
@@ -589,67 +607,108 @@
         html += `<div class="pdf-row"><div class="pdf-label">中止標準</div><div class="pdf-value">${endpoint}</div></div></div>`;
 
         previewData.innerHTML = html;
-
         document.getElementById('preview-signature-area').innerHTML = finalSignatureHTML;
         document.getElementById('sign-date').innerText = getTodayDate();
         document.getElementById('sign-id').innerText = getTextVal(form, 'Request_ID');
 
+        // ====== 更新從這裡開始 ======
         document.getElementById('form-container').style.display = 'none';
-        document.getElementById('preview-container').style.display = 'block';
+        const previewContainer = document.getElementById('preview-container');
+        previewContainer.style.display = 'block';
+
+        const pdfContent = document.getElementById('pdf-content');
+        
+        // 移除所有動態縮放 (transform) 的邏輯，讓表單保持最原始的 800px
+        // 手機上會自動變成可以左右滑動來預覽，徹底避開 iOS 文字消失 Bug
+        pdfContent.style.transform = 'none';
+        previewContainer.style.height = 'auto';
+
+        // 【防爆頁殺手鐧】強制限制簽名圖片的高度
+        const signatureArea = document.getElementById('preview-signature-area');
+        const img = signatureArea.querySelector('img');
+        if (img) {
+            img.style.maxHeight = '65px';
+            img.style.objectFit = 'contain';
+        }
+
         window.scrollTo(0, 0);
     }
 
-    /// --- 匯出 PDF 並呼叫 Email ---
+   // --- 匯出 PDF 並呼叫 Email ---
 function downloadPDFAndMail() {
     const element = document.getElementById('pdf-content');
+    const container = document.getElementById('preview-container');
+    const btnSend = document.querySelector('.btn-send');
+
+    // 1. 改變按鈕狀態，提示使用者
+    const origBtnText = btnSend.innerHTML;
+    const origBtnBg = btnSend.style.backgroundColor;
+    btnSend.innerHTML = '⏳ PDF 排版與產生中... (請稍候)';
+    btnSend.style.backgroundColor = '#f39c12';
+    btnSend.disabled = true;
 
     // 確保視窗在最上方
     window.scrollTo(0, 0);
 
-    // 【終極殺手鐧：CSS 縮放欺騙法】
-    const screenWidth = window.innerWidth;
-    let scaleRate = 1;
-    
-    // 如果螢幕寬度小於 800，就計算縮放比例 (除以 820 是為了左右多留一點點安全邊距)
-    if (screenWidth < 800) {
-        scaleRate = screenWidth / 820;
-        element.style.transform = `scale(${scaleRate})`;
-        element.style.transformOrigin = 'top left';
-    }
+    // 2. 解除容器裁切限制，讓截圖套件能看見完整 800px 寬度
+    const origOverflow = container.style.overflowX;
+    container.style.overflowX = 'visible';
 
-    const opt = {
-        margin:       [10, 0, 10, 0], 
-        filename:     'TMC動物入室揭露說明表單.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { 
-            // 放大解析度以彌補縮放造成的失真
-            scale: 2 / scaleRate, 
-            useCORS: true,
-            scrollX: 0, 
-            scrollY: 0
-        }, 
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak:    { mode: ['css', 'legacy'] } 
-    };
+    // 3. 呼叫最新版的 html2canvas 進行高畫質截圖
+    html2canvas(element, {
+        scale: 2, 
+        useCORS: true,
+        width: 800,       
+        windowWidth: 800, 
+        scrollX: 0,
+        scrollY: 0
+    }).then(canvas => {
+        // 拍完照，立刻恢復原本可滑動的狀態
+        container.style.overflowX = origOverflow;
 
-    alert("系統即將下載 PDF。\n下載完成後，請將 PDF 附件拖曳至彈出的 Email 中寄出！");
+        // 4. 將截圖轉換為圖片格式
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        
+        // 5. 呼叫最新版 jsPDF 建立 A4 檔案
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        // 【新增設定】自訂 PDF 留白邊距 (單位為 mm，10mm = 1公分)
+        const marginLeft = 12;   // 左邊留白 12mm
+        const marginTop = 15;    // 上方留白 15mm
+        const marginRight = 12;  // 右邊留白 12mm
+        
+        // 計算扣除左右邊距後，內容實際能用的寬度
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const drawWidth = pdfWidth - marginLeft - marginRight;
+        
+        // 依據新的寬度，計算等比例縮放後的高度，避免圖片變形
+        const drawHeight = (canvas.height * drawWidth) / canvas.width;
+        
+        // 將圖片貼上 PDF，從設定的 (X, Y) 座標開始畫，並帶入新長寬
+        pdf.addImage(imgData, 'JPEG', marginLeft, marginTop, drawWidth, drawHeight);
+        pdf.save('TMC動物入室揭露說明表單.pdf');
 
-    // 給予瀏覽器 300 毫秒來渲染「縮小後」的完整畫面
-    setTimeout(() => {
-        html2pdf().set(opt).from(element).save().then(() => {
-            
-            // 產出 PDF 後，立刻把縮放解除，恢復原本可滑動的正常狀態
-            if (screenWidth < 800) {
-                element.style.transform = 'none';
-            }
+        // 6. 恢復按鈕狀態
+        btnSend.innerHTML = origBtnText;
+        btnSend.style.backgroundColor = origBtnBg;
+        btnSend.disabled = false;
 
-            setTimeout(() => {
-                const subject = encodeURIComponent("【TMC動物入室揭露說明】申請表單");
-                const body = encodeURIComponent("您好，\n\n附件為填寫完畢之「動物入室揭露說明」表單 PDF 檔案，請查收。\n\n謝謝。");
-                window.location.href = `mailto:tmcvet5516@gmail.com?subject=${subject}&body=${body}`;
-            }, 1500);
-        });
-    }, 300);
+        // 7. 呼叫 Email
+        setTimeout(() => {
+            const subject = encodeURIComponent("【TMC動物入室揭露說明】申請表單");
+            const body = encodeURIComponent("您好，\n\n附件為填寫完畢之「動物入室揭露說明」表單 PDF 檔案，請查收。\n\n謝謝。");
+            window.location.href = `mailto:tmcvet5516@gmail.com?subject=${subject}&body=${body}`;
+        }, 500);
+
+    }).catch(err => {
+        alert("產生 PDF 時發生錯誤，請重試！");
+        container.style.overflowX = origOverflow;
+        btnSend.innerHTML = origBtnText;
+        btnSend.style.backgroundColor = origBtnBg;
+        btnSend.disabled = false;
+        console.error(err);
+    });
 }
 </script>
 
