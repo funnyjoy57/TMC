@@ -101,10 +101,10 @@
         </div>
         <div class="form-row">
             <div class="form-col"><label>申請人 <span class="en-label">Applicant</span></label><input type="text" id="applicant" name="applicant" required></div>
-            <div class="form-col"><label>聯絡電話 <span class="en-label">Phone</span></label><input type="text" id="phone" name="phone" required></div>
+            <div class="form-col"><label>聯絡電話 <span class="en-label">Phone</span></label><input type="tel" id="phone" name="phone" required></div>
         </div>
         <div class="form-row">
-            <div class="form-col"><label>分機及手機 <span class="en-label">Ext. & Mobile (optional)</span></label><input type="text" id="mobile" name="mobile"></div>
+            <div class="form-col"><label>分機及手機 <span class="en-label">Ext. & Mobile (optional)</span></label><input type="tel" id="mobile" name="mobile"></div>
             <div class="form-col"><label>E-mail <span class="en-label">E-mail</span></label><input type="email" id="email" name="email" required></div>
         </div>
 
@@ -120,12 +120,12 @@
         <div class="form-row">
             <div class="form-col"><label>數量 (♂ / ♀ / 懷孕) <span class="en-label">Quantity: ♂/♀/Pregnant</span></label>
                 <div style="display:flex; gap:5px;">
-                    <input type="number" id="maleCount" name="maleCount" placeholder="♂ 數量 Male" min="0" style="width:33%">
-                    <input type="number" id="femaleCount" name="femaleCount" placeholder="♀ 數量 Female" min="0" style="width:33%">
-                    <input type="number" id="pregnantCount" name="pregnantCount" placeholder="懷孕 ♀ Preg." min="0" style="width:33%">
+                    <input type="number" id="maleCount" name="maleCount" placeholder="♂ 數量 Male" min="0" style="width:33%" inputmode="numeric">
+                    <input type="number" id="femaleCount" name="femaleCount" placeholder="♀ 數量 Female" min="0" style="width:33%" inputmode="numeric">
+                    <input type="number" id="pregnantCount" name="pregnantCount" placeholder="懷孕 ♀ Preg." min="0" style="width:33%" inputmode="numeric">
                 </div>
             </div>
-            <div class="form-col"><label>入室籠數 <span class="en-label">Move-in Cages</span></label><input type="number" id="cageCount" name="cageCount" min="1" required></div>
+            <div class="form-col"><label>入室籠數 <span class="en-label">Move-in Cages</span></label><input type="number" id="cageCount" name="cageCount" min="1" required inputmode="numeric"></div>
         </div>
         <div class="form-row">
             <div class="form-col"><label>小鼠目前所在地 <span class="en-label">Current Location</span></label><input type="text" id="location" name="location" required></div>
@@ -155,7 +155,7 @@
             <!-- 將使用籠數的比例調小 (flex: 0.6) -->
             <div class="form-col" style="flex: 0.6;">
                 <label>使用籠數 <span class="en-label">Used Cages</span></label>
-                <input type="number" id="useCageCount" name="useCageCount" min="1" required style="height: 38px; box-sizing: border-box;">
+                <input type="number" id="useCageCount" name="useCageCount" min="1" required style="height: 38px; box-sizing: border-box;" inputmode="numeric">
             </div>
             <!-- IACUC 欄位維持適當比例 (flex: 1.1) -->
             <div class="form-col" style="flex: 1.1;">
