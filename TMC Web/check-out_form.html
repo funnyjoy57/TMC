@@ -68,12 +68,12 @@
         <div><label class="block font-bold">計畫主持人 PI Name</label><input type="text" id="piName" class="w-full border p-2 rounded"></div>
         <div><label class="block font-bold">服務單位 Affiliation</label><input type="text" id="affiliation" class="w-full border p-2 rounded"></div>
         <div><label class="block font-bold">申請人姓名 Applicant</label><input type="text" id="applicant" class="w-full border p-2 rounded"></div>
-        <div><label class="block font-bold">連絡電話 Phone No.</label><input type="text" id="phone" class="w-full border p-2 rounded"></div>
+        <div><label class="block font-bold">連絡電話 Phone No.</label><input type="tel" id="phone" class="w-full border p-2 rounded"></div>
         <div>
   <label class="block font-bold text-gray-700">鼠籠編號 Cages No. (optional)</label>
   <textarea id="cageNumbers" rows="1" class="w-full border p-2 rounded overflow-hidden resize-none" oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"></textarea>
 </div>
-        <div><label class="block font-bold text-gray-700">總籠數 Total Cages (optional)</label><input type="number" id="totalCages" min="0" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full border p-2 rounded"></div>
+        <div><label class="block font-bold text-gray-700">總籠數 Total Cages (optional)</label><input type="number" id="totalCages" min="0" inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full border p-2 rounded"></div>
       </div>
 
       <div class="bg-blue-50 p-4 rounded-md border border-blue-200">
