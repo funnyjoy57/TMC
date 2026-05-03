@@ -618,17 +618,32 @@
 
         const pdfContent = document.getElementById('pdf-content');
         
-        // 移除所有動態縮放 (transform) 的邏輯，讓表單保持最原始的 800px
-        // 手機上會自動變成可以左右滑動來預覽，徹底避開 iOS 文字消失 Bug
-        pdfContent.style.transform = 'none';
-        previewContainer.style.height = 'auto';
-
-        // 【防爆頁殺手鐧】強制限制簽名圖片的高度
-        const signatureArea = document.getElementById('preview-signature-area');
-        const img = signatureArea.querySelector('img');
-        if (img) {
-            img.style.maxHeight = '65px';
-            img.style.objectFit = 'contain';
+        // 【新增：一頁預覽的手機版智慧縮放邏輯】
+        const screenWidth = window.innerWidth;
+        if (screenWidth < 840) {
+            // 算出能完美塞進螢幕的縮放比例 (左右各留 10px 邊距)
+            const scaleRate = (screenWidth - 20) / 800;
+            // 算出水平置中的位移量
+            const offsetLeft = (screenWidth - (800 * scaleRate)) / 2;
+            
+            pdfContent.style.margin = '20px 0 0 0'; // 取消 auto 避免干擾
+            pdfContent.style.transformOrigin = 'top left';
+            pdfContent.style.transform = `translateX(${offsetLeft}px) scale(${scaleRate})`;
+            
+            // 【關鍵技巧】因為縮放不會改變實體佔用的高度，下方會空出一大塊
+            // 我們利用「負邊距 (negative margin)」把下方的按鈕區塊完美拉上來
+            setTimeout(() => {
+                const lostHeight = pdfContent.offsetHeight * (1 - scaleRate);
+                pdfContent.style.marginBottom = `-${lostHeight}px`;
+                previewContainer.style.overflowX = 'hidden'; // 手機版禁止左右滑動
+            }, 50);
+            
+        } else {
+            // 電腦版維持原樣 (置中且可滑動)
+            pdfContent.style.margin = '20px auto';
+            pdfContent.style.transform = 'none';
+            pdfContent.style.marginBottom = '20px';
+            previewContainer.style.overflowX = 'auto';
         }
 
         window.scrollTo(0, 0);
@@ -661,10 +676,22 @@ function downloadPDFAndMail() {
         width: 800,       
         windowWidth: 800, 
         scrollX: 0,
-        scrollY: 0
+        scrollY: 0,
+        // 【終極必殺技：在虛擬複製環境中解除縮放，讓 PDF 保持原始滿版】
+        onclone: function(clonedDoc) {
+            const clonedContainer = clonedDoc.getElementById('preview-container');
+            const clonedContent = clonedDoc.getElementById('pdf-content');
+            
+            if (clonedContainer) {
+                clonedContainer.style.overflowX = 'visible'; 
+            }
+            if (clonedContent) {
+                // 在拍照的瞬間，徹底抹除縮放與位移的影響！
+                clonedContent.style.transform = 'none'; 
+                clonedContent.style.margin = '0'; 
+            }
+        }
     }).then(canvas => {
-        // 拍完照，立刻恢復原本可滑動的狀態
-        container.style.overflowX = origOverflow;
 
         // 4. 將截圖轉換為圖片格式
         const imgData = canvas.toDataURL('image/jpeg', 0.98);
