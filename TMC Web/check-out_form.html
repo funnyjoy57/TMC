@@ -51,7 +51,7 @@
 <body class="bg-gray-100 p-6">
 
   <div id="formContainer" class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold text-center text-[#008B8B] mb-6 border-b pb-4">
+    <h1 class="text-2xl font-bold text-center text-[#008B8B] mb-6 border-b-2 border-[#008B8B] pb-4">
   TMC 動物移出暨委託犧牲申請表<br>
   <span class="text-xl text-[#008B8B]">Mouse Hotel Check Out & Animal Sacrifice</span>
 </h1>
@@ -160,7 +160,7 @@
         <label id="dateLabel" class="block font-bold mb-1">移出日期及時間 Date & Time</label>
         <div class="flex flex-wrap items-center gap-2">
           <!-- 加上 onchange 事件來檢查是否為六日 -->
-          <input type="date" id="actionDate" onchange="checkWeekday(this)" class="w-full border p-2 rounded max-w-xs">
+          <input type="date" id="actionDate" onchange="checkWeekday(this)" onclick="if(this.showPicker) this.showPicker();" class="w-full border p-2 rounded max-w-xs cursor-pointer">
           
           <!-- 合併後的時間下拉選單 -->
           <select id="actionTime" class="border p-2 rounded bg-white">
