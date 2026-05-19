@@ -27,6 +27,14 @@
         .btn-submit { background-color: #3498db; color: white; padding: 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 1.2em; font-weight: bold; margin-top: 20px; transition: 0.3s; }
         .btn-submit:hover { background-color: #2980b9; }
 
+        /* 禁用狀態的文字框樣式 (反灰且游標改變) */
+        input[type="text"]:disabled {
+            background-color: #e9ecef;
+            color: #6c757d;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+
         /* 中英雙語樣式設定 */
         .en-text { color: #7f8c8d; font-size: 0.85em; font-weight: normal; }
         .title-en { display: block; font-size: 0.6em; color: #7f8c8d; margin-top: 5px; font-weight: normal; }
@@ -114,7 +122,7 @@
                     <div class="options">
                         <label><input type="radio" name="Q1_2_Surgery" value="否" checked> 否 <span class="en-text">No</span></label>
                         <br>
-                        <label><input type="radio" name="Q1_2_Surgery" value="主要存活性手術"> 是，主要存活性手術 (暴露體腔或大規模組織剝離或切斷) <br><span class="en-text" style="margin-left:25px;">Yes, Major survival surgery: exposing body cavities or extensive tissue dissection/transection</span></label>
+                        <label><input type="radio" name="Q1_2_Surgery" value="主要存活性手術"> 是，主要存活性手術 (腹腔、胸腔切開、截肢手術等，暴露體腔或大規模組織剝離或切斷) <br><span class="en-text" style="margin-left:25px;">Yes, Major survival surgery: exposing body cavities or extensive tissue dissection/transection</span></label>
                         <br>
                         <label><input type="radio" name="Q1_2_Surgery" value="次要存活性手術"> 是，次要存活性手術 (僅表皮切創，或輕微生理損害) <br><span class="en-text" style="margin-left:25px;">Yes, Minor survival surgery: superficial incisions only, or minor physiological impairment</span></label>
                     </div>
@@ -146,7 +154,7 @@
                         <label><input type="radio" name="Q1_4_Symptom" value="是"> 是，請說明 <span class="en-text">Yes, specify</span>: <input type="text" name="Q1_4_Symptom_Desc" style="width: 250px;"></label><br>
                         c. 是否曾經進行危險性物質給予? <span class="en-text">Has hazardous substance been administered?</span>
                         <label><input type="radio" name="Q1_4_Danger" value="否" checked> 否 <span class="en-text">No</span></label>
-                        <label><input type="radio" name="Q1_4_Danger" value="是"> 是，請說明種類 <span class="en-text">Yes, specify type</span>: <input type="text" name="Q1_4_Danger_Desc" style="width: 250px;"></label>
+                        <label><input type="radio" name="Q1_4_Danger" value="是"> 是，請說明種類 <span class="en-text">Yes, specify type</span>: <input type="text" name="Q1_4_Danger_Desc" style="width: 250px; display: inline-block;" placeholder="如: Streptozotocin, MPTP 等""></label>
                     </div>
                 </div>
 
@@ -176,19 +184,19 @@
                     <label><input type="radio" name="Q2_Substance_Future" value="是" onclick="toggleSection('substance_future_details', true)"> 是 <span class="en-text">Yes</span></label>
                 </div>
                 <div id="substance_future_details" class="conditional-group">
-                    (1) 給予 substance 名稱 <span class="en-text">Name of substance</span>: <input type="text" name="Q2_Name"><br>
+                    (1) 給予 substance 名稱 <span class="en-text">Name of substance</span>: <input type="text" name="Q2_Name" placeholder="如需保密可以代號呈現"><br>
                     (2) 種類 <span class="en-text">Type</span>:<br>
                     <div class="options">
-                        <label><input type="checkbox" name="Q2_Type" value="藥物級化合物"> 藥物級化合物 <span class="en-text">Pharmaceutical grade</span></label><br>
-                        <label><input type="checkbox" name="Q2_Type" value="商品化化合物"> 商品化化合物 <span class="en-text">Commercial grade</span></label><br>
-                        <label><input type="checkbox" name="Q2_Type" value="自行合成試驗物質"> 自行合成試驗物質 <span class="en-text">Self-synthesized</span></label><br>
+                        <label><input type="checkbox" name="Q2_Type" value="藥物級化合物"> 藥物級化合物，請檢附仿單 <span class="en-text">Pharmaceutical grade</span></label><br>
+                        <label><input type="checkbox" name="Q2_Type" value="商品化化合物"> 商品化化合物，由化學品供應商(如: Sigma-Aldrich 等)提供之化合物，請檢附 SDS 表 <span class="en-text">Commercial grade</span></label><br>
+                        <label><input type="checkbox" name="Q2_Type" value="自行合成試驗物質"> 自行合成試驗物質，請說明以下a.、b.兩點 <span class="en-text">Self-synthesized</span></label><br>
                         <div style="margin-left: 20px;">
                             a. 滅菌方式 <span class="en-text">Sterilization method</span>: 
                             <label><input type="radio" name="Q2_Sterilize" value="無法滅菌" checked> 無法滅菌 <span class="en-text">Cannot be sterilized</span></label>
                             <label><input type="radio" name="Q2_Sterilize" value="有滅菌"> 有滅菌 <span class="en-text">Sterilized</span>: <input type="text" name="Q2_Sterilize_Method" style="width:150px;"></label><br>
                             b. 毒性資料 <span class="en-text">Toxicity data</span>:
                             <label><input type="radio" name="Q2_Toxicity" value="未知" checked> 未知 <span class="en-text">Unknown</span></label>
-                            <label><input type="radio" name="Q2_Toxicity" value="已知"> 已知 <span class="en-text">Known</span>: <input type="text" name="Q2_Toxicity_Desc" style="width:200px;"></label>
+                            <label><input type="radio" name="Q2_Toxicity" value="已知"> 已知 <span class="en-text">Known</span>: <input type="text" name="Q2_Toxicity_Desc" style="width:200px;" display: inline-block;" placeholder="如 LD₅₀ 或類似化合物 SDS 表"></label>
                         </div>
                     </div>
                     (3) 是否對操作人員造成危害? <span class="en-text">Is there a hazard to personnel?</span>
@@ -216,8 +224,13 @@
                 </div>
                 <div id="cell_details" class="conditional-group">
                     (1) 細胞種類 <span class="en-text">Cell type</span>: 
-                    <label><input type="checkbox" name="Q3_CellType" value="人類細胞株"> 人類細胞株 <span class="en-text">Human cell line</span></label>
-                    <label><input type="checkbox" name="Q3_CellType" value="動物細胞株"> 動物細胞株 <span class="en-text">Animal cell line</span></label><br>
+                    <div style="margin-top: 5px; margin-bottom: 5px;">
+                        <label><input type="checkbox" name="Q3_CellType" value="人類細胞株"> 人類細胞株 <span class="en-text">Human cell line</span></label>
+                        <input type="text" name="Q3_CellType_Human_Desc" style="width: 180px; display: inline-block; padding: 4px; margin: 0 20px 0 5px; vertical-align: middle;" placeholder="請註明名稱/品系">
+                        
+                        <label><input type="checkbox" name="Q3_CellType" value="動物細胞株"> 動物細胞株 <span class="en-text">Animal cell line</span></label>
+                        <input type="text" name="Q3_CellType_Animal_Desc" style="width: 180px; display: inline-block; padding: 4px; margin: 0 0 0 5px; vertical-align: middle;" placeholder="請註明名稱/品系">
+                    </div>
                     (2) 細胞取得來源 <span class="en-text">Cell source</span>: 
                     <label><input type="checkbox" name="Q3_CellSource" value="商品化細胞株"> 商品化細胞株 <span class="en-text">Commercial cell line</span></label>
                     <label><input type="checkbox" name="Q3_CellSource" value="患者檢體"> 患者檢體 <span class="en-text">Patient specimen</span></label>
@@ -252,7 +265,7 @@
                     <label><input type="checkbox" name="Q5_Care" value="特殊飼料"> 特殊飼料 <span class="en-text">Special diet</span></label>
                     <label><input type="checkbox" name="Q5_Care" value="限制飲食"> 限制飲食 <span class="en-text">Food restriction</span></label>
                     <label><input type="checkbox" name="Q5_Care" value="限制飲水"> 限制飲水 <span class="en-text">Water restriction</span></label>
-                    <label><input type="checkbox" name="Q5_Care" value="其他"> 其他 <span class="en-text">Other</span>: <input type="text" name="Q5_Care_Other" style="width:200px;"></label>
+                    <label><input type="checkbox" name="Q5_Care" value="其他"> 其他 <span class="en-text">Other</span>: <input type="text" name="Q5_Care_Other" style="width:200px; display: inline-block;" placeholder="額外提供巢料、放置飼料於墊料等"></label>
                 </div>
             </div>
 
@@ -264,7 +277,7 @@
                     <label><input type="checkbox" name="Q6_Endpoint" value="無法正常攝食/飲水"> 無法正常攝食/飲水 <span class="en-text">Inability to eat/drink</span></label><br>
                     <label><input type="checkbox" name="Q6_Endpoint" value="明顯對刺激之反應力下降"> 明顯對刺激之反應力下降 <span class="en-text">Decreased response to stimuli</span></label>
                     <label><input type="checkbox" name="Q6_Endpoint" value="腫瘤(>2000mm3)"> 腫瘤 (>2000 mm³) <span class="en-text">Tumor > 2000 mm³</span></label>
-                    <label><input type="checkbox" name="Q6_Endpoint" value="依獸醫師意見(人道因素)"> 依獸醫師意見 <span class="en-text">Veterinarian's advice</span></label><br>
+                    <label><input type="checkbox" name="Q6_Endpoint" value="依獸醫師意見(人道因素)"> 依獸醫師意見(人道因素) <span class="en-text">Veterinarian's advice (Humanitarian factors)</span></label><br>
                     <label><input type="checkbox" name="Q6_Endpoint" value="感染"> 感染 <span class="en-text">Infection</span></label>
                     <label><input type="checkbox" name="Q6_Endpoint" value="其他"> 其他 <span class="en-text">Other</span>: <input type="text" name="Q6_Endpoint_Other" style="width:250px;"></label>
                 </div>
@@ -352,10 +365,74 @@
 </div>
 
 <script>
-    // --- 介面切換 ---
+    // --- 介面切換與大區塊清空 ---
     function toggleSection(sectionId, show) {
-        document.getElementById(sectionId).style.display = show ? 'block' : 'none';
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.style.display = show ? 'block' : 'none';
+            // 如果區塊被隱藏，一併清空該區塊內的所有文字輸入框
+            if (!show) {
+                const textInputs = section.querySelectorAll('input[type="text"]');
+                textInputs.forEach(input => {
+                    input.value = '';
+                });
+            }
+        }
     }
+    // --- 聯動文字框啟用/停用與清空邏輯 ---
+    // 設定所有 [觸發來源] 與 [目標文字框] 的對應關係
+    const textInputDependencies = [
+        { triggerName: 'Q1_1_Diff', triggerValue: '是', targetName: 'Q1_1_Diff_Desc', isCheckbox: false },
+        { triggerName: 'Q1_3_ID', triggerValue: '其他', targetName: 'Q1_3_ID_Other', isCheckbox: true },
+        { triggerName: 'Q1_4_Symptom', triggerValue: '是', targetName: 'Q1_4_Symptom_Desc', isCheckbox: false },
+        { triggerName: 'Q1_4_Danger', triggerValue: '是', targetName: 'Q1_4_Danger_Desc', isCheckbox: false },
+        { triggerName: 'Q1_5_Type', triggerValue: '其他', targetName: 'Q1_5_Type_Other', isCheckbox: true },
+        { triggerName: 'Q2_Sterilize', triggerValue: '有滅菌', targetName: 'Q2_Sterilize_Method', isCheckbox: false },
+        { triggerName: 'Q2_Toxicity', triggerValue: '已知', targetName: 'Q2_Toxicity_Desc', isCheckbox: false },
+        { triggerName: 'Q2_Hazard', triggerValue: '其他', targetName: 'Q2_Hazard_Other', isCheckbox: true },
+        { triggerName: 'Q2_Effect', triggerValue: '是', targetName: 'Q2_Effect_Desc', isCheckbox: false },
+        { triggerName: 'Q3_CellType', triggerValue: '人類細胞株', targetName: 'Q3_CellType_Human_Desc', isCheckbox: true },
+        { triggerName: 'Q3_CellType', triggerValue: '動物細胞株', targetName: 'Q3_CellType_Animal_Desc', isCheckbox: true },
+        { triggerName: 'Q3_CellSource', triggerValue: '其他', targetName: 'Q3_CellSource_Other', isCheckbox: true },
+        { triggerName: 'Q4_VirusType', triggerValue: '其他', targetName: 'Q4_VirusType_Other', isCheckbox: true },
+        { triggerName: 'Q5_Care', triggerValue: '其他', targetName: 'Q5_Care_Other', isCheckbox: true },
+        { triggerName: 'Q6_Endpoint', triggerValue: '其他', targetName: 'Q6_Endpoint_Other', isCheckbox: true }
+    ];
+
+    function updateTextInputs() {
+        textInputDependencies.forEach(dep => {
+            const targetInput = document.querySelector(`input[name="${dep.targetName}"]`);
+            if (!targetInput) return;
+
+            let isEnabled = false;
+            
+            // 判斷是 Checkbox(多選) 還是 Radio(單選)
+            if (dep.isCheckbox) {
+                const triggerInput = document.querySelector(`input[name="${dep.triggerName}"][value="${dep.triggerValue}"]`);
+                if (triggerInput && triggerInput.checked) isEnabled = true;
+            } else {
+                const checkedRadio = document.querySelector(`input[name="${dep.triggerName}"]:checked`);
+                if (checkedRadio && checkedRadio.value === dep.triggerValue) isEnabled = true;
+            }
+
+            // 執行鎖定與清空
+            if (isEnabled) {
+                targetInput.disabled = false;
+            } else {
+                targetInput.disabled = true;
+                targetInput.value = ''; // 鎖定的同時清空內容以免混淆
+            }
+        });
+    }
+
+    // 當網頁載入完成，或表單有任何點擊變動時，執行檢查
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('mainForm');
+        if (form) {
+            form.addEventListener('change', updateTextInputs);
+        }
+        updateTextInputs(); // 初始化：一進網頁先鎖定不需要填的框框
+    });
 
     // --- 抓取數值函式 ---
     function getRadioVal(form, name) {
