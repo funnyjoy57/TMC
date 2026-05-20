@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: 'unsafe-inline' https://cdnjs.cloudflare.com;">
     <title>TMC動物入室揭露說明表單</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSK799Eq8V2851L17qR6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTl/G801ZnG4gA0rA1hF5kLhtwB7UqJ0OF+rXf6O2/Gg8hO8K3fI/l/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         body { font-family: "Microsoft JhengHei", Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
         .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -85,21 +87,36 @@
 
 <div class="container">
     
-    <!-- ====== 填寫表單區塊 ====== -->
     <div id="form-container">
         <h1>TMC動物入室揭露說明表單 <span class="title-en">TMC Animal Transfer Disclosure Form</span></h1>
         
         <div class="notice-box">
-            📩 寄件提醒 <span class="en-text">Sending Reminder</span>：
-            <ul>
-                <li>本表單請寄送至 <span class="en-text">Please email this form to</span>：tmcvet5516@gmail.com</li>
-                <li>副本欄位請務必填上 PI E-mail <span class="en-text">Please CC the PI's email</span></li>
-            </ul>
-            <br>
-            📱 手機版用戶請注意 <span class="en-text">Mobile Users Notice</span>：若您使用 LINE 開啟此連結，請務必點擊畫面角落的「⋮」或「分享」圖示，選擇<strong>「以預設瀏覽器開啟」(Safari / Chrome)</strong>，以免無法順利下載 PDF 與發送 Email！
-        </div>
+    <div style="font-weight: bold; margin-bottom: 8px;">
+        📩 寄件提醒 <span class="en-text" style="font-weight: normal;">Sending Reminder：</span>
+    </div>
+    <ul>
+        <li style="margin-bottom: 10px;">
+            本表單請寄送至：tmcvet5516 [at] gmail.com<br>
+            <span class="en-text">Please email this form to: tmcvet5516 [at] gmail.com</span>
+        </li>
+        <li>
+            副本欄位請務必填上 PI E-mail<br>
+            <span class="en-text">Please ensure to CC the PI's email.</span>
+        </li>
+    </ul>
+    
+    <div style="border-top: 1px dashed #d4b55b; margin: 15px 0;"></div>
+    
+    <div style="font-weight: bold; margin-bottom: 5px;">
+        📱 手機版用戶請注意 <span class="en-text" style="font-weight: normal;">Mobile Users Notice：</span>
+    </div>
+    <div style="font-weight: normal; line-height: 1.6;">
+        若您使用 LINE 開啟此連結，請務必點擊畫面角落的「⋮」或「分享」圖示，選擇<strong>「以預設瀏覽器開啟」(Safari / Chrome)</strong>，以免無法順利下載 PDF 與發送 Email！<br>
+        <span class="en-text" style="display: inline-block; margin-top: 4px;">If you open this link via LINE, please tap the "⋮" or "Share" icon in the corner and select <strong>"Open in default browser" (Safari / Chrome)</strong> to avoid issues with PDF downloads and email dispatch!</span>
+    </div>
+</div>
 
-        <form id="mainForm">
+        <form id="mainForm" onsubmit="event.preventDefault();">
             <div class="section">
                 <span class="section-title">1. 動物健康狀態 <span class="en-text">Animal Health Status</span></span>
                 
@@ -154,7 +171,7 @@
                         <label><input type="radio" name="Q1_4_Symptom" value="是"> 是，請說明 <span class="en-text">Yes, specify</span>: <input type="text" name="Q1_4_Symptom_Desc" style="width: 250px;"></label><br>
                         c. 是否曾經進行危險性物質給予? <span class="en-text">Has hazardous substance been administered?</span>
                         <label><input type="radio" name="Q1_4_Danger" value="否" checked> 否 <span class="en-text">No</span></label>
-                        <label><input type="radio" name="Q1_4_Danger" value="是"> 是，請說明種類 <span class="en-text">Yes, specify type</span>: <input type="text" name="Q1_4_Danger_Desc" style="width: 250px; display: inline-block;" placeholder="如: Streptozotocin, MPTP 等""></label>
+                        <label><input type="radio" name="Q1_4_Danger" value="是"> 是，請說明種類 <span class="en-text">Yes, specify type</span>: <input type="text" name="Q1_4_Danger_Desc" style="width: 250px; display: inline-block;" placeholder="如: Streptozotocin, MPTP 等"></label>
                     </div>
                 </div>
 
@@ -196,7 +213,7 @@
                             <label><input type="radio" name="Q2_Sterilize" value="有滅菌"> 有滅菌 <span class="en-text">Sterilized</span>: <input type="text" name="Q2_Sterilize_Method" style="width:150px;"></label><br>
                             b. 毒性資料 <span class="en-text">Toxicity data</span>:
                             <label><input type="radio" name="Q2_Toxicity" value="未知" checked> 未知 <span class="en-text">Unknown</span></label>
-                            <label><input type="radio" name="Q2_Toxicity" value="已知"> 已知 <span class="en-text">Known</span>: <input type="text" name="Q2_Toxicity_Desc" style="width:200px;" display: inline-block;" placeholder="如 LD₅₀ 或類似化合物 SDS 表"></label>
+                            <label><input type="radio" name="Q2_Toxicity" value="已知"> 已知 <span class="en-text">Known</span>: <input type="text" name="Q2_Toxicity_Desc" style="width:200px; display: inline-block;" placeholder="如 LD₅₀ 或類似化合物 SDS 表"></label>
                         </div>
                     </div>
                     (3) 是否對操作人員造成危害? <span class="en-text">Is there a hazard to personnel?</span>
@@ -303,15 +320,19 @@
                     </div>
 
                     <div id="mode-upload" style="display: none;">
-                        <p style="font-size: 0.9em; color: #555; margin-bottom: 5px;">* 建議上傳白底黑字或透明背景的圖檔 (JPG, PNG)</p>
-                        <input type="file" id="signUploadFile" accept="image/png, image/jpeg">
-                    </div>
+    <p style="font-size: 0.9em; color: #555; margin-bottom: 5px;">
+        * 建議上傳白底黑字或透明背景的圖檔 (JPG, PNG)<br>
+        <span class="en-text" style="display: inline-block; margin-top: 4px;">* Recommended: Upload an image with a white background and black text, or a transparent background (JPG, PNG)</span>
+    </p>
+    <input type="file" id="signUploadFile" accept="image/png, image/jpeg">
+</div>
 
-                    <div id="mode-print" style="display: none;">
-                        <p style="color: #e74c3c; font-weight: bold; background: #fff; padding: 10px; border-radius: 4px; border-left: 4px solid #e74c3c;">
-                            * 系統將在 PDF 結尾預留空白簽名處，請於列印後親筆簽名。
-                        </p>
-                    </div>
+<div id="mode-print" style="display: none;">
+    <p style="color: #e74c3c; font-weight: bold; background: #fff; padding: 10px; border-radius: 4px; border-left: 4px solid #e74c3c;">
+        * 系統將在 PDF 結尾預留空白簽名處，請於列印後親筆簽名。<br>
+        <span style="font-weight: normal; font-size: 0.9em; display: inline-block; margin-top: 4px;">* The system will reserve a blank space for a signature at the end of the PDF. Please sign manually after printing.</span>
+    </p>
+</div>
                 </div>
             </div>
 
@@ -344,7 +365,7 @@
                     <!-- 以下原本 14px -> 全部放大為 16px -->
                     <div style="font-size: 16px; color: #000; line-height: 1.5; margin-bottom: 15px;">
                         <strong>📩 寄件提醒：</strong><br>
-                        本表單請寄送至：tmcvet5516@gmail.com<br>
+                        本表單請寄送至：tmcvet5516 [at] gmail.com<br>
                         副本欄位請務必填上 PI E-mail
                     </div>
                     <div style="font-size: 16px; color: #000; margin-bottom: 8px;">
@@ -365,6 +386,45 @@
 </div>
 
 <script>
+    // --- 資安加強：防範 XSS 攻擊的字串過濾函式 ---
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, function(tag) {
+            const charsToReplace = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            };
+            return charsToReplace[tag] || tag;
+        });
+    }
+
+    // --- 抓取數值函式 ---
+    function getRadioVal(form, name) {
+const el = form.querySelector(`input[name="${name}"]:checked`);
+// 【資料清洗】改為回傳空字串，避免 PDF 文件中印出 "null" 字眼
+return el ? escapeHTML(el.value) : '';
+}
+
+    function hasCheck(form, name) {
+        return form.querySelectorAll(`input[name="${name}"]:checked`).length > 0;
+    }
+
+    function getCheckVals(form, name) {
+        const els = form.querySelectorAll(`input[name="${name}"]:checked`);
+        // 將多選框的每個值都進行安全過濾
+        const vals = Array.from(els).map(e => escapeHTML(e.value));
+        return vals.length > 0 ? vals.join('、') : '';
+    }
+
+    function getTextVal(form, name) {
+        const el = form.querySelector(`input[name="${name}"]`);
+        // 【關鍵修改】使用者輸入的自由文字，一抓出來就立刻把危險字元轉換掉！
+        return el ? escapeHTML(el.value.trim()) : '';
+    }
+
     // --- 介面切換與大區塊清空 ---
     function toggleSection(sectionId, show) {
         const section = document.getElementById(sectionId);
@@ -535,9 +595,25 @@
     document.getElementById('signUploadFile').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
+            if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+                alert('⚠️ 基於安全考量，請只上傳 JPG 或 PNG 圖片檔！');
+                e.target.value = ''; 
+                uploadedSignBase64 = ""; // 【資安修正】同步清空變數，防止夾帶前一次的圖檔
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                alert('⚠️ 圖片檔案過大，請選擇小於 2MB 的檔案！');
+                e.target.value = '';
+                uploadedSignBase64 = ""; // 【資安修正】同步清空變數
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function(event) { uploadedSignBase64 = event.target.result; };
             reader.readAsDataURL(file);
+        } else {
+            // 【邏輯修正】若使用者在選擇檔案視窗點擊「取消」，也應清空狀態
+            uploadedSignBase64 = ""; 
         }
     });
 
@@ -611,9 +687,22 @@
         // --- 組裝預覽 HTML ---
         // 注意：這裡只會抓到表單元素的「中文 value」，因此產生出來的 #pdf-content 會是純中文！
         let finalSignatureHTML = '';
-        if (signMode === 'canvas') finalSignatureHTML = `<img src="${canvas.toDataURL()}" style="max-height: 120px; max-width: 350px;">`;
-        else if (signMode === 'upload') finalSignatureHTML = `<img src="${uploadedSignBase64}" style="max-height: 120px; max-width: 350px;">`;
-        else finalSignatureHTML = `<div style="width: 250px; height: 50px; border-bottom: 1px solid #000;"></div>`;
+        if (signMode === 'canvas') {
+            finalSignatureHTML = `<img src="${canvas.toDataURL()}" style="max-height: 120px; max-width: 350px;">`;
+        } else if (signMode === 'upload') {
+            // 【資安補強】強制驗證 Base64 字串的開頭，防止透過 Console 竄改變數引發 XSS
+            const isJpeg = uploadedSignBase64.startsWith('data:image/jpeg;base64,');
+            const isPng = uploadedSignBase64.startsWith('data:image/png;base64,');
+
+            if (uploadedSignBase64 && (isJpeg || isPng)) {
+                finalSignatureHTML = `<img src="${uploadedSignBase64}" style="max-height: 120px; max-width: 350px;">`;
+            } else {
+                finalSignatureHTML = `<span style="color:red;">圖片格式異常，請重新上傳</span>`;
+            }
+        } else { 
+            // 實體列印簽名模式
+            finalSignatureHTML = `<div style="width: 250px; height: 50px; border-bottom: 1px solid #000;"></div>`;
+        }
 
         const previewData = document.getElementById('preview-data');
         let html = '';
@@ -685,8 +774,8 @@
 
         previewData.innerHTML = html;
         document.getElementById('preview-signature-area').innerHTML = finalSignatureHTML;
-        document.getElementById('sign-date').innerText = getTodayDate();
-        document.getElementById('sign-id').innerText = getTextVal(form, 'Request_ID');
+        document.getElementById('sign-date').innerHTML = getTodayDate();
+        document.getElementById('sign-id').innerHTML = getTextVal(form, 'Request_ID');
 
         // ====== 更新從這裡開始 ======
         document.getElementById('form-container').style.display = 'none';
@@ -800,9 +889,19 @@ function downloadPDFAndMail() {
 
         // 7. 呼叫 Email
         setTimeout(() => {
+            // 【UX與防呆補強】提醒使用者手動加上附件
+            alert("⚠️ 提醒您：\nPDF 已成功下載至您的電腦。\n基於系統安全限制，請務必於稍後開啟的信件中【手動夾帶該 PDF 檔案】！");
+            
             const subject = encodeURIComponent("【TMC動物入室揭露說明】申請表單");
             const body = encodeURIComponent("您好，\n\n附件為填寫完畢之「動物入室揭露說明」表單 PDF 檔案，請查收。\n\n謝謝。");
-            window.location.href = `mailto:tmcvet5516@gmail.com?subject=${subject}&body=${body}`;
+            
+            // 將信箱拆解防爬蟲
+            const user = 'tmcvet5516';
+            const domain = 'gmail.com';
+            const mailAddress = user + '@' + domain;
+
+            // 在需要寄信的地方動態組合
+            window.location.href = `mailto:${mailAddress}?subject=${subject}&body=${body}`;
         }, 500);
 
     }).catch(err => {
