@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣小鼠診所 (TMC) 動物入室申請表 (滿版舒適A4版) | Mouse Hotel Check in Application</title>    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; frame-ancestors 'none';">
+    <title>台灣小鼠診所 (TMC) 動物入室申請表 (滿版舒適A4版) | Mouse Hotel Check in Application</title>    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         /* ================= 網頁填寫介面樣式 ================= */
         body { font-family: 'Segoe UI', "Microsoft JhengHei", sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.5; padding: 20px; margin: 0; }
@@ -74,23 +79,43 @@
         <div style="display: flex; align-items: center; gap: 15px;">TMC 動物入室申請表</div>
         <div style="font-size: 18px; color: #008B8B; font-weight: bold;">TMC Mouse Hotel Check in Application</div>
     </h1>
-    <div class="alert">
-        ⚠️ 注意：請於入室前至少二個工作日的16:30前，傳送此表至小鼠診所。逾時將酌收急件費用"100元/籠"！
-        <br><br>
-        📱 手機版用戶請注意：若您使用 LINE 開啟此連結，請務必點擊畫面角落的「⋮」或「分享」圖示，選擇<strong>「以預設瀏覽器開啟」(Safari / Chrome)</strong>，以免無法順利下載 PDF 與發送 Email！
+    <div class="alert" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: flex-start; gap: 8px;">
+            <span style="font-size: 16px;">⚠️</span>
+            <div>
+                注意：請於入室前至少二個工作日的16:30前，傳送此表至小鼠診所。逾時將酌收急件費用"100元/籠"！<br>
+                <span style="color: #d32f2f; font-weight: bold; font-size: 0.95em;">(若您使用公用電腦，請於離開前確保表單已送出，或清除草稿，以免個資外洩。)</span>
+                
+                <div style="font-size: 0.85em; color: #555; margin-top: 4px; font-weight: normal;">
+                    <strong>Notice:</strong> Please submit this form to the Mouse Clinic before 16:30 at least two working days prior to check-in. Late submissions will incur an expedited fee of NT$100/cage!<br>
+                    <span style="color: #c62828;">(If using a public computer, please ensure the form is submitted or the draft is cleared before leaving to prevent personal data leakage.)</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; gap: 8px;">
+            <span style="font-size: 16px;">📱</span>
+            <div>
+                手機版用戶請注意：若您使用 LINE 開啟此連結，請務必點擊畫面角落的「⋮」或「分享」圖示，選擇<strong>「以預設瀏覽器開啟」(Safari / Chrome)</strong>，以免無法順利下載 PDF 與發送 Email！
+                
+                <div style="font-size: 0.85em; color: #555; margin-top: 4px; font-weight: normal;">
+                    <strong>Mobile Users:</strong> If opening this link via LINE, please tap the "⋮" or "Share" icon in the corner and select <strong>"Open in Default Browser" (Safari / Chrome)</strong> to ensure successful PDF download and email delivery!
+                </div>
+            </div>
+        </div>
     </div>
 
     <form id="tmcForm">
         <h3>一、使用單位基本資料 <span class="en-label">I. Basic Information</span></h3>
         <div class="form-group">
-            <label>身分別 <span style="color:red">*</span> <span class="en-label">Identity</span></label>
+            <label>身分別 <span class="en-label">Identity</span></label>
             <label class="inline-label"><input type="radio" name="identity" value="一般產業界" data-email="mousehotel@tmc.sinica.edu.tw" required onchange="toggleQuotation()"> 一般產業界 <span class="en-label">Industry</span></label>
             <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐學界" data-email="optunithotel@tmc.sinica.edu.tw" onchange="toggleQuotation()"> NBRP進駐學界 <span class="en-label">NBRP Academic</span></label>
             <label class="inline-label"><input type="radio" name="identity" value="NBRP進駐廠商" data-email="firmunithotel@tmc.sinica.edu.tw" onchange="toggleQuotation()"> NBRP進駐廠商 <span class="en-label">NBRP Corporate</span></label>
         </div>
         <div class="form-row">
             <div class="form-col" id="quotationCol" style="display: none;">
-                <label>報價單編號 <span style="color:red">*</span> <span class="en-label">Quotation No.</span></label>
+                <label>報價單編號 <span class="en-label">Quotation No.</span></label>
                 <input type="text" id="quotationNumber" name="quotationNumber">
             </div>
             <div class="form-col"><label>計畫主持人 (PI) <span class="en-label">Principal Investigator</span></label><input type="text" id="piName" name="piName" required></div>
@@ -183,7 +208,7 @@
 
         <h3>四、簽名確認 <span class="en-label">IV. Signature</span></h3>
         <div class="form-group sign-options">
-            <label>請選擇計畫主持人簽名方式 <span style="color:red">*</span> <span class="en-label">Select Signature Method</span></label>
+            <label>請選擇計畫主持人簽名方式 <span class="en-label">Select Signature Method</span></label>
             <label class="inline-label"><input type="radio" name="signMethod" value="draw" checked onchange="toggleSignMode()"> 1. 線上手寫簽名 <span class="en-label">Online Draw</span></label>
             <label class="inline-label"><input type="radio" name="signMethod" value="upload" onchange="toggleSignMode()"> 2. 上傳簽名圖檔 <span class="en-label">Upload Image</span></label>
             <label class="inline-label"><input type="radio" name="signMethod" value="print" onchange="toggleSignMode()"> 3. 匯出列印後實體簽名 <span class="en-label">Print & Sign</span></label>
@@ -203,12 +228,13 @@
             📄 系統將於 PDF 中保留空白的簽名欄位。請您在下載並列印後，親筆簽名再行繳交或掃描回傳。 <span class="en-label">Blank signature field will be kept in PDF for manual signing.</span>
         </div>
 
-        <div class="btn-group no-print">
-            <button type="button" class="btn btn-save" onclick="saveDraft()">💾 儲存草稿 <span class="en-label">Save Draft</span></button>
-            <button type="submit" class="btn btn-submit">👁️ 預覽並生成 <span class="en-label">Preview & Generate</span></button>
+        <div class="btn-group no-print" style="gap: 10px;">
+            <button type="button" class="btn btn-save" style="width: 33%;" onclick="saveDraft()">💾 儲存草稿 <span class="en-label">Save</span></button>
+            
+            <button type="button" class="btn" style="background-color: #607D8B; color: white; width: 33%;" onclick="clearDraft()">🗑️ 清除草稿 <span class="en-label">Clear</span></button>
+            
+            <button type="submit" class="btn btn-submit" style="width: 33%;">👁️ 預覽並生成 <span class="en-label">Preview</span></button>
         </div>
-    </form>
-</div>
 
 <div id="preview-section" style="display: none;">
     <div class="pdf-viewer-bg">
@@ -222,6 +248,25 @@
 </div>
 
 <script>
+ // ==========================================
+    // 【資安防護】：強制使用 HTTPS 加密連線 (排除直接點開檔案與本機測試環境)
+    if (location.protocol !== 'https:' && 
+        location.protocol !== 'file:' && 
+        location.hostname !== 'localhost' && 
+        location.hostname !== '127.0.0.1') {
+        location.replace(`https:${location.href.substring(location.protocol.length)}`);
+    }
+
+    // 【資安防護】：XSS 字元過濾函數，防止惡意指令碼注入
+    function escapeHTML(str) {
+        if (typeof str !== 'string') return str;
+        return str.replace(/[&<>'"]/g, function(tag) {
+            const charsToReplace = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
+            return charsToReplace[tag] || tag;
+        });
+    }
+    // ==========================================
+
     const canvas = document.getElementById('signature-pad');
     const ctx = canvas.getContext('2d');
     let isDrawing = false, hasSigned = false;
@@ -229,12 +274,10 @@
     window.addEventListener('load', () => {
         const today = new Date();
         
-        // 如果有申請日期欄位，預設為今天
         if(document.getElementById('applyDate')) {
             document.getElementById('applyDate').valueAsDate = today;
         }
         
-        // 設定「預計入室日期」只能選擇今天以後 (包含今天)
         const yyyy = today.getFullYear();
         const mm = String(today.getMonth() + 1).padStart(2, '0');
         const dd = String(today.getDate()).padStart(2, '0');
@@ -242,30 +285,23 @@
         const inDateInput = document.getElementById('inDate');
         inDateInput.setAttribute('min', minDate);
 
-        // ==========================================
-        // 【新增】：檢查是否選到星期六(6)或星期日(0)
         inDateInput.addEventListener('change', function() {
             if (this.value) {
                 const selectedDate = new Date(this.value);
-                const day = selectedDate.getDay(); // 0 是星期日，6 是星期六
-                
+                const day = selectedDate.getDay(); 
                 if (day === 0 || day === 6) {
                     alert("❌ 週末（星期六、日）不開放申請，請選擇平日。");
-                    this.value = ''; // 清空錯誤的選擇
+                    this.value = ''; 
                 }
             }
         });
-        // ==========================================
-        // 【新增】：產生允許的入室時間選單 (15分鐘間隔，限制特定時段)
+
         const timeSelect = document.getElementById('inTime');
         const allowedTimes = [
-            "09:30", "09:45",
-            "10:00", "10:15", "10:30", "10:45",
-            "11:00", "11:15", "11:30", "11:45",
-            "12:00",
-            "13:00", "13:15", "13:30", "13:45",
-            "14:00", "14:15", "14:30", "14:45",
-            "15:00", "15:15", "15:30", "15:45",
+            "09:30", "09:45", "10:00", "10:15", "10:30", "10:45",
+            "11:00", "11:15", "11:30", "11:45", "12:00",
+            "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", 
+            "14:30", "14:45", "15:00", "15:15", "15:30", "15:45",
             "16:00", "16:15", "16:30"
         ];
         allowedTimes.forEach(t => {
@@ -274,33 +310,30 @@
             opt.textContent = t;
             timeSelect.appendChild(opt);
         });
-        // ==========================================
+
         resizeCanvas();
         loadDraft();
     });
 
     function toggleQuotation() {
-    const identity = document.querySelector('input[name="identity"]:checked');
-    const quotationCol = document.getElementById('quotationCol');
-    const quotationNumber = document.getElementById('quotationNumber');
-    
-    // 當選中「一般產業界」時顯示並設為必填
-    if (identity && identity.value === '一般產業界') {
-        quotationCol.style.display = 'block';
-        quotationNumber.required = true;
-    } else {
-        // 選其他時隱藏並取消必填，同時清空已填寫的內容
-        quotationCol.style.display = 'none';
-        quotationNumber.required = false;
-        quotationNumber.value = ''; 
+        const identity = document.querySelector('input[name="identity"]:checked');
+        const quotationCol = document.getElementById('quotationCol');
+        const quotationNumber = document.getElementById('quotationNumber');
+        
+        if (identity && identity.value === '一般產業界') {
+            quotationCol.style.display = 'block';
+            quotationNumber.required = true;
+        } else {
+            quotationCol.style.display = 'none';
+            quotationNumber.required = false;
+            quotationNumber.value = ''; 
+        }
     }
-}
 
     function resizeCanvas() {
         const ratio = window.devicePixelRatio || 1;
         canvas.width = canvas.offsetWidth * ratio;
         canvas.height = canvas.offsetHeight * ratio;
-        // 移除 ctx.scale，改用精準的座標轉換，並將畫筆粗細按比例放大
         ctx.lineWidth = 2.5 * ratio; 
         ctx.lineCap = "round"; 
         ctx.strokeStyle = "#000";
@@ -311,7 +344,6 @@
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         
-        // 依照畫布實際像素與畫面顯示大小的比例，精準計算出滑鼠/手指位置
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
         
@@ -320,6 +352,7 @@
             y: (clientY - rect.top) * scaleY 
         };
     };
+    
     canvas.addEventListener('mousedown', (e) => { isDrawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
     canvas.addEventListener('mousemove', (e) => { if(!isDrawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); hasSigned = true; });
     window.addEventListener('mouseup', () => { isDrawing = false; ctx.closePath(); });
@@ -354,49 +387,71 @@
     document.getElementById('tmcForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // ==========================================
-        // 【新增】：表單送出前的必填與勾選驗證
-        // 1. 驗證「數量」至少填寫一項且大於 0
         const male = parseInt(document.getElementById('maleCount').value) || 0;
         const female = parseInt(document.getElementById('femaleCount').value) || 0;
         const pregnant = parseInt(document.getElementById('pregnantCount').value) || 0;
         if (male <= 0 && female <= 0 && pregnant <= 0) {
             alert('請注意：「數量 (♂ / ♀ / 懷孕)」這三個欄位，請至少填寫一個大於 0 的數值！');
-            return; // 終止執行
+            return; 
         }
 
-        // 2. 驗證「飼料」與「飲水」至少勾選一項
         if (document.querySelectorAll('input[name="feed"]:checked').length === 0) {
             alert('請至少勾選一項「飼料」！');
-            return; // 終止執行
+            return; 
         }
         if (document.querySelectorAll('input[name="water"]:checked').length === 0) {
             alert('請至少勾選一項「飲水」！');
-            return; // 終止執行
+            return; 
         }
-        // ==========================================
 
         const mode = document.querySelector('input[name="signMethod"]:checked').value;
         const formData = new FormData(this);
 
-        if (mode === 'draw' && !hasSigned) { alert('請完成「線上手寫簽名」！'); return; }
-        if (mode === 'upload' && document.getElementById('signatureFile').files.length === 0) { alert('請選擇要上傳的簽名圖檔！'); return; }
+        // 如果是手寫簽名，檢查畫布
+        if (mode === 'draw' && !hasSigned) { 
+            alert('請完成「線上手寫簽名」！'); 
+            return; 
+        }
         
+        // 👇 這裡是您新增的：加強版圖片上傳與驗證邏輯 👇
         if (mode === 'upload') {
+            const file = document.getElementById('signatureFile').files[0];
+            
+            // 1. 檢查是否真的有選檔案
+            if (!file) {
+                alert('請選擇要上傳的簽名圖檔！'); 
+                return;
+            }
+            
+            // 2. 檢查 MIME Type (資安防護)
+            if (!['image/jpeg', 'image/png'].includes(file.type)) {
+                alert('安全警告：僅允許上傳 JPG 或 PNG 格式的圖片！');
+                return;
+            }
+            
+            // 3. 通過驗證後，讀取檔案並生成 PDF
             const reader = new FileReader();
-            reader.onload = function(evt) { buildFourSectionsPDF(formData, evt.target.result, mode); };
-            reader.readAsDataURL(document.getElementById('signatureFile').files[0]);
+            reader.onload = function(evt) { 
+                buildFourSectionsPDF(formData, evt.target.result, mode); 
+            };
+            reader.readAsDataURL(file);
+            
         } else {
+            // 如果是線上手寫 (draw) 或 紙本列印 (print)，直接生成
             buildFourSectionsPDF(formData, mode === 'draw' ? canvas.toDataURL() : '', mode);
         }
+        // 👆 新增結束 👆
     });
 
     function buildFourSectionsPDF(formData, signatureSrc, mode) {
         const d = {};
+        
+        // 【資安防護】：遍歷所有輸入欄位，強制執行 HTML 脫逸 (Sanitization)
         formData.forEach((value, key) => {
             if (!value) return;
-            if (d[key]) d[key] += '、' + value;
-            else d[key] = value;
+            const sanitizedValue = escapeHTML(value.trim()); // 過濾特殊字元
+            if (d[key]) d[key] += '、' + sanitizedValue;
+            else d[key] = sanitizedValue;
         });
 
         const targetEmail = document.querySelector('input[name="identity"]:checked').getAttribute('data-email');
@@ -406,17 +461,12 @@
         const dateText = mode === 'print' ? '簽署日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日' : '簽署日期：' + new Date().toLocaleDateString();
         const sigImgHTML = mode === 'print' ? '' : `<img id="preview-signature" class="signature-img" src="${signatureSrc}" alt="簽名">`;
 
-        // ==========================================
-        // 【新增】：判斷是否有填寫報價單編號，動態決定表格的該列要長什麼樣子
         let identityRowHtml = "";
-        if (d.quotationNumber && d.quotationNumber.trim() !== "") {
-            // 有報價單：顯示「身分別」與「報價單編號」
+        if (d.quotationNumber && d.quotationNumber !== "") {
             identityRowHtml = `<tr><th>身分別</th><td>${d.identity || ''}</td><th>報價單編號</th><td>${d.quotationNumber}</td></tr>`;
         } else {
-            // 無報價單：隱藏報價單欄位，讓「身分別」直接合併儲存格佔滿整列 (colspan="3")
             identityRowHtml = `<tr><th>身分別</th><td colspan="3">${d.identity || ''}</td></tr>`;
-        }
-        // ==========================================
+        }        // ==========================================
 
         const html = `
         <div id="pdf-area">
@@ -591,6 +641,14 @@
         if (saved) {
             const data = JSON.parse(saved);
             Object.keys(data).forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = data[id]; });
+        }
+    }
+    function clearDraft() {
+        if(confirm('確定要清除所有已填寫的草稿資料嗎？')) {
+            localStorage.removeItem('tmcDraft');
+            document.getElementById('tmcForm').reset();
+            clearCanvas(); // 清除簽名畫布
+            alert('草稿已清除！'); // 可以多加一個提示讓使用者知道已刪除
         }
     }
 </script>
