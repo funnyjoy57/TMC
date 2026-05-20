@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdn.tailwindcss.com https://cdnjs.cloudflare.com;">
   <title>TMC 動物移出暨委託犧牲申請系統</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
   <style>
     /* 手寫板外框 */
@@ -57,10 +59,24 @@
 </h1>
 
 <!-- 新增的警告標語：紅字紅底、字體稍小(text-sm) -->
-<div class="bg-red-100 text-red-700 text-sm border p-3 rounded-md mb-6 font-bold">
-  ⚠️ 注意：最晚請於移出或犧牲的前一個工作天的16:30前完成申請，逾時將酌收急件費用"100元/籠"！
-<br><br>
-        📱 手機版用戶請注意：若您使用 LINE 開啟此連結，請務必點擊畫面角落的「⋮」或「分享」圖示，選擇<strong>「以預設瀏覽器開啟」(Safari / Chrome)</strong>，以免無法順利下載 PDF 與發送 Email！
+<div class="bg-red-50 text-red-700 text-sm border border-red-200 p-3 rounded-md mb-6">
+  
+  <div class="flex items-start mb-3">
+    <div class="mr-2 text-base leading-snug">⚠️</div>
+    <div>
+      <div class="font-bold">注意 (Note)：最晚請於移出或犧牲的前一個工作天的16:30前完成申請，逾時將酌收急件費用"100元/籠"！</div>
+      <div class="font-normal text-black mt-1"><strong>Notice:</strong> Please complete the application no later than 16:30 on the working day prior to the check-out or sacrifice. An expedited fee of "NT$100/cage" will be charged for late applications!</div>
+    </div>
+  </div>
+
+  <div class="flex items-start">
+    <div class="mr-2 text-base leading-snug">📱</div>
+    <div>
+      <div class="font-bold">手機版用戶請注意 (Notice for Mobile Users)：若您使用 LINE 開啟此連結，請務必點擊畫面角落的「⋮」或「分享」圖示，選擇<strong>「以預設瀏覽器開啟」(Safari / Chrome)</strong>，以免無法順利下載 PDF 與發送 Email！</div>
+      <div class="font-normal text-black mt-1"><strong>Mobile Users: </strong>If you open this link via LINE, please tap the "⋮" or "Share" icon in the corner and select <strong>"Open in default browser" (Safari / Chrome)</strong> to ensure successful PDF download and email delivery!</div>
+    </div>
+  </div>
+
 </div>
 
 <form id="tmcForm" class="space-y-6">
@@ -406,6 +422,17 @@
         else if (sigMethod === '上傳簽名圖檔') {
           const file = document.getElementById('sigFile').files[0];
           if (!file) return alert('請上傳簽名圖片檔案！');
+          
+          // 資安加強：限制檔案格式只能是 png, jpg, jpeg (排除可能夾帶程式碼的 svg 或不支援的格式)
+          const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+          if (!validTypes.includes(file.type)) {
+              return alert('簽名檔格式錯誤，請上傳 JPG 或 PNG 圖片！');
+          }
+          // 資安加強：限制檔案大小最大為 2MB (2 * 1024 * 1024 bytes)
+          if (file.size > 2097152) {
+              return alert('簽名檔太大了！請上傳小於 2MB 的圖片。');
+          }
+          
           finalSigData = await toBase64(file);
         }
         else {
@@ -510,6 +537,13 @@
         
         window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
         closePreview();
+        
+        // 資安/隱私加強：下載完畢後自動清除表單與手寫板，保護前一位使用者的個資
+        document.getElementById('tmcForm').reset();
+        clearPad();
+        document.getElementById('sigFile').value = ''; // 清空上傳的檔案
+        toggleSections(); // 重置區塊顯示狀態
+
       }).catch(err => {
         alert("❌ PDF 生成發生錯誤，請檢查是否有外部圖片連結阻擋：\n" + err);
         console.error("PDF Generation Error: ", err);
