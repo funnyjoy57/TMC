@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: 'unsafe-inline' https://cdnjs.cloudflare.com;">
     <title>TMC動物入室揭露說明表單</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSK799Eq8V2851L17qR6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTl/G801ZnG4gA0rA1hF5kLhtwB7UqJ0OF+rXf6O2/Gg8hO8K3fI/l/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         body { font-family: "Microsoft JhengHei", Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
@@ -96,8 +95,8 @@
     </div>
     <ul>
         <li style="margin-bottom: 10px;">
-            本表單請寄送至：tmcvet5516 [at] gmail.com<br>
-            <span class="en-text">Please email this form to: tmcvet5516 [at] gmail.com</span>
+            本表單請寄送至：tmcvet5516@gmail.com<br>
+            <span class="en-text">Please email this form to: tmcvet5516@gmail.com</span>
         </li>
         <li>
             副本欄位請務必填上 PI E-mail<br>
@@ -365,7 +364,7 @@
                     <!-- 以下原本 14px -> 全部放大為 16px -->
                     <div style="font-size: 16px; color: #000; line-height: 1.5; margin-bottom: 15px;">
                         <strong>📩 寄件提醒：</strong><br>
-                        本表單請寄送至：tmcvet5516 [at] gmail.com<br>
+                        本表單請寄送至：tmcvet5516@gmail.com<br>
                         副本欄位請務必填上 PI E-mail
                     </div>
                     <div style="font-size: 16px; color: #000; margin-bottom: 8px;">
@@ -839,11 +838,11 @@ function downloadPDFAndMail() {
     html2canvas(element, {
         scale: 2, 
         useCORS: true,
-        width: 800,       
+        width: 800,        
         windowWidth: 800, 
         scrollX: 0,
         scrollY: 0,
-        // 【終極必殺技：在虛擬複製環境中解除縮放，讓 PDF 保持原始滿版】
+        // 【保留您的版面修正設定】
         onclone: function(clonedDoc) {
             const clonedContainer = clonedDoc.getElementById('preview-container');
             const clonedContent = clonedDoc.getElementById('pdf-content');
@@ -852,7 +851,6 @@ function downloadPDFAndMail() {
                 clonedContainer.style.overflowX = 'visible'; 
             }
             if (clonedContent) {
-                // 在拍照的瞬間，徹底抹除縮放與位移的影響！
                 clonedContent.style.transform = 'none'; 
                 clonedContent.style.margin = '0'; 
             }
@@ -866,19 +864,15 @@ function downloadPDFAndMail() {
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p', 'mm', 'a4');
         
-        // 【新增設定】自訂 PDF 留白邊距 (單位為 mm，10mm = 1公分)
-        const marginLeft = 12;   // 左邊留白 12mm
-        const marginTop = 15;    // 上方留白 15mm
-        const marginRight = 12;  // 右邊留白 12mm
+        const marginLeft = 12;   
+        const marginTop = 15;    
+        const marginRight = 12;  
         
-        // 計算扣除左右邊距後，內容實際能用的寬度
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const drawWidth = pdfWidth - marginLeft - marginRight;
         
-        // 依據新的寬度，計算等比例縮放後的高度，避免圖片變形
         const drawHeight = (canvas.height * drawWidth) / canvas.width;
         
-        // 將圖片貼上 PDF，從設定的 (X, Y) 座標開始畫，並帶入新長寬
         pdf.addImage(imgData, 'JPEG', marginLeft, marginTop, drawWidth, drawHeight);
         pdf.save('TMC動物入室揭露說明表單.pdf');
 
@@ -889,28 +883,25 @@ function downloadPDFAndMail() {
 
         // 7. 呼叫 Email
         setTimeout(() => {
-            // 【UX與防呆補強】提醒使用者手動加上附件
             alert("⚠️ 提醒您：\nPDF 已成功下載至您的電腦。\n基於系統安全限制，請務必於稍後開啟的信件中【手動夾帶該 PDF 檔案】！");
             
             const subject = encodeURIComponent("【TMC動物入室揭露說明】申請表單");
             const body = encodeURIComponent("您好，\n\n附件為填寫完畢之「動物入室揭露說明」表單 PDF 檔案，請查收。\n\n謝謝。");
             
-            // 將信箱拆解防爬蟲
-            const user = 'tmcvet5516';
-            const domain = 'gmail.com';
-            const mailAddress = user + '@' + domain;
-
-            // 在需要寄信的地方動態組合
+            const mailAddress = "tmcvet5516@gmail.com";
             window.location.href = `mailto:${mailAddress}?subject=${subject}&body=${body}`;
         }, 500);
 
     }).catch(err => {
-        alert("產生 PDF 時發生錯誤，請重試！");
+        // 🚨 【修改這裡】：將詳細的系統錯誤訊息顯示出來！
+        console.error("PDF 產生失敗：", err);
+        
+        alert(`發生錯誤，PDF 無法生成！\n\n系統錯誤訊息：\n${err.message}\n\n👉 請按 F12 開啟開發者工具，查看 Console 面板了解詳細原因。`);
+        
         container.style.overflowX = origOverflow;
         btnSend.innerHTML = origBtnText;
         btnSend.style.backgroundColor = origBtnBg;
         btnSend.disabled = false;
-        console.error(err);
     });
 }
 </script>
