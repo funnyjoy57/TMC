@@ -300,13 +300,13 @@
             </div>
 
             <div class="section grid-layout" style="background-color: #ecf0f1; padding: 20px; border-radius: 5px;">
-                <div>
-                    <label class="question-text">Service request ID / Purchase agreement No.:</label>
-                    <input type="text" name="Request_ID">
-                </div>
+    <div>
+        <label class="question-text">學界請填寫Service request ID / Purchase agreement No.; 業界請填寫Quotation No.</label>
+        <input type="text" name="Request_ID" placeholder="SRXXXX-XXXXX / No. XXXXX / TMC-XXXXXX (Ind. only)">
+    </div>
                 
                 <div style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 5px;">
-                    <label class="question-text" style="font-size: 1.1em; color: #2980b9;">計畫主持人簽名方式 <span class="en-text" style="color: #2980b9;">PI Signature Method</span>：</label>
+                    <label class="question-text" style="font-size: 1.1em; color: #2980b9;">計畫主持人簽名 <span class="en-text" style="color: #2980b9;">PI Signature</span>：</label>
                     <div class="options" style="margin-bottom: 15px;">
                         <label><input type="radio" name="SignMode" value="canvas" checked onclick="changeSignMode('canvas')"> 1. 線上手寫簽名 <span class="en-text">Online signature</span></label>
                         <label><input type="radio" name="SignMode" value="upload" onclick="changeSignMode('upload')"> 2. 上傳簽名圖檔 <span class="en-text">Upload signature image</span></label>
@@ -335,7 +335,7 @@
                 </div>
             </div>
 
-            <button type="button" class="btn-submit" onclick="generatePreview()">產生預覽畫面 <span style="font-weight: normal; font-size: 0.8em;">Generate Preview</span></button>
+            <button type="button" class="btn-submit" onclick="generatePreview()">產生預覽畫面 <span style="font-weight: normal; font-size: 0.8em;">Preview</span></button>
         </form>
     </div>
 
