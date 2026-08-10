@@ -301,9 +301,14 @@
 
             <div class="section grid-layout" style="background-color: #ecf0f1; padding: 20px; border-radius: 5px;">
     <div>
-        <label class="question-text">學界請填寫Service request ID / Purchase agreement No.; 業界請填寫Quotation No.</label>
-        <input type="text" name="Request_ID" placeholder="SRXXXX-XXXXX / No. XXXXX / TMC-XXXXXX (Ind. only)">
+    <label class="question-text">請選擇您要填寫的單號類型：</label>
+    <div class="options" style="margin-bottom: 10px;">
+        <label><input type="radio" name="ID_Type" value="SR" onclick="setRequestPrefix('SR')"> 學界Acad. - Service request ID</label><br>
+        <label><input type="radio" name="ID_Type" value="No" onclick="setRequestPrefix('No.')"> 學界Acad. - Purchase agreement No.</label><br>
+        <label><input type="radio" name="ID_Type" value="TMC" onclick="setRequestPrefix('TMC-')"> 業界Ind. - Quotation No.</label>
     </div>
+    <input type="text" name="Request_ID" placeholder="請先選擇上方類型，並接續填寫完整單號">
+</div>
                 
                 <div style="border-top: 1px solid #ccc; padding-top: 15px; margin-top: 5px;">
                     <label class="question-text" style="font-size: 1.1em; color: #2980b9;">計畫主持人簽名 <span class="en-text" style="color: #2980b9;">PI Signature</span>：</label>
@@ -361,26 +366,25 @@
                 </div>
                 
                 <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding-left: 20px;">
-                    <!-- 以下原本 14px -> 全部放大為 16px -->
-                    <div style="font-size: 16px; color: #000; line-height: 1.5; margin-bottom: 15px;">
-                        <strong>📩 寄件提醒：</strong><br>
-                        本表單請寄送至：tmcvet5516@gmail.com<br>
-                        副本欄位請務必填上 PI E-mail
-                    </div>
-                    <div style="font-size: 16px; color: #000; margin-bottom: 8px;">
-                        <strong>日期:</strong> <span id="sign-date"></span>
-                    </div>
-                    <div style="font-size: 16px; color: #000; font-weight: bold; margin-bottom: 5px;">
-                        Service Request ID: <span id="sign-id"></span>
-                    </div>
-                </div>
-            </div>
-
-        <div class="btn-group" data-html2canvas-ignore="true">
-            <button class="btn-action btn-back" onclick="backToEdit()">返回修改 <span style="font-weight: normal; font-size: 0.8em;">Back to Edit</span></button>
-            <button class="btn-action btn-send" onclick="downloadPDFAndMail()">確認無誤，下載 PDF 並寄出 <span style="font-weight: normal; font-size: 0.8em; display: block;">Confirm & Download PDF</span></button>
-        </div>
+    <!-- 以下原本 14px -> 全部放大為 16px -->
+    <div style="font-size: 16px; color: #000; line-height: 1.5; margin-bottom: 15px;">
+        <strong>📩 寄件提醒：</strong><br>
+        本表單請寄送至：tmcvet5516@gmail.com<br>
+        副本欄位請務必填上 PI E-mail
     </div>
+    <div style="font-size: 16px; color: #000; margin-bottom: 8px;">
+        <strong>日期:</strong> <span id="sign-date"></span>
+    </div>
+    <div style="font-size: 16px; color: #000; font-weight: bold; margin-bottom: 5px;">
+        <span id="sign-id-label">Service Request ID:</span> <span id="sign-id"></span>
+    </div>
+</div>
+</div> <!-- 這裡是 pdf-signature 區塊的結尾 -->
+
+<div class="btn-group" data-html2canvas-ignore="true">
+    <button class="btn-action btn-back" onclick="backToEdit()">返回修改 <span style="font-weight: normal; font-size: 0.8em;">Back to Edit</span></button>
+    <button class="btn-action btn-send" onclick="downloadPDFAndMail()">確認無誤，下載 PDF 並寄出 <span style="font-weight: normal; font-size: 0.8em; display: block;">Confirm & Download PDF</span></button>
+</div>
 
 </div>
 
@@ -518,6 +522,13 @@ return el ? escapeHTML(el.value) : '';
         document.getElementById('form-container').style.display = 'block';
         document.getElementById('preview-container').style.display = 'none';
         window.scrollTo(0, document.body.scrollHeight);
+    }
+
+// --- 單號類型選擇，自動帶入前綴 ---
+    function setRequestPrefix(prefix) {
+        const reqInput = document.querySelector('input[name="Request_ID"]');
+        reqInput.value = prefix; // 將輸入框的值改成對應的開頭
+        reqInput.focus();        // 自動將游標對焦在輸入框，讓使用者可以直接繼續打字
     }
 
     // --- 簽名模式切換與處理 ---
@@ -774,7 +785,22 @@ return el ? escapeHTML(el.value) : '';
         previewData.innerHTML = html;
         document.getElementById('preview-signature-area').innerHTML = finalSignatureHTML;
         document.getElementById('sign-date').innerHTML = getTodayDate();
-        document.getElementById('sign-id').innerHTML = getTextVal(form, 'Request_ID');
+        
+        // 新增：動態判斷輸入格式並替換標籤
+        let reqIdValue = getTextVal(form, 'Request_ID');
+        let reqIdLabel = "Service request ID: "; // 預設顯示
+        
+        if (/^SR/i.test(reqIdValue)) {
+            reqIdLabel = "Service request ID: ";
+        } else if (/^No\./i.test(reqIdValue)) {
+            reqIdLabel = "Purchase agreement No.: ";
+        } else if (/^TMC-/i.test(reqIdValue)) {
+            reqIdLabel = "Quotation No.: ";
+        }
+        
+        // 更新標籤名稱與輸入的數值
+        document.getElementById('sign-id-label').innerHTML = reqIdLabel;
+        document.getElementById('sign-id').innerHTML = reqIdValue;
 
         // ====== 更新從這裡開始 ======
         document.getElementById('form-container').style.display = 'none';
